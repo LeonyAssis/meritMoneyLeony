@@ -3,9 +3,7 @@
   "version": "1.0.225",
   "private": true,
   "scripts": {
-    "start": "gulp default",
-    "setup": "gulp setup",
-    "test": "gulp test",
+    "start": "node app.js",   
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
     "lint": "gulp eslint",
