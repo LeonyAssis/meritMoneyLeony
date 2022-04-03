@@ -1,0 +1,30 @@
+version: "3.8"
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10k"
+    max-file: "1"
+
+networks:
+  shared-services:
+    external: true
+
+services:
+  gis:
+    restart: always
+    environment:
+      - WATCH_FILES=${WATCH_FILES}
+      - DEVELOPER_REGISTRATION=${DEVELOPER_REGISTRATION}
+      - DEVELOPER_INFRAWS_ID=${DEVELOPER_INFRAWS_ID}
+      - DEVELOPER_INFRAWS_KEY=${DEVELOPER_INFRAWS_KEY}
+    user: "1000:1000"
+    container_name: gis
+    build:
+      context: .
+      target: dev
+    volumes:
+      - ".:/application"
+    logging: *default-logging
+    networks:
+      - shared-services

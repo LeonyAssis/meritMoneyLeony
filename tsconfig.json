@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "strict": false,
+    "target": "es6",
+    "checkJs": true,
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "build",
+    "alwaysStrict": true,
+    "noEmit": true
+  },
+  "include": [
+    "app/**/*.js",
+    "infra/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "tests",
+    "infra/deploy"
+  ]
+}

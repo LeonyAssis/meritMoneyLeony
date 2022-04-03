@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "id": "machine-chip-update.json",
+  "properties": {
+    "description": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "defect": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "user_id",
+    "defect"
+  ]
+}

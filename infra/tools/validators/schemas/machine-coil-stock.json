@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "id": "machine-coil-stock.json",
+  "properties": {
+    "description": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "received",
+        "sent"
+      ]
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "user_id": {
+      "type": "integer"
+    }
+  },
+  "if": {
+    "properties": { "status": { "const": "received" } }
+  },
+  "then": {
+    "properties": {
+      "gn_purchase_invoice": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "string",
+        "enum": [
+          "Tiliform"
+        ]
+      }
+    },
+    "required": ["gn_purchase_invoice"]
+  },
+  "else": {
+    "properties": {
+      "origin": {
+        "type": "string",
+        "enum": [
+          "Gerencianet"
+        ]
+      },
+      "machine_client": {
+        "type": "object",
+        "properties": {
+          "profile_id": {
+            "type": "integer"
+          },
+          "account_id": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "profile_id",
+          "account_id"
+        ]
+      }
+    },
+    "required": ["machine_client"]
+  },
+  "required": [
+    "status",
+    "amount",
+    "origin",
+    "user_id"
+  ]
+}

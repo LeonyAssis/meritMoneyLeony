@@ -1,0 +1,31 @@
+description: "successful operation"
+content:
+  application/json:
+    example:
+      {
+        "chips": [
+          {
+            "id": 1,
+            "carrier_chip": "VIVO",
+            "simcard_serial": "6M181981",
+            "chip_number": "1155998529466",
+            "description": "Descrição",
+            "machine_chip_type_id": 1,
+            "gn_purchase_invoice": "234654",
+            "user_id": 18,
+            "status": "available/linked/defect",
+            "linked_at": null,
+            "defect_at": null,
+            "defect_reported_by": null,
+            "created_at": "2021-04-20T14:25:51.000Z",
+            "updated_at": "2021-04-20T14:25:51.000Z",
+            "machine_chip_type": {
+              "type": "2FF"
+            }
+          }
+        ],
+        "currentPage": 1,
+        "pages": 1,
+        "numOfResults": 1,
+        "limit": "10"
+    }

@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "id": "pier-address.json",
+  "properties": {
+    "idTipoEndereco": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "cep": {
+      "$ref": "defs.json#/definitions/zipcode"
+    },
+    "logradouro": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "numero": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "complemento": {
+      "$ref": "defs.json#/definitions/complement"
+    },
+    "porntoReferencia": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "bairro": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "cidade": {
+      "$ref": "defs.json#/definitions/city"
+    },
+    "uf": {
+      "$ref": "defs.json#/definitions/state"
+    },
+    "pais": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "enderecoCorrespondencia": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "idTipoEndereco",
+    "cidade",
+    "uf",
+    "enderecoCorrespondencia"
+  ]
+}

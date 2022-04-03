@@ -1,0 +1,3314 @@
+openapi: "3.0.0"
+info:
+  description: "Bem vindo ao Swagger do projeto GIS, nele você encontrará tudo o que precisa para começar a utilizar nossos serviços."
+  version: "1.0.154"
+  title: "GIS"
+servers:
+  - url: https://gis.interno.testegerencianet.com.br
+    description: Test
+paths:
+  /robots/commercial-wallet/accounts-activate:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Executa o robô que classifica como conta_ativar os documentos e insere na carteira comercial estes documentos."
+      description: "Este robô captura todas as contas em um intervalo de dias, com as emissões maiores ou iguais ao valor descrito e os recebimentos menores ou iguais ao recebimento de valor. Se os parâmetros não estiverem definidos, o robô trabalhará com as configurações padrão: interval_days = 15, number_receipts <= 3, number_emissions> = 10. Exemplo de consulta: / robots / commercial-wallet / accounts-active? Interval_days = 15 & number_receipts = 3 & number_emissions = 10"
+      operationId: "runCommercialWalletAccoutsActivate"
+      parameters:
+        - name: "interval_days"
+          in: "query"
+          description: "Inteval days before now."
+          required: false
+          schema:
+            type: "integer"
+            default: "15"
+        - name: "number_receipts"
+          in: "query"
+          description: "Number of min receipted documents from new accounts"
+          required: false
+          schema:
+            type: "integer"
+            default: "3"
+        - name: "number_emissions"
+          in: "query"
+          description: "Number of max emissed documents from new accounts"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100003,
+                  name - documents_not_found,
+                  message = No documents were found in these settings.
+
+              *   code - 4100004,
+                  name - accounts_not_found,
+                  message - No accounts were found in these settings.
+
+  /robots/commercial-wallet/balancing:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Executa o robô pega as carteiras comerciais sem analista atribuido e faz o balanceamento entre eles."
+      description: "Este robô consulta a tabela de carteira a procura de documentos sem analista definido e faz a atribuição dos mesmos seguindo um critério de balanceamento. O critério atual consiste em atribuir de forma equalitária entre os analistas as carteiras comerciais, partindo das carteiras com maior número de transações. Analistas com mais de 1300 carteiras comerciais são automáticamente excluídos da fila de recebimento das mesmas."
+      operationId: "runCommercialWalletBalancing"
+      parameters:
+        - name: "type"
+          in: "query"
+          description: "Type of commercial wallet"
+          required: false
+          schema:
+            type: "string"
+            default: "conta_ativar"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100003,
+                  name - documents_not_found,
+                  message = No documents were found in these settings.
+
+              *   code - 4100023,
+                  name - commercial_wallet_type_not_found,
+                  message - No accounts were found in these settings.
+              *   code - 4100005,
+                  name - no_avaliable_analyst,
+                  message - There's no avaliable analyst.
+
+  /robots/commercial-wallet/report-performance-tracking/generate:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Executa o robô que gera as performances trackings dos últimos 6 meses à partir da data de referência."
+      description: "Este robô consulta na tabela de carteira comercial e no banco arranjo, gerando a performance tracking dos últimos 6 meses à partir da data de referência."
+      operationId: "runCommercialWalletReportPerformanceTrackingGenerate"
+      parameters:
+        - name: "limit"
+          in: "query"
+          description: "Limite de carteiras para execução"
+          required: false
+          schema:
+            type: "integer"
+            default: "20"
+        - name: "reference_date"
+          in: "query"
+          description: "Ano-Mês de referência"
+          required: false
+          schema:
+            type: "string"
+            default: "2020-03"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100022,
+                  name - commercial_wallet_not_found_to_generate_performance_tracking,
+                  message = No commercial wallet were found to generate performance tracking.
+
+  /robots/commercial-wallet/report-performance-tracking/send:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Executa o robô que gera todo dia 1° os relatórios em Excel com dados das carteiras que cada analista realiza acompanhamento."
+      description: "Este robô consulta na tabela de performance trackings e gera um Excel que é enviado para o e-mail de cada analista comercial."
+      operationId: "runCommercialWalletReportPerformanceTrackingSend"
+      parameters:
+        - name: "analyst"
+          in: "query"
+          description: "Email of commercial analyst"
+          required: false
+          schema:
+            type: "string"
+            default: "nome.sobrenome@gerencianet.com.br"
+        - name: "reference_date"
+          in: "query"
+          description: "Year-Month of reference"
+          required: false
+          schema:
+            type: "integer"
+            default: "2020-03"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 3100004,
+                  name - invalid_date,
+                  message - Reference date must be in YYYY-MM format.
+
+              *   code - 4100016,
+                  name - could_not_create_file_in_s3,
+                  message - There's no avaliable analyst.
+  /commercial-wallet/notes:
+    post:
+      tags:
+        - "Commercial Wallet"
+      summary: "Cria uma nota para a carteira comercial."
+      description: "Este endpoint insere uma nota de observação para uma carteira comercial específica, onde é informado o tipo de nota e uma mensagem que serve para o comercial acompanhar de forma mais assertiva."
+      operationId: "runCommercialWalletNotesPost"
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommercialWalletNotesReq"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              C
+
+  /commercial-wallet/:id/notes:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista as notas inseridas para a carteira comercial."
+      description: "Este endpoint retorna a lista de notas inseridas se acordo com o ID da carteira comercial."
+      operationId: "runCommercialWalletNotesGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "page_number"
+          in: "query"
+          description: "Número da página."
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "limit"
+          in: "query"
+          description: "Limite de itens a serem listados."
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "order"
+          in: "query"
+          description: "Ordena pela data de alteração (ASC|DESC)"
+          required: false
+          schema:
+            type: "integer"
+            default: "DESC"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100014,
+                  name - commercial_wallet_notes_not_found,
+                  message = Notes to commercial wallet not found.
+
+  /commercial-wallet/document/:document/notes:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista as notas inseridas para a carteira comercial de acordo com o documento informado."
+      description: "Este endpoint retorna a lista de notas inseridas se acordo com o documento da carteira comercial."
+      operationId: "runCommercialWalletNotesByDocumentGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "page_number"
+          in: "query"
+          description: "Número da página."
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "limit"
+          in: "query"
+          description: "Limite de itens a serem listados."
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "order"
+          in: "query"
+          description: "Ordena pela data de alteração (ASC|DESC)"
+          required: false
+          schema:
+            type: "integer"
+            default: "DESC"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100014,
+                  name - commercial_wallet_notes_not_found,
+                  message = Notes to commercial wallet not found.
+
+  /commercial-wallet/note-types:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista os tipos de notas existentes referente a carteira comercial."
+      description: "Este endpoint retorna a lista com os tipos de notas referente a carteira comercial."
+      operationId: "runCommercialWalletNoteTypesGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100020,
+                  name - commercial_wallet_note_types_not_found,
+                  message = No commercial wallet types were found.
+
+  /commercial-wallet/status-types:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista os tipos de status existentes referente a carteira comercial."
+      description: "Este endpoint retorna a lista com os tipos de status referente a carteira comercial."
+      operationId: "runCommercialWalletStatusTypesGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100021,
+                  name - commercial_wallet_status_types_not_found,
+                  message = No commercial wallet status types were found.
+
+  /commercial-wallet/status:
+    post:
+      tags:
+        - "Commercial Wallet"
+      summary: "Cria um status para uma carteira comercial especifica."
+      operationId: "runCommercialWalletStatusPost"
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommercialWalletStatusReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   4100002 =
+                  "code": 4100002,
+                  "message": "supplied parameters are not valid commercial_wallet_id should be integer",
+                  "extra": {
+                      "type": "type",
+                      "path": ".commercial_wallet_id",
+                      "meta": {
+                          "type": "integer"
+                      }
+                  }
+  /commercial-wallet/document/:document/status:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista as status inseridos para os documentos da carteira comercial."
+      description: "Este endpoint retorna a lista de status inseridas de acordo com o documento informado."
+      operationId: "runCommercialWalletStatusGetByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "page_number"
+          in: "query"
+          description: "Número da página."
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "limit"
+          in: "query"
+          description: "Limite de itens a serem listados."
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "order"
+          in: "query"
+          description: "Ordena pela data de alteração (ASC|DESC)"
+          required: false
+          schema:
+            type: "integer"
+            default: "DESC"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100014,
+                  name - commercial_wallet_status_not_found,
+                  message = Status to commercial wallet not found.
+
+  /commercial-wallet/:id/status:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista os status que foram inseridos para uma carteira comercial específica."
+      description: "Este endpoint retorna o histórico de status inseridos de acordo com o ID da carteira comercial."
+      operationId: "runCommercialWalletStatusGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "page_number"
+          in: "query"
+          description: "Número da página."
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "limit"
+          in: "query"
+          description: "Limite de itens a serem listados."
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "order"
+          in: "query"
+          description: "Ordena pela data de alteração (ASC|DESC)"
+          required: false
+          schema:
+            type: "integer"
+            default: "DESC"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100017,
+                  name - commercial_wallet_status_not_found,
+                  message = Status to commercial wallet not found.
+
+  /commercial-wallet/document/:document:
+    get:
+      tags:
+        - "Commercial Wallet"
+      summary: "Lista as informações da carteira comercial de acordo com o documento informado."
+      description: "Este endpoint retorna as informações da carteira comercial de acordo com o documento informado."
+      operationId: "runCommercialWalletByDocumentGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100018,
+                  name - commercial_wallet_by_document_not_found,
+                  message = Commercial wallet not found by document.
+                   /commercial-wallet/document/:document:
+  /comercial-wallets/:id/sizes:
+    put:
+      tags:
+        - "Commercial Wallet"
+      summary: "Altera o tamanho da conta e/ou marca como especial"
+      description: "Este endpoint altera o tamanho da conta no gis e intranet(document_commercial_size) e/ou marca como especial"
+      operationId: "runCommercialWalletByDocumentGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100018,
+                  name - commercial_wallet_by_document_not_found,
+                  message = Commercial wallet not found by document.
+
+              *   code - 4100058,
+                  name - commercial_wallet_params_not_found,
+                  message = At least 1 parameter must been sent.
+
+              *   code - 4100059,
+                  name - commercial_wallet_account_size_update_is_the_same,
+                  message = The commercial wallet has already this account_size.
+
+              *   code - 4100060,
+                  name - commercial_wallet_is_special_update_is_the_same,
+                  message = The commercial wallet has already this is_special value.
+  /document-analyses/classification:
+    post:
+      tags:
+        - "Document Analyses"
+      summary: "Classifica documentos em análise."
+      description: "Este endpoint cria novas classificações de documentos quando os mesmos estão abertos para análise."
+      operationId: "runDocumentAnalysesByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentAnalysesClassificationReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100026,
+                  name - document_id_not_found,
+                  message = No document_id were found.
+
+              *   code - 4100027,
+                  name - email_not_found,
+                  message = No email were found to user.
+  /control-claims/count:
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Apresenta a contagem de sinistros ativos."
+      description: "Este endpoint retorna a quantidade de sinistros ativos e sua primeira abertura."
+      operationId: "runControlClaimsCount"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+
+  /control-claims:
+    post:
+      tags:
+        - "Control Claims"
+      summary: "Cadastro de novo sinistro."
+      description: "Este endpoint cadastra um novo sinistro."
+      operationId: "runControlClaimsPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+
+              *   code - 4100002,
+                  name - validation_error,
+                  message - supplied parameters are not valid.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimsReq"
+
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista todos os sinistros."
+      description: "Este endpoint lista todos os endereços conforme paramêtros informados"
+      operationId: "runControlClaimsList"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "order"
+          in: "query"
+          description: "Ordem que deseja apresentar a listagem"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"
+        - name: "column"
+          in: "query"
+          description: "Coluna que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "id"
+        - name: "active"
+          in: "query"
+          description: "Listar os registros que estão ativos"
+          required: false
+          schema:
+            type: "boolean"
+            default: "false"
+        - name: "search"
+          in: "query"
+          description: "Campo de busca padrão por ID ou título"
+          required: false
+          schema:
+            type: "string"
+            default: ""
+        - name: "createdAt"
+          in: "query"
+          description: "Campo de busco por data de criação do sinistro"
+          required: false
+          schema:
+            type: "string"
+            default: ""
+        - name: "finalizedAt"
+          in: "query"
+          description: "Campo de busco por data de finalização do sinistro"
+          required: false
+          schema:
+            type: "string"
+            default: ""
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+
+  /control_claims/:id:
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista o sinistro por ID."
+      description: "Este endpoint retorna os dados de um sinistro específicado pelo ID."
+      operationId: "runControlClaimsListById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+    put:
+      tags:
+        - "Control Claims"
+      summary: "Atualiza o sinistro por ID e seus profissionais."
+      description: "Este endpoint atualiza os dados de um sinistro específicado pelo ID."
+      operationId: "runControlClaimsUpdateById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimsReq"
+
+  /control-claims/:id/comments:
+    post:
+      tags:
+        - "Control Claims"
+      summary: "Cadastro de novo comentário no sinistro."
+      description: "Este endpoint cadastra um novo comentário no sinistro."
+      operationId: "runControlClaimCommentsPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100002,
+                  name - validation_error,
+                  message - supplied parameters are not valid.
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimCommentsReq"
+
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista os comentários de um sinistro específico."
+      description: "Este endpoint retorna os comentários um sinistro específicado pelo ID."
+      operationId: "runControlClaimCommentsById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100056,
+                  name - control_claim_comments_not_found,
+                  message = Control claim comments not found.
+
+  /control-claims/:id/tickets:
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista os tickets vinculado a um sinistro."
+      description: "Este endpoint retorna a lista de tickets vinculado a um sinistro específicado pelo ID."
+      operationId: "runControlClaimTicketsGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /control-claims/ticket/:ticket_id:
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista os sinistros vinculado a um ticket."
+      description: "Este endpoint retorna a lista de sinistros vinculado a um ticket específicado pelo ID."
+      operationId: "runControlClaimByTicketGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+    post:
+      tags:
+        - "Control Claims"
+      summary: "Vincular ticket ao sinistro."
+      description: "Este endpoint vincula os tickets a um sinistro."
+      operationId: "runControlClaimTicketsPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100002,
+                  name - validation_error,
+                  message - supplied parameters are not valid.
+
+              *   code - 4100054,
+                  name - control_claims_not_found,
+                  message = Control claims not found.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimTicketsReq"
+    delete:
+      tags:
+        - "Control Claims"
+      summary: "Desvincular ticket do sinistro."
+      description: "Este endpoint desvincula os tickets do sinistro."
+      operationId: "runControlClaimTicketsDelete"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100002,
+                  name - validation_error,
+                  message - supplied parameters are not valid.
+
+              *   code - 4100057,
+                  name - control_claim_found_no_ticket,
+                  message = Control claim found no ticket.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimTicketsReq"
+
+  /control-claims/:id/professionals:
+    post:
+      tags:
+        - "Control Claims"
+      summary: "Cadastra responsavel pelo sinistro"
+      description: "Este endpoint cria os responsáveis pelo sinistro"
+      operationId: "runControlClaimProfessionalByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimsProfessionalReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100002,
+                  message = supplied parameters are not valid
+    get:
+      tags:
+        - "Control Claims"
+      summary: "Lista os responsáveis pelo sinistro"
+      description: "Este endpoint lista os responsáveis pelo sinistro"
+      operationId: "runControlClaimProfessionalByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100065,
+                  message = Control claim professionals not found
+
+  /control-claims/professionals/:id:
+    put:
+      tags:
+        - "Control Claims"
+      summary: "Altera o responsável pelo sinistro"
+      description: "Este endpoint altera os responsáveis pelo sinistro"
+      operationId: "runControlClaimProfessionalByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlClaimsProfessionalReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100002,
+                  message = supplied parameters are not valid
+
+              *   code - 4100063,
+                  message = Professional not found
+    delete:
+      tags:
+        - "Control Claims"
+      summary: "Marca o responsável como excluído no sinistro"
+      description: "Este endpoint altera o status para 0 no responsável pelo sinistro"
+      operationId: "runControlClaimProfessionalByDocument"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+
+              *   code - 4100064,
+                  name - delete_professional_by_id_not_found,
+                  message = Professional not found.
+
+  /account-relationship/:account:
+    get:
+      tags:
+        - "Account Relationship"
+      summary: "Lista os parceiros de uma conta específica."
+      description: "Este endpoint retorna os parceiros de uma conta específicado pelo número da conta."
+      operationId: "runAccountRelationshipsById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines:
+    get:
+      tags:
+        - "Machine"
+      summary: "Lista todas as maquininhas de cartão"
+      description: "Este endpoint lista todas as maquininhas e seus dados vinculados."
+      operationId: "runMachineList"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "column"
+          in: "query"
+          description: "Nome do campo que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "created_at"
+        - name: "order"
+          in: "query"
+          description: "Ordenação da coluna (asc, desc)"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"
+        - name: "has_defect"
+          in: "query"
+          description: "Filtra se possui defeito (true, false)"
+          required: false
+          schema:
+            type: "string"
+            default: null
+        - name: "has_client"
+          in: "query"
+          description: "Filtra se possui cliente vinculado (true, false)"
+          required: false
+          schema:
+            type: "string"
+            default: null
+        - name: "is_activated"
+          in: "query"
+          description: "Filtra se está ativa (true, false)"
+          required: false
+          schema:
+            type: "string"
+            default: null
+        - name: "search"
+          in: "query"
+          description: "Filtra por número de serial ou nota fiscal do fabricante"
+          required: false
+          schema:
+            type: "string"
+        - name: "machine_manufacturer_id"
+          in: "query"
+          description: "Filtra pelo fabricante da maquininha"
+          required: false
+          schema:
+            type: "integer"
+        - name: "machine_model_id"
+          in: "query"
+          description: "Filtra pelo modelo da maquininha"
+          required: false
+          schema:
+            type: "integer"
+        - name: "status"
+          in: "query"
+          description: "Filtra pelo status da maquininha (working, analyse, defect, repaired, discarded, warranty)"
+          required: false
+          schema:
+            type: "string"
+        - name: "client_status"
+          in: "query"
+          description: "Filtra pelo status do cliente (linked, actived, blocked)"
+          required: false
+          schema:
+            type: "string"
+        - name: "business_type"
+          in: "query"
+          description: "Filtra pelo tipo de negócio (rented, sold)"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                {
+                  "machines":
+                    [
+                      {
+                        "id": 1,
+                        "description": "string",
+                        "serial_number": "6M181969",
+                        "gn_purchase_invoice": "8478945616",
+                        "status": "working/analyse/defect/repaired/discarded/warranty",
+                        "business_type": "rented/sold",
+                        "machine_manufacturer_id": 1,
+                        "machine_model_id": 1,
+                        "machine_chip_id": 1,
+                        "user_id": 18,
+                        "warranty_at": null,
+                        "created_at": "2021-04-23T17:08:05.000Z",
+                        "updated_at": "2021-04-23T17:08:05.000Z",
+                        "machine_manufacturer":
+                          {
+                            "id": 1,
+                            "model": "PAX",
+                            "created_at": "2021-03-25T17:30:30.000Z",
+                            "updated_at": "2021-03-25T17:30:30.000Z",
+                          },
+                        "machine_model":
+                          {
+                            "id": 1,
+                            "model": "D195",
+                            "quantity_coil": 0,
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                          },
+                        "machine_chip":
+                          {
+                            "id": 1,
+                            "carrier_chip": "VIVO",
+                            "sim_card_serial": "6M181981",
+                            "chip_number": "1155998529466",
+                            "description": "Descrição",
+                            "machine_chip_type_id": 1,
+                            "invoice": "234654",
+                            "user_id": 18,
+                            "linked_at": null,
+                            "defect_at": null,
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                            "machine_chip_type": { "type": "2FF" },
+                          },
+                        "machine_client":
+                          {
+                            "id": 1,
+                            "machine_id": 1,
+                            "profile_id": 1,
+                            "account_id": 1,
+                            "status": "linked/actived/blocked",
+                            "user_id": 18,
+                            "activated_at": null,
+                            "blocked_at": null,
+                            "machine_orders_id": 1,
+                            "profile": { "id": 1, "name": "Fulano de Tal" },
+                            "account":
+                              { "id": 1, "number": 100001, "check_digit": 2 },
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                          },
+                      },
+                    ],
+                  "currentPage": 1,
+                  "pages": 1,
+                  "numOfResults": 1,
+                  "limit": 10,
+                }
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+    post:
+      tags:
+        - "Machine"
+      summary: "Cadastra uma ou várias maquininhas de cartão"
+      description: "Este endpoint cadastra um maquininha ou várias"
+      operationId: "runMachinePost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/accounts/:account_id:
+    get:
+      tags:
+        - "Machine"
+      summary: "Lista as maquininhas de um determinado cliente pela sua conta"
+      description: "Este endpoint lista as maquininhas vinculadas a um determinado cliente."
+      operationId: "runMachinesClient"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "column"
+          in: "query"
+          description: "Nome do campo que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "created_at"
+        - name: "order"
+          in: "query"
+          description: "Ordenação da coluna (asc, desc)"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                {
+                  "machines":
+                    [
+                      {
+                        "id": 1,
+                        "description": "string",
+                        "serial_number": "6M181969",
+                        "gn_purchase_invoice": "8478945616",
+                        "status": "working/analyse/defect/repaired/discarded/warranty",
+                        "business_type": "rented/sold",
+                        "machine_manufacturer_id": 1,
+                        "machine_model_id": 1,
+                        "machine_chip_id": 1,
+                        "user_id": 18,
+                        "warranty_at": null,
+                        "created_at": "2021-04-23T17:08:05.000Z",
+                        "updated_at": "2021-04-23T17:08:05.000Z",
+                        "machine_manufacturer":
+                          {
+                            "id": 1,
+                            "model": "PAX",
+                            "created_at": "2021-03-25T17:30:30.000Z",
+                            "updated_at": "2021-03-25T17:30:30.000Z",
+                          },
+                        "machine_model":
+                          {
+                            "id": 1,
+                            "model": "D195",
+                            "quantity_coil": 0,
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                          },
+                        "machine_chip":
+                          {
+                            "id": 1,
+                            "carrier_chip": "VIVO",
+                            "sim_card_serial": "6M181981",
+                            "chip_number": "1155998529466",
+                            "description": "Descrição",
+                            "machine_chip_type_id": 1,
+                            "invoice": "234654",
+                            "user_id": 18,
+                            "linked_at": null,
+                            "defect_at": null,
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                            "machine_chip_type": { "type": "2FF" },
+                          },
+                        "machine_client":
+                          {
+                            "id": 1,
+                            "machine_id": 1,
+                            "profile_id": 1,
+                            "account_id": 1,
+                            "status": "linked/actived/blocked",
+                            "user_id": 18,
+                            "activated_at": null,
+                            "blocked_at": null,
+                            "machine_orders_id": 1,
+                            "profile": { "id": 1, "name": "Fulano de Tal" },
+                            "account":
+                              { "id": 1, "number": 100001, "check_digit": 2 },
+                            "created_at": "2021-04-20T14:25:51.000Z",
+                            "updated_at": "2021-04-20T14:25:51.000Z",
+                          },
+                      },
+                    ],
+                  "currentPage": 1,
+                  "pages": 1,
+                  "numOfResults": 1,
+                  "limit": 10,
+                }
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+  /machines/:machine_id:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta os detalhes dos dados da maquininha"
+      description: "Este endpoint apresenta os detalhes dos dados vinculados a maquininha."
+      operationId: "runMachineById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                {
+                  "id": 1,
+                  "description": "string",
+                  "serial_number": "6M181969",
+                  "gn_purchase_invoice": "8478945616",
+                  "status": "working/analyse/defect/repaired/discarded/warranty",
+                  "business_type": "rented/sold",
+                  "machine_manufacturer_id": 1,
+                  "machine_model_id": 1,
+                  "machine_chip_id": 1,
+                  "user_id": 18,
+                  "warranty_at": null,
+                  "created_at": "2021-04-23T17:08:05.000Z",
+                  "updated_at": "2021-04-23T17:08:05.000Z",
+                  "machine_manufacturer":
+                    {
+                      "id": 1,
+                      "model": "PAX",
+                      "created_at": "2021-03-25T17:30:30.000Z",
+                      "updated_at": "2021-03-25T17:30:30.000Z",
+                    },
+                  "machine_model":
+                    {
+                      "id": 1,
+                      "model": "D195",
+                      "quantity_coil": 0,
+                      "created_at": "2021-04-20T14:25:51.000Z",
+                      "updated_at": "2021-04-20T14:25:51.000Z",
+                    },
+                  "machine_chip":
+                    {
+                      "id": 1,
+                      "carrier_chip": "VIVO",
+                      "sim_card_serial": "6M181981",
+                      "chip_number": "1155998529466",
+                      "description": "Descrição",
+                      "machine_chip_type_id": 1,
+                      "invoice": "234654",
+                      "user_id": 18,
+                      "linked_at": null,
+                      "defect_at": null,
+                      "created_at": "2021-04-20T14:25:51.000Z",
+                      "updated_at": "2021-04-20T14:25:51.000Z",
+                      "machine_chip_type": { "type": "2FF" },
+                    },
+                  "machine_client":
+                    {
+                      "id": 1,
+                      "machine_id": 1,
+                      "profile_id": 1,
+                      "account_id": 1,
+                      "status": "linked/actived/blocked",
+                      "user_id": 18,
+                      "activated_at": null,
+                      "blocked_at": null,
+                      "machine_orders_id": 1,
+                      "profile": { "id": 1, "name": "Fulano de Tal" },
+                      "account":
+                        { "id": 1, "number": 100001, "check_digit": 2 },
+                      "created_at": "2021-04-20T14:25:51.000Z",
+                      "updated_at": "2021-04-20T14:25:51.000Z",
+                    },
+                }
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+    put:
+      tags:
+        - "Machine"
+      summary: "Atualiza a descrição da maquininha"
+      description: "Este endpoint atualiza a descrição da maquininha"
+      operationId: "runMachinePut"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineUpdate"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/:machine_id/maintenance:
+    get:
+      tags:
+        - "Machine"
+      summary: "Lista o histórico de manutenções"
+      description: "Este endpoint lista o histórico de manutenções"
+      operationId: "runMachineMaintenanceGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "description": "Possível defeito X",
+                    "status": "analyse/no_defect/defect/repaired/discarded/warranty",
+                    "user_id": 18,
+                    "created_at": "2021-04-23T17:08:05.000Z",
+                    "updated_at": "2021-04-23T17:08:05.000Z",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+    post:
+      tags:
+        - "Machine"
+      summary: "Registra a avaliação de manutenção"
+      description: "Este endpoint registra o processo, caso seja informado alguma manutenção"
+      operationId: "runMachineMaintenancePost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineMaintenanceReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/models:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta os modelos de maquininhas"
+      description: "Este endpoint apresenta os modelos de maquininhas."
+      operationId: "runMachineModels"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "model": "D195",
+                    "quantity_coil": 0,
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                  {
+                    "id": 2,
+                    "model": "S920",
+                    "quantity_coil": 3,
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/models/checklist:
+    get:
+      tags:
+        - "Machine"
+      summary: "Obtem os itens a serem checkados no pedido"
+      description: "Este endpoint obtem os itens a serem checkados no pedido"
+      operationId: "runMachineOrdersItemsChecklistList"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "model": "D195",
+                    "checklist":
+                      [
+                        "Atualizar software",
+                        "Inserir bobina e fazer teste de impressão",
+                        "Sons do teclado funcionando",
+                        "Contraste",
+                        "Maquininha carrega?",
+                        "Chip de dados funcionou?",
+                        "Resetar maquininha",
+                        "Configurar GPRS",
+                        "Desligar maquinha",
+                        "Inserir uma bobina na maquininha e colocar três na caixa",
+                      ],
+                  },
+                  {
+                    "id": 2,
+                    "model": "S920",
+                    "checklist":
+                      [
+                        "Atualizar software",
+                        "Sons do teclado funcionando",
+                        "Contraste",
+                        "Maquininha carrega?",
+                        "Chip de dados funcionou?",
+                        "Resetar maquininha",
+                        "Configurar GPRS",
+                        "Desligar maquinha",
+                      ],
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/manufacturers:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta os fabricantes de maquininhas"
+      description: "Este endpoint apresenta os fabricantes de maquininhas."
+      operationId: "runMachineManufacturers"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "name": "PAX",
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/coils:
+    $ref: "./resources/machine/coil_stock/_index.yml"
+
+  /machines/coils/available:
+    $ref: "./resources/machine/coil_stock/available.yml"
+
+  /machines/chips:
+    $ref: "./resources/machine/chips/_index.yml"
+
+  /machines/chips/:chip_id:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta os detalhes do chip escolhido"
+      description: "Este endpoint apresenta os detalhes do chip que foi solicitado"
+      operationId: "runMachineChipListById"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MachineChipRes"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100073,
+                  message = No chip found
+
+    put:
+      tags:
+        - "Machine"
+      summary: "Atualiza os dados do chip"
+      description: "Este endpoint atualiza os dados relacionado ao chip"
+      operationId: "runMachineChipPut"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MachineChipReqPut"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/chips/:chip_id/defect:
+    put:
+      tags:
+        - "Machine"
+      summary: "Atualiza o chip como defeito"
+      description: "Este endpoint atualiza o chip como defeito"
+      operationId: "runMachineChipDefectPut"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                defect_reported_by:
+                  type: "integer"
+                  example: 18
+              required:
+                - defect_reported_by
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/chips/simcard/:simcard_serial:
+    get:
+      tags:
+        - "Machine"
+      summary: "Consulta o chip pelo serial informado"
+      description: "Este endpoint consulta os chips pelo seria informado"
+      operationId: "runMachineChipListBySimCard"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MachineChipRes"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100073,
+                  message = No chip found
+
+  /machines/chips/available:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta quantidade disponível, vinculado e com defeito"
+      description: "Este endpoint apresenta a quantidade de chips disponível, vinculado e com defeito"
+      operationId: "runMachineChipAvailable"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MachineChipsAvailableRes"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/chips/types:
+    get:
+      tags:
+        - "Machine"
+      summary: "Apresenta os tipos de chips"
+      description: "Este endpoint lista os tipos de chips cadastrados."
+      operationId: "runMachineChipTypes"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "type": "2FF",
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                  {
+                    "id": 2,
+                    "type": "3FF",
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100074,
+                  message = No chip types found
+
+  /machines/orders:
+    get:
+      tags:
+        - "Machine"
+      summary: "Atualiza a descrição da maquininha e informa se tiver defeito"
+      description: "Este endpoint atualiza a descrição da maquininha e informa se tiver defeito"
+      operationId: "runMachineOrdersList"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "column"
+          in: "query"
+          description: "Nome do campo que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "created_at"
+        - name: "order"
+          in: "query"
+          description: "Ordenação da coluna (asc, desc)"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"
+        - name: "start_date"
+          in: "query"
+          description: "Filtra pela data inicial do pedido"
+          required: false
+          schema:
+            type: "string"
+        - name: "end_date"
+          in: "query"
+          description: "Filtra pela data final do pedido"
+          required: false
+          schema:
+            type: "string"
+        - name: "status"
+          in: "query"
+          description: "Filtra pelo status do pedido (open, awaiting_shipping, done)"
+          required: false
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "suggestion_carrier_chip": "Vivo",
+                    "machine_client_id": 1,
+                    "machine_order_address_id": 1,
+                    "machine_order_shipping_id": 1,
+                    "machine_order_shipping":
+                      {
+                        "id": 1,
+                        "tracking_code": null,
+                        "company": null,
+                        "package_width": null,
+                        "package_height": null,
+                        "package_length": null,
+                        "package_weight": null,
+                        "shipment_price": null,
+                        "created_at": "2021-03-25T17:30:30.000Z",
+                        "updated_at": "2021-03-25T17:30:30.000Z",
+                      },
+                    "machine_client":
+                      {
+                        "id": 1,
+                        "profile_id": 1,
+                        "account_id": 1,
+                        "profile": { "id": 1, "name": "Fulano de Tal" },
+                        "account":
+                          { "id": 1, "number": 100001, "check_digit": 2 },
+                        "created_at": "2021-03-25T17:30:30.000Z",
+                        "updated_at": "2021-03-25T17:30:30.000Z",
+                      },
+                    "machine_order_address":
+                      {
+                        "id": 1,
+                        "street": "Rua Um",
+                        "number": "532",
+                        "reference": null,
+                        "neighborhood": null,
+                        "zipcode": "35162000",
+                        "city": "Ipatinga",
+                        "state": "MG",
+                      },
+                    "user_id": 18,
+                    "created_at": "2021-03-25T17:30:30.000Z",
+                    "updated_at": "2021-03-25T17:30:30.000Z",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+    post:
+      tags:
+        - "Machine"
+      summary: "Cria um novo pedido"
+      description: "Este endpoint cria um novo pedido"
+      operationId: "runMachineOrdersPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                profile_id:
+                  type: "integer"
+                  example: 1
+                account_id:
+                  type: "integer"
+                  example: 1
+                suggestion_carrier_chip:
+                  type: "string"
+                machine_order_address:
+                  type: "object"
+                  properties:
+                    street:
+                      type: "string"
+                      example: "Rua Um"
+                    number:
+                      type: "string"
+                      example: "532"
+                    reference:
+                      type: "string"
+                      example: null
+                    neighborhood:
+                      type: "string"
+                      example: null
+                    zipcode:
+                      type: "string"
+                      example: "35162000"
+                    city:
+                      type: "string"
+                      example: "Ipatinga"
+                    state:
+                      type: "string"
+                      example: "MG"
+                  required:
+                    - street
+                    - number
+                    - zipcode
+                    - city
+                    - state
+                machine_order_products:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      price:
+                        type: "integer"
+                      discount:
+                        type: "integer"
+                      acquisition_type:
+                        type: "string"
+                        enum: [buy, rent]
+                        example: "buy"
+                      machine_model_id:
+                        type: "integer"
+                        example: 1
+                      quantity:
+                        type: "integer"
+                        example: 1
+                    required:
+                      - acquisition_type
+                      - machine_model_id
+                      - quantity
+              required:
+                - profile_id
+                - account_id
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/orders/:order_id/complete:
+    put:
+      tags:
+        - "Machine"
+      summary: "Linka maquinhas, chip e pedidos"
+      description: "Linka maquinhas, chip e pedidos"
+      operationId: "runMachineOrdersLink"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                machine_order_shipping:
+                  type: "object"
+                  properties:
+                    package_width:
+                      type: "integer"
+                      example: 30
+                    package_height:
+                      type: "integer"
+                      example: 40
+                    package_length:
+                      type: "integer"
+                      example: 15
+                    package_weight:
+                      type: "integer"
+                      example: 500
+                  required:
+                    - package_width
+                    - package_height
+                    - package_length
+                    - package_weight
+                machine_order_products:
+                  type: "array"
+                  items:
+                    type: "object"
+                    properties:
+                      id:
+                        type: "integer"
+                        example: 1
+                      machine_id:
+                        type: "integer"
+                        example: 1
+                      machine_chip_id:
+                        type: "integer"
+                        example: 1
+                    required:
+                      - id
+                      - machine_id
+                      - machine_chip_id
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/orders/:order_id/shipping:
+    put:
+      tags:
+        - "Machine"
+      summary: "Atualiza codido de rastreio e finaliza pedido"
+      description: "Atualiza codido de rastreio e finaliza pedido"
+      operationId: "runMachineOrdersShipping"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                machine_order_shipping:
+                  type: "object"
+                  properties:
+                    tracking_code:
+                      type: "string"
+                      example: "PJ62664892231"
+                    company:
+                      type: "string"
+                      example: "Correios"
+                  required:
+                    - tracking_code
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/orders/:order_id/invoices:
+    put:
+      tags:
+        - "Machine"
+      summary: "Insere nota fiscal no pedido"
+      description: "Insere nota fiscal no pedido"
+      operationId: "runMachineOrdersInvoice"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                purchase_invoice:
+                  type: "string"
+                  example: "56465489"
+                transport_invoice:
+                  type: "string"
+                  example: "12323144"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /machines/alerts:
+    get:
+      tags:
+        - "Machine"
+      summary: "Lista os alertas de fraude das maquininhas"
+      description: "Este endpoint lista os alertas de fraude das maquininhas de todos os clientes."
+      operationId: "runMachinesAlerts"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "column"
+          in: "query"
+          description: "Nome do campo que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "created_at"
+        - name: "order"
+          in: "query"
+          description: "Ordenação da coluna (asc, desc)"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"
+        - name: "search"
+          in: "query"
+          description: "Pesquisar por conta ou protocolo"
+          required: false
+          schema:
+            type: "string"
+        - name: "status"
+          in: "query"
+          description: "Pesquisar por status created/waiting/accepted/rejected"
+          required: false
+          schema:
+            type: "string"
+        - name: "start_date"
+          in: "query"
+          description: "Filtra pela data inicial do alerta"
+          required: false
+          schema:
+            type: "string"
+        - name: "end_date"
+          in: "query"
+          description: "Filtra pela data final do alerta"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                {
+                  "alerts":
+                    [
+                      {
+                        "id": 1,
+                        "account_number": "595554",
+                        "account":
+                          {
+                            "id": 1,
+                            "number": "595554",
+                            "check_digit": "2",
+                            "primary_cnae": "1011202",
+                            "cnae": { "mcc": "5422" },
+                            "document_id": 1,
+                            "document":
+                              {
+                                "id": 1,
+                                "corporation_id": null,
+                                "corporation": null,
+                                "profile_id": 1,
+                                "profile":
+                                  {
+                                    "id": 1,
+                                    "name": "Cristiano Messi",
+                                    "cpf": "11245896378",
+                                  },
+                              },
+                          },
+                        "type_alert_id": 1,
+                        "type_alert":
+                          {
+                            "id": 1,
+                            "description_alert": "Transação com código referente a uma operação suspeita",
+                          },
+                        "reason": "Conta 595554 apresentou o código 43 para a compra de código nsu: 4597410296",
+                        "status": "ignored/created/waiting/accepted/rejected",
+                        "quantity_alerts_for_account": 5,
+                        "deadline_for_analysis": "2021-05-30 23:59:59",
+                        "days_left_for_analysis": 3,
+                        "created_at": "2021-05-27 16:45:08",
+                        "updated_at": "2021-05-27 16:45:08",
+                      },
+                    ],
+                  "currentPage": 1,
+                  "pages": 1,
+                  "numOfResults": 1,
+                  "limit": 10,
+                }
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+  /machines/alerts/:id:
+    get:
+      tags:
+        - "Machine"
+      summary: "Obtem um alerta de fraude da maquininha"
+      description: "Este endpoint obtem um alerta de fraude da maquininha."
+      operationId: "runMachinesAlertDetail"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                {
+                  "id": 1,
+                  "account_number": "595554",
+                  "account":
+                    {
+                      "id": 1,
+                      "number": "595554",
+                      "check_digit": "2",
+                      "primary_cnae": "1011202",
+                      "cnae": { "mcc": "5422" },
+                      "document_id": 1,
+                      "document":
+                        {
+                          "id": 1,
+                          "corporation_id": null,
+                          "corporation": null,
+                          "profile_id": 1,
+                          "profile":
+                            {
+                              "id": 1,
+                              "name": "Cristiano Messi",
+                              "cpf": "11245896378",
+                            },
+                        },
+                    },
+                  "type_alert_id": 1,
+                  "type_alert":
+                    {
+                      "id": 1,
+                      "description_alert": "Transação com código referente a uma operação suspeita",
+                    },
+                  "reason": "Conta 595554 apresentou o código 43 para a compra de código nsu: 4597410296",
+                  "status": "ignored/created/waiting/accepted/rejected",
+                  "quantity_alerts_for_account": 5,
+                  "deadline_for_analysis": "2021-05-30 23:59:59",
+                  "days_left_for_analysis": 3,
+                  "created_at": "2021-05-27 16:45:08",
+                  "updated_at": "2021-05-27 16:45:08",
+                }
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+  /machines/alerts/:id/notes:
+    post:
+      tags:
+        - "Machine"
+      summary: "Insere uma nota ao alerta"
+      description: "Insere uma nota que será vinculada a conta do alerta"
+      operationId: "runMachineAlersNotesPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                content:
+                  type: "string"
+                  example: "Verificamos que a situação está..."
+                user_id:
+                  type: "integer"
+                  example: 18
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+    get:
+      tags:
+        - "Machine"
+      summary: "Lista as notas do alerta"
+      description: "Lista as notas que estão vinculadas a conta do alerta."
+      operationId: "runMachinesAlertNotes"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "id": 1,
+                    "content": "Verificamos que a situação está...",
+                    "user_id": 18,
+                    "created_at": "2021-05-27 16:45:08",
+                    "updated_at": "2021-05-27 16:45:08",
+                  },
+                ]
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100076,
+                  message = No machine found
+
+  /credit-analysis/history/request/:request_id:
+    get:
+      tags:
+        - "Credit Analysis"
+      summary: "Apresenta todos os registros do request_id requisitado"
+      description: "Este endpoint apresenta o historico de analise de crédito por request_id."
+      operationId: "runCreditAnalysis"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100083,
+                  message = No requests were found
+
+  /credit-analysis/history/name/responsible:
+    get:
+      tags:
+        - "Credit Analysis"
+      summary: "Apresenta todos os registros do nome requisitado"
+      description: "Este endpoint apresenta o historico de analise de crédito por nome."
+      operationId: "runCreditAnalysis"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditAnalysesNameReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (error_name)
+              *   code - 4100084,
+                  message = No responsible were found
+
+  /credit-analysis/history/request:
+    post:
+      tags:
+        - "Credit Analysis"
+      summary: "Insere um novo registro de analise de crédito"
+      description: "Este endpoint apresenta o historico de analise de crédito por nome."
+      operationId: "runCreditAnalysis"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreditAnalysesReq"
+
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+components:
+  schemas:
+    Errors:
+      $ref: "#/components/schemas/Errors"
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "GnError"
+            extra:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "documents_not_found"
+                code:
+                  type: integer
+                  example: 3100003
+                message:
+                  type: string
+                  example: "No documents were found in these settings."
+                extra:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: "type"
+                    path:
+                      type: string
+                      example: "state"
+                    meta:
+                      type: object
+                      properties:
+                        missingProperty:
+                          type: string
+                          example: "state"
+              required:
+                - name
+                - code
+                - message
+          required:
+            - name
+            - extra
+      required:
+        - error
+
+    CommercialWalletNotesReq:
+      $ref: "#/components/schemas/CommercialWalletNotesReq"
+      type: "object"
+      properties:
+        commercial_wallet_id:
+          type: "integer"
+          example: 1
+        note_types_id:
+          type: "integer"
+          example: 4
+        user_id:
+          type: "integer"
+          example: 10
+        content:
+          type: "string"
+          example: "Este documento movimentou bastante este mês temos que dar uma atenção mais para ele."
+      required:
+        - commercial_wallet_id
+        - note_types_id
+        - user_id
+        - content
+
+    CommercialWalletStatusReq:
+      $ref: "#/components/schemas/CommercialWalletStatusReq"
+      type: "object"
+      properties:
+        commercial_wallet_status_type_id:
+          type: "integer"
+          example: 4
+        commercial_wallet_id:
+          type: "integer"
+          example: 1
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - commercial_wallet_status_type_id
+        - commercial_wallet_id
+        - user_id
+
+    DocumentAnalysesClassificationReq:
+      $ref: "#/components/schemas/DocumentAnalysesClassificationReq"
+      type: "object"
+      properties:
+        level:
+          type: "string"
+          example: "A"
+        email:
+          type: "string"
+          example: "isadora.alves@gerencianet.com.br"
+        document_id:
+          type: "integer"
+          example: 10
+      required:
+        - level
+        - email
+        - document_id
+
+    ControlClaimsReq:
+      $ref: "#/components/schemas/ControlClaimsReq"
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          example: "Falha no Sistema"
+        control_claim_types_id:
+          type: "integer"
+          example: 10
+        description_error_scenario:
+          type: "string"
+          example: "Descrição do cenário"
+        description_impact:
+          type: "string"
+          example: "Descrição do impacto"
+        comment:
+          type: "string"
+          example: "Descrição do impacto"
+        user_id:
+          type: "integer"
+          example: 10
+        professionals:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+          example:
+            - control_claim_professional_types_id: 10
+              user_professional_id: 5
+              name_professional: "Eduardo Oliveira"
+              sector: "Departamento de Infra"
+      required:
+        - title
+        - control_claim_types_id
+        - description_error_scenario
+        - description_impact
+        - comment
+        - user_id
+        - professionals
+
+    ControlClaimCommentsReq:
+      $ref: "#/components/schemas/ControlClaimCommentsReq"
+      type: "object"
+      properties:
+        comment:
+          type: "string"
+          example: "Descrever aqui o comentário"
+        important:
+          type: "integer"
+          example: 0
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - comment
+        - user_id
+
+    ControlClaimTicketsReq:
+      $ref: "#/components/schemas/ControlClaimTicketsReq"
+      type: "object"
+      properties:
+        control_claims_id:
+          type: "integer"
+          example: 1
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - control_claims_id
+        - user_id
+
+    ControlClaimsProfessionalReq:
+      $ref: "#/components/schemas/ControlClaimsProfessionalReq"
+      type: "object"
+      properties:
+        control_claim_professional_types_id:
+          type: "integer"
+          example: 1
+        user_professional_id:
+          type: "integer"
+          example: 1
+        name_professional:
+          type: "string"
+          example: "Jão da Silva"
+        sector:
+          type: "string"
+          example: "Infra Cloud"
+        user_id:
+          type: "integer"
+          example: 1
+      required:
+        - control_claim_professional_types_id
+        - user_professional_id
+        - name_professional
+        - sector
+
+    MachineCoilStockRes:
+      $ref: "#/components/schemas/MachineCoilStockRes"
+      type: "object"
+      properties:
+        coils:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              id:
+                type: "integer"
+                example: 1
+              description:
+                type: "string"
+                example: "Recebimento"
+              status:
+                type: "string"
+                example: "received"
+              quantity:
+                type: "integer"
+                example: 1000
+              invoice:
+                type: "string"
+                example: "123456"
+              origin:
+                type: "string"
+                example: "Tiliform"
+              destiny:
+                type: "string"
+                example: "Gerencianet"
+              profile_id:
+                type: "integer"
+                example: 8
+              account_id:
+                type: "number"
+                example: 10
+              machine_model_id:
+                type: "integer"
+                example: 2
+              user_id:
+                type: "integer"
+                example: 18
+              created_at:
+                type: "string"
+                example: "2021-04-20T11:48:16.000Z"
+              updated_at:
+                type: "string"
+                example: "2021-04-20T11:48:16.000Z"
+        currentPage:
+          type: "string"
+          example: 1
+        pages:
+          type: "integer"
+          example: 1
+        numOfResults:
+          type: "integer"
+          example: 1
+        limit:
+          type: "string"
+          example: "10"
+
+    MachineChipRes:
+      $ref: "#/components/schemas/MachineChipRes"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 2
+        carrier_chip:
+          type: "string"
+          example: "VIVO"
+        sim_card_serial:
+          type: "string"
+          example: "6M181981"
+        chip_number:
+          type: "string"
+          example: "1155998529466"
+        description:
+          type: "string"
+          example: "Descrição"
+        machine_chip_type_id:
+          type: "integer"
+          example: 1
+        gn_purchase_invoice:
+          type: "string"
+          example: "234654"
+        user_id:
+          type: "integer"
+          example: 10
+        machine_id:
+          type: "integer"
+          example: null
+        linked_at:
+          type: "string"
+          example: null
+        defect_at:
+          type: "string"
+          example: null
+        defect_reported_by:
+          type: "integer"
+          example: null
+        created_at:
+          type: "string"
+          example: "2021-04-20T14:25:51.000Z"
+        updated_at:
+          type: "string"
+          example: "2021-04-20T14:25:51.000Z"
+        machine_chip_type:
+          type: "object"
+          properties:
+            type:
+              type: "string"
+              example: "2FF"
+
+    MachineChipsAvailableRes:
+      $ref: "#/components/schemas/MachineChipsAvailableRes"
+      type: "object"
+      properties:
+        linked:
+          type: "string"
+          example: "0"
+        defect:
+          type: "string"
+          example: "0"
+        available:
+          type: "string"
+          example: "2"
+
+    MachineChipReqPut:
+      $ref: "#/components/schemas/MachineChipReqPut"
+      type: "object"
+      properties:
+        carrier_chip:
+          type: "string"
+          example: "Vivo"
+        sim_card_serial:
+          type: "string"
+          example: "LM4525415"
+        chip_number:
+          type: "string"
+          example: "+5531986254786"
+        description:
+          type: "string"
+          example: "Descrição da atividade"
+        chip_type:
+          type: "string"
+          example: "2FF"
+        gn_purchase_invoice:
+          type: "string"
+          example: "454231215"
+      required:
+        - description
+        - defect
+        - user_id
+
+    MachinePartnerReq:
+      $ref: "#/components/schemas/MachinePartnerReq"
+      type: "object"
+      properties:
+        profile_id:
+          type: "integer"
+          example: 1
+        profile_name:
+          type: "string"
+          example: "Nome do Perfil"
+        status:
+          type: "integer"
+          enum: [0, 1]
+          example: 1
+        account_id:
+          type: "integer"
+          example: 20
+        user_id:
+          type: "integer"
+          example: 1
+      required:
+        - profile_id
+        - profile_name
+        - status
+        - user_id
+
+    MachinePartnerReqPut:
+      $ref: "#/components/schemas/MachinePartnerReqPut"
+      type: "object"
+      properties:
+        profile_name:
+          type: "string"
+          example: "Nome do Perfil"
+        status:
+          type: "integer"
+          example: 1
+        account_id:
+          type: "integer"
+          example: 20
+        user_id:
+          type: "integer"
+          example: 1
+      required:
+        - profile_name
+        - status
+        - user_id
+
+    MachineLinkedChip:
+      $ref: "#/components/schemas/MachineLinkedChip"
+      type: "object"
+      properties:
+        sim_card_serial:
+          type: "string"
+          example: "LM181971"
+      required:
+        - sim_card_serial
+
+    MachineUpdate:
+      $ref: "#/components/schemas/MachineUpdate"
+      type: "object"
+      properties:
+        description:
+          type: "string"
+          example: "Descrição da Maquininha"
+      required:
+        - description
+
+    MachineReq:
+      $ref: "#/components/schemas/MachineReq"
+      type: "object"
+      properties:
+        machines:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              serial_number:
+                type: "string"
+                example: "6M181969"
+              machine_manufacturer_id:
+                type: "integer"
+                example: 1
+              machine_model_id:
+                type: "integer"
+                example: 1
+              invoice:
+                type: "string"
+                example: "454231215"
+              description:
+                type: "string"
+              user_id:
+                type: "integer"
+                example: 1
+            required:
+              - serial_number
+              - machine_manufacturer_id
+              - machine_model_id
+              - user_id
+
+    MachineLinkedPartner:
+      $ref: "#/components/schemas/MachineLinkedPartner"
+      type: "object"
+      properties:
+        machines:
+          type: "array"
+          items:
+            type: "object"
+            properties:
+              machine_id:
+                type: "integer"
+                example: 1
+            required:
+              - machine_id
+        user_id:
+          type: "integer"
+          example: 1
+          required:
+            - user_id
+
+    MachineLinkAccountReq:
+      $ref: "#/components/schemas/MachineLinkAccountReq"
+      type: "object"
+      properties:
+        profile_id:
+          type: "integer"
+          example: 10
+        account_id:
+          type: "integer"
+          example: 10
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - profile_id
+        - account_id
+        - user_id
+
+    MachineMaintenanceReq:
+      $ref: "#/components/schemas/MachineMaintenanceReq"
+      type: "object"
+      properties:
+        description:
+          type: "integer"
+          example: "Possível defeito X"
+        status:
+          type: "string"
+          enum: [analyse, no_defect, defect, repaired, discarded, warranty]
+          example: "defect"
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - description
+        - status
+        - user_id
+
+    CreditAnalysesNameReq:
+      $ref: "#/components/schemas/CreditAnalysesNameReq"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Neo the chosen one"
+      required:
+        - name
+
+    CreditAnalysesReq:
+      $ref: "#/components/schemas/CreditAnalysesReq"
+      type: "object"
+      properties:
+        request_id:
+          type: "integer"
+          example: 10
+        name:
+          type: "string"
+          example: "Shaolin do sertão"
+        user_id:
+          type: "integer"
+          example: 21
+        reason:
+          type: "string"
+          example: "Aprovado o pedido de aumento do limite de R$ 9,00"
+        status:
+          type: "string"
+          enum: ["credit_granted", "credit_denied", "in_analysis"]
+          example: "credit_granted"
+
+      required:
+        - request_id
+        - name
+        - user_id
+        - reason
+        - status

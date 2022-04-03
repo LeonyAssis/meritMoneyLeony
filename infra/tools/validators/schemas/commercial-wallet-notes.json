@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "id": "commercial-wallet-notes.json",
+  "properties": {
+    "commercial_wallet_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "note_types_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "commercial_wallet_id",
+    "note_types_id",
+    "user_id",
+    "content"
+  ]
+}

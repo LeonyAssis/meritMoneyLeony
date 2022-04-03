@@ -1,0 +1,44 @@
+type: object
+properties:
+  error:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "GnError"
+      extra:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "validation_error"
+          code:
+            type: integer
+            example: 3100001
+          message:
+            type: string
+            example: "supplied parameters are not valid"
+          extra:
+            type: object
+            properties:
+              type:
+                type: string
+                example: "type"
+              path:
+                type: string
+                example: "state"
+              meta:
+                type: object
+                properties:
+                  missingProperty:
+                    type: string
+                    example: "state"
+        required:
+          - name
+          - code
+          - message
+    required:
+      - name
+      - extra
+required:
+  - error

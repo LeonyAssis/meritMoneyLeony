@@ -1,0 +1,7 @@
+name: "column"
+in: "query"
+description: "Nome do campo que deseja ordenar"
+required: false
+schema:
+  type: "string"
+  default: null

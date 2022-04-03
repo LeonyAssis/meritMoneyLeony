@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "id": "machine-alert-create-notes.json",
+  "properties": {
+    "content": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "content",
+    "user_id"
+  ]
+}

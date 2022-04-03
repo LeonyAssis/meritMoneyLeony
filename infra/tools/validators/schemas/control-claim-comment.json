@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "id": "control-claim-comment.json",
+  "properties": {
+    "comment": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "important": {
+      "type": "integer"
+    },
+    "user_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "comment",
+    "user_id"
+  ]
+}

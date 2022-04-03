@@ -1,0 +1,39 @@
+type: "object"
+properties:
+  description:
+    type: "string"
+    example: "Primeiro pedido"
+  status:
+    type: "string"
+    enum: [received, sent]
+    example: "received"
+  amount:
+    type: "integer"
+    example: 10
+  gn_purchase_invoice:
+    type: "string"
+    example: "56454545"
+  origin:
+    type: "string"
+    example: "Tiliform"
+  destiny:
+    type: "string"
+    example: "Gerencianet"
+  profile_id:
+    type: "integer"
+    example: null
+  account_id:
+    type: "integer"
+    example: null
+  user_id:
+    type: "integer"
+    example: 18
+  machine_model_id:
+    type: "integer"
+    example: null
+required:
+  - status
+  - quantity
+  - origin
+  - destiny
+  - user_id

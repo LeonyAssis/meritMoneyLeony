@@ -1,0 +1,17 @@
+{
+  "id": "authorize.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "account": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "limit": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "account",
+    "limit"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "id": "commercial-wallet-status.json",
+  "properties": {
+    "commercial_wallet_status_type_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "commercial_wallet_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "commercial_wallet_status_type_id",
+    "commercial_wallet_id",
+    "user_id"
+  ]
+}

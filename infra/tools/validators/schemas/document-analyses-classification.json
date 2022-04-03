@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "id": "document-analyses-classification.json",
+  "properties": {
+    "level": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "FRAUDE"
+      ]
+    },
+    "email": {
+      "type": "string"
+    },
+    "document_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "level",
+    "email",
+    "document_id"
+  ]
+}

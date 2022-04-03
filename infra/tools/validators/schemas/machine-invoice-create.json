@@ -1,0 +1,38 @@
+{
+  "type": "array",
+  "id": "machine-invoice-create.json",
+  "items": {
+    "type": "object",
+    "properties": {
+      "invoice": {
+        "type": "integer"
+      },
+      "value": {
+        "type": "integer"
+      },
+      "intranet_generic_file_id": {
+        "type": "integer"
+      },
+      "user_id": {
+        "type": "integer"
+      },
+      "machine_invoice_types_id": {
+        "type": "integer"
+      },
+      "machine_invoice_type": {
+        "type": "string"
+      },
+      "machine_order_id": {
+        "type": "integer"
+      },
+      "url": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "invoice",
+      "value",
+      "user_id"
+    ]
+  }
+}

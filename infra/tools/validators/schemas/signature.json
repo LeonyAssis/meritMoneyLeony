@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "id": "signature.json",
+  "properties": {
+    "token": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "value": {
+      "$ref": "defs.json#/definitions/signatureValue"
+    }
+  },
+  "required": [
+    "token",
+    "value"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "id": "machine-update.json",
+  "properties": {
+    "description": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "has_defect": {
+      "type": "boolean"
+    },
+    "if": {
+      "properties": { "has_defect": { "const": true } }
+    },
+    "then": {
+      "properties": {
+        "defect_description": {
+          "$ref": "defs.json#/definitions/longText"
+        }
+      },
+      "required": ["defect_description"]
+    }
+  },
+  "required": [
+    "user_id"
+  ]
+}

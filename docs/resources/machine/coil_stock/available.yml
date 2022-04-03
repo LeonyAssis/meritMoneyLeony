@@ -1,0 +1,16 @@
+get:
+  tags:
+    - "Machine"
+  summary: "Apresenta quantidade disponível em estoque"
+  description: "Este endpoint apresenta a quantidade disponível em estoque"
+  operationId: "runMachineCoilStockAvailable"
+  parameters:
+    - $ref: "../../../global/parameters/headers/authorization.yml"
+  responses:
+    200:
+      $ref: "./responses/coil_stock_available_get.yml"
+    400:
+      description: "Invalid status value"
+    500:
+      description: |
+        Internal Server Error

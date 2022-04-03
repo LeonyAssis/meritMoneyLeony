@@ -1,0 +1,60 @@
+{
+  "id": "shipping_cost_time.json",
+  "type": "object",
+  "properties": {
+    "company": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "destiny": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "package_weight": {
+      "type": "number",
+      "minimum": 0.01
+    },
+    "package_length": {
+      "type": "integer",
+      "minimum": 15
+    },
+    "package_height": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "package_width": {
+      "type": "integer",
+      "minimum": 10
+    },
+    "package_value": {
+      "type": "integer"
+    },
+    "format": {
+      "type": "string"
+    },
+    "self_hand": {
+      "type": "boolean"
+    },
+    "delivery_advicemment": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "company",
+    "origin",
+    "destiny",
+    "service",
+    "package_weight",
+    "package_length",
+    "package_height",
+    "package_width",
+    "package_value",
+    "format",
+    "self_hand",
+    "delivery_advicemment"
+  ]
+}

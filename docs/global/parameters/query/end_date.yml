@@ -1,0 +1,7 @@
+name: "end_date"
+in: "query"
+description: "Data final para realizar busca por período"
+required: false
+schema:
+  type: "string"
+  default: ""

@@ -1,0 +1,38 @@
+{
+  "id": "machine.json",
+  "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "serial_number": {
+            "type": "string"
+          },
+          "machine_manufacturer_id": {
+            "type": "integer"
+          },
+          "machine_model_id": {
+            "type": "integer"
+          },
+          "manufacturer": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "gn_purchase_invoice": {
+            "type": "string"
+          },
+          "description": {
+            "$ref": "defs.json#/definitions/longText"
+          },
+          "user_id": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "serial_number",
+          "gn_purchase_invoice",
+          "user_id"
+        ]
+      }
+}

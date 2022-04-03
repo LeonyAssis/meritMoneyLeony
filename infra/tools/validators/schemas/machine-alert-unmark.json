@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "id": "machine-alert-unmark.json",
+  "properties": {
+    "unmarked_by": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "unmarked_by"
+  ]
+}

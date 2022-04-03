@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "id": "address.json",
+  "properties": {
+    "street": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "number": {
+      "$ref": "defs.json#/definitions/number"
+    },
+    "neighborhood": {
+      "$ref": "defs.json#/definitions/fullString"
+    },
+    "zipcode": {
+      "$ref": "defs.json#/definitions/zipcode"
+    },
+    "city": {
+      "$ref": "defs.json#/definitions/city"
+    },
+    "complement": {
+      "$ref": "defs.json#/definitions/complement"
+    },
+    "state": {
+      "$ref": "defs.json#/definitions/state"
+    }
+  },
+  "required": [
+    "street",
+    "neighborhood",
+    "zipcode",
+    "city",
+    "state"
+  ]
+}

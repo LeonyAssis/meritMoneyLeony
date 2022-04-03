@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "id": "credit-analysis-history.json",
+  "properties": {
+    "request_id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "reason": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "credit_granted",
+        "credit_denied",
+        "in_analysis"
+      ]
+    }
+  },
+  "required": [
+    "request_id",
+    "name",
+    "user_id",
+    "reason",
+    "status"
+  ]
+}

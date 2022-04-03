@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "id": "machine-alert-markup.json",
+  "properties": {
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "user_id"
+  ]
+}

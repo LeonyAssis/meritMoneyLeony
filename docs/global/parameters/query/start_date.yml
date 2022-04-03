@@ -1,0 +1,7 @@
+name: "start_date"
+in: "query"
+description: "Data inicial para realizar busca por período"
+required: false
+schema:
+  type: "string"
+  default: ""

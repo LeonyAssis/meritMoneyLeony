@@ -1,0 +1,698 @@
+[
+  {
+    "code": 3100000,
+    "name": "server_error",
+    "message": "Erro interno do servidor."
+  },
+  {
+    "code": 4100001,
+    "name": "infra_unreachable",
+    "message": "could not comunicate with infra"
+  },
+  {
+    "code": 4100002,
+    "name": "validation_error",
+    "message": "supplied parameters are not valid",
+    "friendly_message": "%s"
+  },
+  {
+    "code": 4100003,
+    "name": "documents_not_found",
+    "message": "No documents were found in these settings."
+  },
+  {
+    "code": 4100004,
+    "name": "accounts_not_found",
+    "message": "No accounts were found in these settings."
+  },
+  {
+    "code": 4100005,
+    "name": "no_avaliable_analyst",
+    "message": "There's no avaliable analyst."
+  },
+  {
+    "code": 4100006,
+    "name": "analyst_required",
+    "message": "You must give an analyst in url."
+  },
+  {
+    "code": 4100007,
+    "name": "invalid_commercial_walllet",
+    "message": "An invalid commercial wallet was given."
+  },
+  {
+    "code": 4100008,
+    "name": "cannot_verify_content_jwt",
+    "message": "Failed to verify content jwt."
+  },
+  {
+    "code": 4100009,
+    "name": "fail_to_authenticate_token",
+    "message": "Failed to authenticate access token."
+  },
+  {
+    "code": 4100010,
+    "name": "unauthorized_service",
+    "message": "missing subuser permission"
+  },
+  {
+    "code": 4100011,
+    "name": "jwt_expired",
+    "message": "JWT Token Expired"
+  },
+  {
+    "code": 4100012,
+    "name": "no_waiting_email_register",
+    "message": "There are no email_register with 'waiting' status."
+  },
+  {
+    "code": 4100013,
+    "name": "email_register_status_changed",
+    "message": "The status of the email_register %s changed."
+  },
+  {
+    "code": 4100014,
+    "name": "commercial_wallet_notes_not_found",
+    "message": "Notes to commercial wallet not found."
+  },
+  {
+    "code": 4100015,
+    "name": "organization_id_not_allowed",
+    "message": "Organization cannot use the service"
+  },
+  {
+    "code": 4100016,
+    "name": "could_not_create_file_in_s3",
+    "message": "Could not create file in s3"
+  },
+  {
+    "code": 4100017,
+    "name": "commercial_wallet_status_not_found",
+    "message": "Status to commercial wallet not found."
+  },
+  {
+    "code": 4100018,
+    "name": "commercial_wallet_by_document_not_found",
+    "message": "Commercial wallet not found by document."
+  },
+  {
+    "code": 4100019,
+    "name": "could_not_possible_to_sends_the_email",
+    "message": "Could not send email"
+  },
+  {
+    "code": 4100020,
+    "name": "commercial_wallet_note_types_not_found",
+    "message": "No commercial wallet note types were found"
+  },
+  {
+    "code": 4100021,
+    "name": "commercial_wallet_status_types_not_found",
+    "message": "No commercial wallet status types were found"
+  },
+  {
+    "code": 4100022,
+    "name": "commercial_wallet_not_found_to_generate_performance_tracking",
+    "message": "No commercial wallet were found to generate performance tracking"
+  },
+  {
+    "code": 4100023,
+    "name": "commercial_wallets_not_found",
+    "message": "You must specify a type of commercial wallet to make the balance of the commercial wallets."
+  },
+  {
+    "code": 4100024,
+    "name": "invalid_date",
+    "message": "Reference date must be in YYYY-MM format."
+  },
+  {
+    "code": 4100025,
+    "name": "not_first_business_day",
+    "message": "Can't send performance tracking when it's not first business day."
+  },
+  {
+    "code": 4100026,
+    "name": "document_analyses_classification_document_id_not_found",
+    "message": "No document id were found to document analyses classification."
+  },
+  {
+    "code": 4100027,
+    "name": "document_analyses_classification_user_id_not_found",
+    "message": "No user id were found to document analyses classification."
+  },
+  {
+    "code": 4100028,
+    "name": "commercial_type_required",
+    "message": "Commercial Wallet type is required for this operation."
+  },
+  {
+    "code": 4100029,
+    "name": "cannot_find_markup_to_open_accounts_validation",
+    "message": "Cannot find markup with this open_accounts_validation_id"
+  },
+  {
+    "code": 4100030,
+    "name": "cannot_get_communication_large_scale_to_generate",
+    "message": "Cannot get any communication large scale to generate"
+  },
+  {
+    "code": 4100031,
+    "name": "cannot_get_communication_large_scale_to_send",
+    "message": "Cannot get any communication large scale to send"
+  },
+  {
+    "code": 4100032,
+    "name": "cannot_list_communication_large_scale",
+    "message": "Cannot list any communication large scale"
+  },
+  {
+    "code": 4100033,
+    "name": "cannot_get_communication_large_scale",
+    "message": "Cannot get this communication large scale"
+  },
+  {
+    "code": 4100034,
+    "name": "cannot_get_communication_large_scale_status",
+    "message": "Cannot list any communication large scale status"
+  },
+  {
+    "code": 4100035,
+    "name": "user_is_not_authorized_to_classificate_document",
+    "message": "The user e-mail do not have authorization to classificate the document."
+  },
+  {
+    "code": 4100036,
+    "name": "user_is_not_authorized_to_classificate_document",
+    "message": "The user e-mail do not have authorization to classificate the document."
+  },
+  {
+    "code": 4100037,
+    "name": "no_message_returned_from_sqs",
+    "message": "No message returned from sqs."
+  },
+  {
+    "code": 4100038,
+    "name": "no_commercial_wallets_were_found",
+    "message": "Commercial Wallets in theses settings were not found."
+  },
+  {
+    "code": 4100039,
+    "name": "cannot_create_empty_negotiations",
+    "message": "Negotiations may have at least one billet, card or banking negotiation."
+  },
+  {
+    "code": 4100040,
+    "name": "none_rate_negotiation_to_assign",
+    "message": "There is no availiable negotiation to assign."
+  },
+  {
+    "code": 4100041,
+    "name": "no_rate_negotiations_were_found",
+    "message": "Rate negotiations in theses settings were not found."
+  },
+  {
+    "code": 4100042,
+    "name": "no_history_rate_negotiations_were_found",
+    "message": "Rate negotiations history in theses settings were not found."
+  },
+  {
+    "code": 4100043,
+    "name": "rate_negotiation_type_not_found",
+    "message": "You must specify a type of rate negotiations to list it's history."
+  },
+  {
+    "code": 4100044,
+    "name": "document_situation_type_not_valid",
+    "message": "This type is invalid. Types = emissions or shutdown."
+  },
+  {
+    "code": 4100045,
+    "name": "document_situation_not_found",
+    "message": "There is no documents found in this settings."
+  },
+  {
+    "code": 4100046,
+    "name": "responsible_user_id_required",
+    "message": "The parameter responsible_user_id (new responsible) is required in the query."
+  },
+  {
+    "code": 4100047,
+    "name": "cannot_get_alternative_account_from_server",
+    "message": "The querying resulted failure to get alternative account with this phone."
+  },
+  {
+    "code": 4100048,
+    "name": "cannot_get_alternative_account_from_database",
+    "message": "There is no alternative account for this number previously saved in database."
+  },
+  {
+    "code": 4100049,
+    "name": "whatsapp_message_send_has_failed",
+    "message": "The server did not sent the message."
+  },
+  {
+    "code": 4100050,
+    "name": "whatsapp_template_not_found",
+    "message": "The template name was not found."
+  },
+  {
+    "code": 4100051,
+    "name": "whatsapp_wrong_number_of_arguments",
+    "message": "The message variables has different size of the array informed for that template."
+  },
+  {
+    "code": 4100052,
+    "name": "commercial_wallet_param_update_is_the_same",
+    "message": "The param you that you are trying to update has already this value."
+  },
+  {
+    "code": 4100053,
+    "name": "no_availiable_analyst_with_this_email",
+    "message": "There's no availiable analyst with this email."
+  },
+  {
+    "code": 4100054,
+    "name": "control_claims_not_found",
+    "message": "Control claims not found."
+  },
+  {
+    "code": 4100055,
+    "name": "cannot_create_control_claims_professionals",
+    "message": "At least one professional is required"
+  },
+  {
+    "code": 4100056,
+    "name": "control_claim_comments_not_found",
+    "message": "Control claim comments not found."
+  },
+  {
+    "code": 4100057,
+    "name": "control_claim_found_no_ticket",
+    "message": "Control claim found no ticket."
+  },
+  {
+    "code": 4100058,
+    "name": "control_claims_status_not_found",
+    "message": "Status to control claims not found."
+  },
+  {
+    "code": 4100059,
+    "name": "update_professional_by_id_not_found",
+    "message": "Professional not found"
+  },
+  {
+    "code": 4100060,
+    "name": "delete_professional_by_id_not_found",
+    "message": "Professional not found"
+  },
+  {
+    "code": 4100061,
+    "name": "get_professionals_by_control_claim_not_found",
+    "message": "Control claim professionals not found"
+  },
+  {
+    "code": 4100062,
+    "name": "no_availiable_bank_secrecy_requests",
+    "message": "There's no availiable bank secrecy requests."
+  },
+  {
+    "code": 4100063,
+    "name": "cant_communicate_with_ccs",
+    "message": "There was a fail when trying to communicate with CCS project."
+  },
+  {
+    "code": 4100064,
+    "name": "no_availiable_bank_secrecy_requests",
+    "message": "There's no availiable bank secrecy requests."
+  },
+  {
+    "code": 4100065,
+    "name": "control_claim_types_not_found",
+    "message": "No control claim types were found"
+  },
+  {
+    "code": 4100066,
+    "name": "control_claims_status_not_found",
+    "message": "Status to control claims not found."
+  },
+  {
+    "code": 4100067,
+    "name": "commercial_wallet_params_not_found",
+    "message": "At least 1 parameter must been sent."
+  },
+  {
+    "code": 4100068,
+    "name": "commercial_wallet_account_size_update_is_the_same",
+    "message": "The commercial wallet has already this account_size."
+  },
+  {
+    "code": 4100069,
+    "name": "commercial_wallet_is_special_update_is_the_same",
+    "message": "The commercial wallet has already this is_special value."
+  },
+  {
+    "code": 4100070,
+    "name": "unrecognized_status_in_the_machine_coil_stock",
+    "message": "Status parameter only accepts received and sent"
+  },
+  {
+    "code": 4100071,
+    "name": "coil_stock_less_than_requested",
+    "message": "Stock less than requested"
+  },
+  {
+    "code": 4100072,
+    "name": "coil_stock_logs_not_found",
+    "message": "Coil stock logs not found"
+  },
+  {
+    "code": 4100073,
+    "name": "no_chip_found",
+    "message": "No chip found"
+  },
+  {
+    "code": 4100074,
+    "name": "no_chip_types_found",
+    "message": "No chip types found"
+  },
+  {
+    "code": 4100075,
+    "name": "no_partner_found",
+    "message": "No partner found"
+  },
+  {
+    "code": 4100076,
+    "name": "no_machine_found",
+    "message": "No machine found"
+  },
+  {
+    "code": 4100077,
+    "name": "chip_linked_machine",
+    "message": "Chip linked to the machine"
+  },
+  {
+    "code": 4100078,
+    "name": "defective_chip",
+    "message": "Defective chip"
+  },
+  {
+    "code": 4100078,
+    "name": "linked_machine",
+    "message": "The machine is already linked"
+  },
+  {
+    "code": 4100079,
+    "name": "no_partner_in_account_relationship",
+    "message": "There's no partner associed to this account."
+  },
+  {
+    "code": 4100080,
+    "name": "no_users_to_manage",
+    "message": "No users to manage."
+  },
+  {
+    "code": 4100081,
+    "name": "no_account_rate_found",
+    "message": "No account rates were found."
+  },
+  {
+    "code": 4100082,
+    "name": "cannot_get_account_new_rate_to_edit",
+    "message": "Cannot get account new rate to edit."
+  },
+  {
+    "code": 4100083,
+    "name": "request_id_not_found",
+    "message": "No requests were found."
+  },
+  {
+    "code": 4100084,
+    "name": "responsible_not_found",
+    "message": "No responsible were found."
+  },
+  {
+    "code": 4100085,
+    "name": "coil_stock_gn_purchase_invoice_required",
+    "message": "The field gn_purchase_invoice is required if status is received."
+  },
+  {
+    "code": 4100086,
+    "name": "coil_stock_machine_client_required",
+    "message": "The field machine_client is required if status is sent."
+  },
+  {
+    "code": 4100087,
+    "name": "machine_order_shipping_and_id_required",
+    "message": "The field machine_order_shipping and param id are required."
+  },
+  {
+    "code": 4100087,
+    "name": "order_not_found",
+    "message": "No machine orders were found."
+  },
+  {
+    "code": 4100087,
+    "name": "order_shipping_null",
+    "message": "No machine order shipping are linked to machine order."
+  },
+  {
+    "code": 4100088,
+    "name": "order_id_required",
+    "message": "Order id are required"
+  },
+  {
+    "code": 4100089,
+    "name": "order_body_produts_length_mismatch",
+    "message": "Order products lenth differ from req.body.products "
+  },
+  {
+    "code": 4100090,
+    "name": "req_body_with_the_duplicate_ids",
+    "message": "Req. has duplicate ids in products"
+  },
+  {
+    "code": 4100091,
+    "name": "machine_not_working_already",
+    "message": "Machine is not working already"
+  },
+  {
+    "code": 4100092,
+    "name": "no_alert_notes_for_this_account",
+    "message": "There is no alert notes for this account"
+  },
+  {
+    "code": 4100093,
+    "name": "alert_not_found",
+    "message": "No alert were found"
+  },
+  {
+    "code": 4100094,
+    "name": "client_not_found",
+    "message": "No client were found"
+  },
+  {
+    "code": 4100095,
+    "name": "chip_type_required",
+    "message": "Chip type is required."
+  },
+  {
+    "code": 4100096,
+    "name": "machine_model_required",
+    "message": "Machine model is required."
+  },
+  {
+    "code": 4100097,
+    "name": "machine_manufacturer_required",
+    "message": "Machine manufacturer is required."
+  },
+  {
+    "code": 4100098,
+    "name": "compliance_analyses_documents_not_found",
+    "message": "Compliance analyses document not found."
+  },
+  {
+    "code": 4100099,
+    "name": "analyst_is_not_able_to_analyse_rate_due_his_level",
+    "message": "Analyst is not able to analyse rate due his level"
+  },
+  {
+    "code": 4100101,
+    "name": "machine_alert_not_found",
+    "message": "No machine alert were found"
+  },
+  {
+    "code": 4100102,
+    "name": "alert_markup_already_exists",
+    "message": "Alert markup already exists"
+  },
+  {
+    "code": 4100103,
+    "name": "alert_markup_does_not_exists",
+    "message": "Alert markup does not exists"
+  },
+  {
+    "code": 41001034,
+    "name": "chargeback_not_found",
+    "message": "No chargeback were found"
+  },
+  {
+    "code": 4100105,
+    "name": "fraud_not_found",
+    "message": "No fraud were found"
+  },
+  {
+    "code": 4100106,
+    "name": "no_account_for_alert_were_found",
+    "message": "No account for alert were found"
+  },
+  {
+    "code": 4100107,
+    "name": "create_ticket_machine_alert_error",
+    "message": "Create ticket machine alert error"
+  },
+  {
+    "code": 4100108,
+    "name": "create_ticket_mesage_machine_alert_error",
+    "message": "Create ticket mesage machine alert error"
+  },
+  {
+    "code": 4100109,
+    "name": "shipping_company_not_found",
+    "message": "No shipping company were found"
+  },
+  {
+    "code": 4100110,
+    "name": "shipping_service_not_found",
+    "message": "No shipping service were found"
+  },
+  {
+    "code": 4100111,
+    "name": "shipping_format_not_found",
+    "message": "No shipping format were found"
+  },
+  {
+    "code": 4100112,
+    "name": "shipping_package_value_invalid",
+    "message": "Package value should be 0 or between R$ 21,00 and R$ 3.000,00."
+  },
+  {
+    "code": 4100113,
+    "name": "correios_config_post_card_not_found",
+    "message": "No correios config post card were found"
+  },
+  {
+    "code": 4100114,
+    "name": "correios_post_card_is_required",
+    "message": "Correios post card is required"
+  },
+  {
+    "code": 4100115,
+    "name": "invoice_type_required",
+    "message": "Invoice type is required"
+  },
+  {
+    "code": 4100116,
+    "name": "type_tracking_insertion_must_be_automatic",
+    "message": "Type tracking insertion must be automatic"
+  },
+  {
+    "code": 4100117,
+    "name": "company_must_be_correios",
+    "message": "Company must be correios"
+  },
+  {
+    "code": 4100118,
+    "name": "correios_post_card_status_is_invalid",
+    "message": "Correios post card status is invalid"
+  },
+  {
+    "code": 4100119,
+    "name": "correios_service_is_unavailable",
+    "message": "Correios service is unavailable"
+  },
+  {
+    "code": 4100120,
+    "name": "machine_order_shipping_does_not_have_correios_label",
+    "message": "Machine order shipping does not have correios label"
+  },
+  {
+    "code": 4100121,
+    "name": "correios_label_does_not_have_correios_plp",
+    "message": "Correios label does not have correios plp"
+  },
+  {
+    "code": 4100122,
+    "name": "failed_to_create_soap_client",
+    "message": "Failed to create soap client"
+  },
+  {
+    "code": 4100123,
+    "name": "correios_soap_function_consulta_cep_failed",
+    "message": "Correios soap function consulta cep failed"
+  },
+  {
+    "code": 4100124,
+    "name": "correios_soap_function_busca_cliente_failed",
+    "message": "Correios soap function busca cliente failed"
+  },
+  {
+    "code": 4100125,
+    "name": "correios_soap_function_verifica_disponibilidade_servico_failed",
+    "message": "Correios soap function verifica disponibilidade servico failed"
+  },
+  {
+    "code": 4100126,
+    "name": "correios_soap_function_get_status_cartao_postagem_failed",
+    "message": "Correios soap function get status cartao postagem failed"
+  },
+  {
+    "code": 4100127,
+    "name": "correios_soap_function_solicita_etiquetas_failed",
+    "message": "Correios soap function solicita etiquetas failed"
+  },
+  {
+    "code": 4100128,
+    "name": "correios_soap_function_gera_digito_verificador_etiquetas_failed",
+    "message": "Correios soap function gera digito verificador etiquetas failed"
+  },
+  {
+    "code": 4100129,
+    "name": "correios_soap_function_fecha_plp_varios_servicos_failed",
+    "message": "Correios soap function fecha plp varios servicos failed"
+  },
+  {
+    "code": 4100130,
+    "name": "correios_soap_function_solicita_xml_plp_failed",
+    "message": "Correios soap function solicita xml plp failed"
+  },
+  {
+    "code": 4100131,
+    "name": "correios_soap_function_calc_preco_prazo_failed",
+    "message": "Correios soap function calc_preco_prazo failed"
+  },
+  {
+    "code": 4100132,
+    "name": "correios_calc_preco_prazo_returned_an_error",
+    "message": "Correios calc preco prazo returned an error"
+  },
+  {
+    "code": 4100133,
+    "name": "correios_request_service_requires_gis_log_id",
+    "message": "Correios request service requires gis log id"
+  },
+  {
+    "code": 4100134,
+    "name": "no_correios_client_service_were_found",
+    "message": "No correios client service were found"
+  },
+  {
+    "code": 4100135,
+    "name": "no_correios_client_were_found",
+    "message": "No correios client were found"
+  },
+  {
+    "code": 4100136,
+    "name": "order_already_canceled",
+    "message": "Order already canceled"
+  }
+]

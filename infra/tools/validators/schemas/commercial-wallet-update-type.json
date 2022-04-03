@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "id": "commercial-wallet-update-type.json",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "conta_ativar",
+        "conta_recuperar",
+        "conta_normal",
+        "conta_perdida"
+      ]
+    },
+    "revaluation": {
+      "type": "string"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "type",
+    "user_id"
+  ]
+}

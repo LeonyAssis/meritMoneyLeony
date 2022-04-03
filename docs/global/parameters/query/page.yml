@@ -1,0 +1,7 @@
+name: "page"
+in: "query"
+description: "Número da página que deseja buscar"
+required: false
+schema:
+  type: "integer"
+  default: "1"

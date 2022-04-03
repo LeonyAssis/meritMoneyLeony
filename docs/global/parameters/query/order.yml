@@ -1,0 +1,7 @@
+name: "order"
+in: "query"
+description: "Ordenação da coluna (asc, desc)"
+required: false
+schema:
+  type: "string"
+  default: "desc"

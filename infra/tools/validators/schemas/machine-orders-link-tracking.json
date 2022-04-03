@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "id": "machine-orders-link-tracking.json",
+  "properties": {
+    "tracking_code": {
+      "type": "string"
+    },
+    "posted_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "user_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "posted_at",
+    "user_id"
+  ]
+}

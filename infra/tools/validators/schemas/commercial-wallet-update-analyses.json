@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "id": "commercial-wallet-update-analyses.json",
+  "properties": {
+    "status_analyses": {
+      "type": "string",
+      "enum": [
+        "not_need_attention",
+        "need_attention",
+        "was_attended"
+      ]
+    },
+    "revaluation": {
+      "type": "string"
+    },
+    "reason": {
+      "$ref": "defs.json#/definitions/longText"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "status_analyses",
+    "reason",
+    "user_id"
+  ]
+}

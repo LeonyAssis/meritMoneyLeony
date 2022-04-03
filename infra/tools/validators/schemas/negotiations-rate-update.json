@@ -1,0 +1,370 @@
+{
+  "type": "object",
+  "id": "negotiations-rate-update.json",
+  "properties": {
+    "rate_negotiation_billets": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "requested_rate": {
+          "type": "number"
+        },
+        "expected_receipts": {
+          "type": "integer",
+          "min": 0
+        },
+        "availability_time": {
+          "type": "integer",
+          "min": 0
+        },
+        "approvation_reason": {
+          "type": "string"
+        },
+        "approver_user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "rate_negotiation_config_status_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "rate_negotiation_cards": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "requested_rate": {
+          "type": "number"
+        },
+        "payment_type": {
+          "type": "string"
+        },
+        "interest_type": {
+          "type": "string"
+        },
+        "rate_fixed": {
+          "type": "number"
+        },
+        "interest_rate": {
+          "type": "number"
+        },
+        "expected_receipts": {
+          "type": "integer",
+          "min": 0
+        },
+        "max_shares": {
+          "type": "integer",
+          "min": 0,
+          "max": 12
+        },
+        "max_without_interest": {
+          "type": "integer",
+          "min": 0
+        },
+        "min_value": {
+          "type": "integer",
+          "min": 0
+        },
+        "availability_time": {
+          "type": "integer",
+          "min": 0
+        },
+        "approvation_reason": {
+          "type": "string"
+        },
+        "approver_user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "rate_negotiation_config_status_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "rate_negotiation_pix": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "basic",
+            "promotions"
+          ]
+        },
+        "default": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "faixa": {
+                "type": "object",
+                "properties": {
+                  "minimo": {
+                    "type": "integer"
+                  },
+                  "maximo": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimo",
+                  "maximo"
+                ]
+              },
+              "tarifa": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "properties": {
+                  "tipo": {
+                    "type": "string",
+                    "enum": [
+                      "fixa",
+                      "porcentagem"
+                    ]
+                  },
+                  "tetoEmReais": {
+                    "type": "integer",
+                    "min": 0
+                  },
+                  "valor": {
+                    "type": "integer",
+                    "min": 0
+                  }
+                },
+                "if": {
+                  "properties": {
+                    "tipo": {
+                      "const": "fixa"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "valor"
+                  ]
+                },
+                "else": {
+                  "required": [
+                    "valor"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "faixa",
+              "tarifa"
+            ]
+          }
+        },
+        "promocoes": {
+          "type": [
+            "array"
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "condicao": {
+                "type": "object",
+                "properties": {
+                  "periodo": {
+                    "type": "object",
+                    "properties": {
+                      "inicio": {
+                        "type": "string"
+                      },
+                      "fim": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "inicio",
+                      "fim"
+                    ]
+                  },
+                  "limite": {
+                    "type": "object",
+                    "properties": {
+                      "quantidadeLiquidacoes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "quantidadeLiquidacoes"
+                    ]
+                  }
+                }
+              },
+              "beneficios": {
+                "type": [
+                  "array"
+                ],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "faixa": {
+                      "type": "object",
+                      "properties": {
+                        "minimo": {
+                          "type": "integer"
+                        },
+                        "maximo": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "minimo",
+                        "maximo"
+                      ]
+                    },
+                    "tarifa": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "tipo": {
+                          "type": "string",
+                          "enum": [
+                            "fixa",
+                            "porcentagem"
+                          ]
+                        },
+                        "tetoEmReais": {
+                          "type": "integer",
+                          "min": 0
+                        },
+                        "valor": {
+                          "type": "integer",
+                          "min": 0
+                        }
+                      },
+                      "if": {
+                        "properties": {
+                          "tipo": {
+                            "const": "fixa"
+                          }
+                        }
+                      },
+                      "then": {
+                        "required": [
+                          "valor"
+                        ]
+                      },
+                      "else": {
+                        "required": [
+                          "valor"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "faixa",
+                    "tarifa"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "condicao",
+              "beneficios"
+            ]
+          }
+        },
+        "rate_negotiation_config_status_id": {
+          "type": "number"
+        },
+        "approver_user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "approvation_reason": {
+          "type": "string"
+        },
+        "user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        }
+      },
+      "if": {
+        "properties": {
+          "type": {
+            "const": "promotions"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "id",
+          "default",
+          "type"
+        ]
+      },
+      "else": {
+        "required": [
+          "id",
+          "default",
+          "type"
+        ]
+      }
+    },
+    "rate_negotiation_bankings": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "requested_rate": {
+          "type": "number"
+        },
+        "expected_receipts": {
+          "type": "integer",
+          "min": 0
+        },
+        "approvation_reason": {
+          "type": "string"
+        },
+        "approver_user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "rate_negotiation_config_status_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        },
+        "user_id": {
+          "$ref": "defs.json#/definitions/positiveInt"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  }
+}

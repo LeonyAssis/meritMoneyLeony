@@ -1,0 +1,37 @@
+extends skeleton.pug
+
+block content
+    tr
+      td(class='empty-column' style='height: 25px;' width='25')
+      td(class='box align-middle' style='border: 1px solid #e7e7e7; border-radius: 3px; padding: 15px 20px;')
+        table(
+          cellspacing='0' cellpading='0' width='510'
+          style='font-family: Arial,Geneva,sans-serif; border-collapse: collapse; font-size: 14px; line-height: 18px;'
+        )
+          tbody
+            tr
+              td(class='icon' style='vertical-align: middle; width: 40px;' with='40' valign='middle')
+                img(
+                  src="https://pe85007.s3-sa-east-1.amazonaws.com/cdn/imagens/2016/11/16/3542f734fe2db98d75a299e70486cfd0_icon-calendar-exclamation-red.png",
+                  style="border: none; display: block;"
+                )
+              td(class='text-red' style='color: #b50000; vertical-align: middle;' valign='middle')
+                div #{error_message}
+      td(class='empty-column' style='height: 25px;' width='25')
+
+    tr
+      td(class='empty-column' style='height: 25px;' width='25')
+      td
+        table(
+          cellspacing='0' cellpading='0'
+          style='font-family: Arial,Geneva,sans-serif; border-collapse: collapse; font-size: 14px; line-height: 18px;'
+        )
+          tbody
+            tr
+              td(class='paragraph greeting' style='padding-top: 14px; padding-bottom: 60px')
+                | Infelizmente não foi possível emitir seu Cartão Gerencianet. Por favor, refaça o processo
+                | de solicitação quando a conta estiver com saldo disponível.
+      td(class='empty-column' style='height: 25px;' width='25')
+
+
+

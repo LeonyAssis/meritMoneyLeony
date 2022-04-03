@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "id": "document-validation-analyst-markup.json",
+  "properties": {
+    "open_accounts_validation_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    },
+    "user_id": {
+      "$ref": "defs.json#/definitions/positiveInt"
+    }
+  },
+  "required": [
+    "open_accounts_validation_id",
+    "user_id"
+  ]
+}

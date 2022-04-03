@@ -1,0 +1,73 @@
+get:
+  tags:
+    - "Machine"
+  summary: "Lista os chips"
+  description: "Este endpoint lista os chips vinculados e não vinculados"
+  operationId: "runMachineChipList"
+  parameters:
+    - $ref: "../../../global/parameters/headers/authorization.yml"
+    - $ref: "../../../global/parameters/query/limit.yml"
+    - $ref: "../../../global/parameters/query/page.yml"
+    - $ref: "../../../global/parameters/query/column.yml"
+    - $ref: "../../../global/parameters/query/order.yml"
+    - name: "available"
+      in: "query"
+      description: "Filtra se o chip está disponivel (true, false)"
+      required: false
+      schema:
+        type: "string"
+        default: null
+    - name: "carrier_chip"
+      in: "query"
+      description: "Operadora do chip, caso não informado irá consultar de todas operadoras"
+      required: false
+      schema:
+        type: "string"
+        default: null
+    - name: "search"
+      in: "query"
+      description: "Consulta pelo número serial ou número do chip"
+      required: false
+      schema:
+        type: "string"
+        default: null
+  responses:
+    200:
+      $ref: "./responses/chips_get.yml"
+    400:
+      description: "Invalid status value"
+    500:
+      description: |
+        Internal Server Error
+
+        Possíveis erros (error_name)
+          *   code - 4100073,
+              message = No chip found
+
+post:
+  tags:
+    - "Machine"
+  summary: "Cadastra os chips que serão utilizados nas maquininhas"
+  description: "Cadastro de chip que será utilizado na maquininha"
+  operationId: "runMachineChipPost"
+  parameters:
+    - name: "Authorization"
+      in: "header"
+      required: true
+      description: "Token Bearer"
+      schema:
+        type: "string"
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "./schemas/chips_post_req_body.yml"
+
+  responses:
+    200:
+      description: "successful operation"
+    400:
+      description: "Invalid status value"
+    500:
+      description: |
+        Internal Server Error

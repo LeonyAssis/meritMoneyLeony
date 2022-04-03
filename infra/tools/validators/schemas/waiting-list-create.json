@@ -1,0 +1,26 @@
+{
+	"type": "object",
+	"id": "waiting-list-create.json",
+	"properties": {
+		"passkey": {
+			"type": "string"
+		},
+		"name": {
+			"$ref": "defs.json#/definitions/fullName"
+		},
+		"email": {
+			"type": "string"
+		},
+		"document": {
+			"type": "string"
+		},
+		"phone": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"name",
+		"email",
+		"document"
+	]
+}
