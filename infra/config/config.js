@@ -11,10 +11,10 @@ if (env === ENV_DEVELOPMENT) {
 }
 
 const buildParamName = (param) => {
-  return `/${env}/${appPackage.name}${param}`;
+  return `/${appPackage.name}${param}`;
 };
 
-const PARAMETER_CONFIG = buildParamName('/config');
+const PARAMETER_CONFIG = buildParamName('./config');
 const PARAMETER_DATABASES = buildParamName('/databases');
 const PARAMETER_TIMEZONE = `/${env}/common/timezone`;
 const getParameters = async () => {
