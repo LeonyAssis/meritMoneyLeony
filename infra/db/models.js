@@ -22,7 +22,8 @@ const loadModels = (params) => {
       underscored: true
     },
     dialectOptions: {
-      ssl: true
+      ssl: true,
+      rejectUnauthorized: false
     }
   };
 
