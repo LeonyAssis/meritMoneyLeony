@@ -6,11 +6,6 @@ const setupContainer = require('./infra/bootstrap/register');
 const config = require('./infra/config/config');
 const logger = modules.logger;
 
-if (process.env.NODE_EXTRA_CA_CERTS) {
-  const https = modules.https;
-  const httpsAgent = new https.Agent({ ca: modules.fs.readFileSync(process.env.NODE_EXTRA_CA_CERTS) });
-  https.globalAgent = httpsAgent;
-}
 
 async function shutdown(server, sequelize) {
   server.shutdown(async (err) => {
@@ -71,7 +66,8 @@ async function init() {
  
     server = httpShutdown(server);
 
-    server.listen(appConfig.server.port || process.env.PORT);
+    server.listen(process.env.PORT || appConfig.server.port);
+    console.log(process.env.PORT, '************');
     server.timeout = 120000;
 
     process.on('SIGINT', () => shutdown(server, sequelize));
