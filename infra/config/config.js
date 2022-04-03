@@ -18,14 +18,14 @@ const PARAMETER_CONFIG = buildParamName('/config');
 const PARAMETER_DATABASES = buildParamName('/databases');
 const PARAMETER_TIMEZONE = `/${env}/common/timezone`;
 const getParameters = async () => {
-  if (env === ENV_DEVELOPMENT) {
+  
     return {
       [PARAMETER_CONFIG]: fs.readFileSync(`${__dirname}/config.json`),
       [PARAMETER_DATABASES]: fs.readFileSync(`${__dirname}/databases.json`),
       [PARAMETER_TIMEZONE]: 'America/Fortaleza',
      
     };
-  }
+  
 
 
 
