@@ -39,6 +39,8 @@ const getParameters = async () => {
 
 module.exports.getConfig = async () => {
   const params = await getParameters();
+  console.log(PARAMETER_CONFIG, '++++++++++++++++++++++++++++++++++');
+  console.error(PARAMETER_CONFIG, '++++++++++++++++++++++++++++++++++');
   let config = JSON.parse(params[PARAMETER_CONFIG]);
   const databases = JSON.parse(params[PARAMETER_DATABASES]);
   config.timezone = 'America/Fortaleza';
