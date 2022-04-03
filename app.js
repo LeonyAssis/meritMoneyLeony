@@ -68,9 +68,10 @@ async function init() {
 
     let http = modules.http;
     let server = http.createServer(app);
+ 
     server = httpShutdown(server);
 
-    server.listen(appConfig.server.port, appConfig.server.host);
+    server.listen(appConfig.server.port || process.env.PORT);
     server.timeout = 120000;
 
     process.on('SIGINT', () => shutdown(server, sequelize));
