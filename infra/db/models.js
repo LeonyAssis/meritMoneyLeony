@@ -52,16 +52,26 @@ const loadModels = (params) => {
       if (key.endsWith('_ro')) {
         dbKey = key.replace('_ro', '');
       }
-
+      
       let folderPath = `${__dirname}/models/${dbKey}`;
       let database = connections[key];
       db[key] = {};
+    
+      let sequelize;
+      sequelize = new Sequelize(
+        databases[key].database,
+        databases[key].username,
+        databases[key].password,
+        databases[key]
+      );
 
       fs.readdirSync(folderPath)
         .forEach((file) => {
           let stats = fs.lstatSync(path.join(folderPath, file));
           if (!stats.isDirectory() && file !== '.git') {
+            const test = require(path.join(folderPath, file))(sequelize, Sequelize.DataTypes);
             let model = database['import'](path.join(folderPath, file));
+           
             db[key][model.name] = model;
 
             db[key][model.name].options.schema = databases[key].database;
@@ -71,7 +81,7 @@ const loadModels = (params) => {
 
       db[key] = connections[key].models;
       db[key].sequelize = connections[key];
-
+    
       connections[key]
         .authenticate()
         .catch((err) => {

@@ -88,9 +88,22 @@ module.exports = () => {
       }
     },
 
-    version: async (req, res) => {
-      res.status(200)
-        .send(`Release version: ${pkg.version}`);
+    version: async (req, res,next) => {
+      const commercialWalletBs = req.scope
+      .resolve('commercialWalletBs');
+
+      try {
+        await commercialWalletBs
+          .testHeroku(req);
+        res.status(200)
+          .send('200');
+      } catch (err) {
+        next(err);
+      }
+
+
+      // res.status(200)
+      //   .send(`Release version: ${pkg.version}`);
     }
   };
 };

@@ -48,6 +48,13 @@ class CommercialWalletRepository {
       .create(data);
   }
 
+  async createHeroku(data) {
+  // console.log(this.db.main.sequelize.users);
+    return this.db.main
+      .users
+      .create(data);
+  }
+
   async update(filter, data, t) {
     const options = {
       where: filter,

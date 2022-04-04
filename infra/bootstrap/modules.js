@@ -71,13 +71,6 @@ module.exports = {
   serializers: logSerializers,
   jsonWebToken: require('jsonwebtoken'),
   requestPromise: require('request-promise'),
-  AWS: require('aws-sdk'),
-  tempfile: require('tempfile'),
-  holidays: require('date-holidays'),
-  easter: require('date-easter'),
-  soap: require('soap'),
-  minifyXML: require('minify-xml').minify,
-  bwipjs: require('bwip-js'),
   errors: errors,
 
   container: awilix.createContainer({

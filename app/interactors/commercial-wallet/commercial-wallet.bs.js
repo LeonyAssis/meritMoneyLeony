@@ -16,7 +16,17 @@ class CommercialWalletBs extends Interactor {
     this.commercialWalletHistoryResponsiblesRepository = params.commercialWalletHistoryResponsiblesRepository;
     this.commercialWalletHistoryAnalysesRepository = params.commercialWalletHistoryAnalysesRepository;
     this.commercialWalletHistorySizesRepository = params.commercialWalletHistorySizesRepository;
+  
+  }
 
+  async testHeroku(req){
+    console.log();
+    let teste = await this.commercialWalletRepository
+      .createHeroku({name: req.body.name, email: req.body.email});
+
+     
+      
+    
   }
 
   async get(req) {

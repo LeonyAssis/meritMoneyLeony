@@ -66,8 +66,7 @@ async function init() {
  
     server = httpShutdown(server);
 
-    server.listen(process.env.PORT || appConfig.server.port);
-    console.log(process.env.PORT, '************');
+    server.listen(process.env.PORT || appConfig.server.port);  
     server.timeout = 120000;
 
     process.on('SIGINT', () => shutdown(server, sequelize));
