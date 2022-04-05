@@ -1,5 +1,7 @@
 'use strict';
-require('dotenv').config();
+
+if (!process.env.NODE_ENV)
+  require('dotenv').config();
 
 const httpShutdown = require('http-shutdown');
 const modules = require('./infra/bootstrap/modules');
@@ -64,10 +66,10 @@ async function init() {
 
     let http = modules.http;
     let server = http.createServer(app);
- 
+
     server = httpShutdown(server);
 
-    server.listen(process.env.PORT || appConfig.server.port);  
+    server.listen(process.env.PORT || appConfig.server.port);
     server.timeout = 120000;
 
     process.on('SIGINT', () => shutdown(server, sequelize));
