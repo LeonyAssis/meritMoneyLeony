@@ -9,7 +9,7 @@ const _ = require('lodash');
 const logSerializers = require('../tools/log/serializers');
 const appPackage = require('../../package.json');
 const errors = require('../config/errors.json');
-const permissions = require('../config/permissions/permissions');
+// const permissions = require('../config/permissions/permissions');
 const glob = require('glob');
 
 const setImports = (dir, type) => {
@@ -29,23 +29,22 @@ const setImports = (dir, type) => {
   return imports;
 };
 
-const loadPermissions = () => {
-  let _new_permissions = Object.assign({}, permissions);
+// const loadPermissions = () => {
+//   let _new_permissions = Object.assign({}, permissions);
 
-  const _permissions = glob.sync('infra/config/permissions/**/*.permission.js');
+//   const _permissions = glob.sync('infra/config/permissions/**/*.permission.js');
 
-  _permissions.forEach(permission => {
-    const permissionPath = path.resolve(process.cwd(), permission);
-    const loadedPermission = require(permissionPath);
-    _.merge(_new_permissions, loadedPermission);
-  });
+//   _permissions.forEach(permission => {
+//     const permissionPath = path.resolve(process.cwd(), permission);
+//     const loadedPermission = require(permissionPath);
+//     _.merge(_new_permissions, loadedPermission);
+//   });
 
-  return _new_permissions;
-};
+//   return _new_permissions;
+// };
 
 module.exports = {
-  env: process.env.NODE_ENV || 'development',
-  permissions: loadPermissions(),
+  env: process.env.NODE_ENV || 'development', 
   Ajv: new Ajv({
     schemaId: 'auto'
   }),

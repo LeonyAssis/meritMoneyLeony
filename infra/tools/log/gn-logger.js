@@ -51,6 +51,7 @@ class GnLogger {
   }
 
   error(...args) {
+    console.log(...args);
     this.logger.error(...args);
   }
 

@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config()
 const httpShutdown = require('http-shutdown');
 const modules = require('./infra/bootstrap/modules');
 const setupContainer = require('./infra/bootstrap/register');

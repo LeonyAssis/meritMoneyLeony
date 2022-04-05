@@ -36,13 +36,10 @@ const loadModels = (params) => {
         return;
       }
 
-
       databases[key] = Object.assign(databases[key], defaultDbAttributes);
       databases[key].user = databases[key].username;    
       connections[key] = new Sequelize(
-        databases[key].database,
-        databases[key].username,
-        databases[key].password,
+        process.env.DATABASE_URL,
         databases[key]
       );
 
@@ -55,21 +52,14 @@ const loadModels = (params) => {
       
       let folderPath = `${__dirname}/models/${dbKey}`;
       let database = connections[key];
-      db[key] = {};
-    
-      let sequelize;
-      sequelize = new Sequelize(
-        databases[key].database,
-        databases[key].username,
-        databases[key].password,
-        databases[key]
-      );
+      db[key] = {};    
+ 
 
       fs.readdirSync(folderPath)
         .forEach((file) => {
           let stats = fs.lstatSync(path.join(folderPath, file));
           if (!stats.isDirectory() && file !== '.git') {
-            const test = require(path.join(folderPath, file))(sequelize, Sequelize.DataTypes);
+           
             let model = database['import'](path.join(folderPath, file));
            
             db[key][model.name] = model;

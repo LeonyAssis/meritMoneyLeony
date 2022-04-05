@@ -12,7 +12,7 @@ module.exports = (err, req, res, next) => { // eslint-disable-line
     gnLogger.error(err, 'Unhandled error');
     err = errorService.get('server_error');
   } else {
-    gnLogger.error(err, 'GnError');
+    gnLogger.error(err, 'GnError');   
   }
 
   res.json({

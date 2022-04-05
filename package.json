@@ -6,7 +6,7 @@
     "start": "node app.js",
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
-    "lint": "gulp eslint",
+    "lint": "eslint",
     "type-checking": "tsc --noEmit"
   },
   "nyc": {
@@ -44,7 +44,7 @@
     "moment": "2.29.1",
     "moment-timezone": "^0.5.34",
     "mysql2": "2.3.3",
-    "natives": "1.1.6",   
+    "natives": "1.1.6",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "pug": "^3.0.2",
@@ -56,7 +56,12 @@
     "underscore.string": "3.3.5"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
     "del": "4.0.0",
+    "dotenv": "^16.0.0",
+    "eslint": "^8.12.0",
+    "eslint-config-google": "^0.14.0",
     "jshint": "2.13.4",
     "jshint-stylish": "2.2.1",
     "mocha": "^8.3.2",

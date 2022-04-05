@@ -5,7 +5,12 @@
         "database": "dafgst7a5duloj",
         "host": "ec2-52-21-136-176.compute-1.amazonaws.com",
         "dialect": "postgres",
-        "migrationFolder": "public",
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
+        },
         "migrationStorageTableName": "sequelize_meta",
         "seederStorageTableName": "SequelizeData",
         "seederStorage": "sequelize",

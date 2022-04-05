@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "id": "users.json",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },    
+    "document": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "role_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "name",
+    "email",    
+    "password"
+  ]
+}
