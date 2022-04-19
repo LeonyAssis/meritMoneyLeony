@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
+    "start_nodemon": "nodemon app.js",
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
     "lint": "eslint",

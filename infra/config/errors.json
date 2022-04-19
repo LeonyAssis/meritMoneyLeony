@@ -16,6 +16,24 @@
     "name": "user_not_found",
     "message": "user not found",
     "friendly_message": "%s"
+  },
+  {
+    "code": 3,
+    "name": "owner_or_balance_not_found",
+    "message": "owner or balance not found",
+    "friendly_message": "%s"
+  },
+  {
+    "code": 4,
+    "name": "receiver_or_balance_not_found",
+    "message": "receiver or balance not found",
+    "friendly_message": "%s"
+  },
+  {
+    "code": 5,
+    "name": "owner_does_not_have_enough_balance",
+    "message": "The owner does not have enough balance",
+    "friendly_message": "%s"
   }
 
 

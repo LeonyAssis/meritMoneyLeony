@@ -17,11 +17,17 @@ module.exports = {
         allowNull: false,
       },
       document: {
-        type: Sequelize.STRING(14)
+        type: Sequelize.STRING(11),
+        unique: true,
       },
       password:{
         type: Sequelize.STRING(500),
         allowNull: false,
+      },
+      active:{
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
       },
       role_id: {
         type: Sequelize.INTEGER,
@@ -35,7 +41,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    }).then(() => queryInterface.addIndex('users', ['email', 'document']));
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('users');

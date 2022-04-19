@@ -9,8 +9,6 @@ const _ = require('lodash');
 const logSerializers = require('../tools/log/serializers');
 const appPackage = require('../../package.json');
 const errors = require('../config/errors.json');
-// const permissions = require('../config/permissions/permissions');
-const glob = require('glob');
 
 const setImports = (dir, type) => {
   const relativePath = path.relative('infra/bootstrap', dir) + '/';
@@ -28,20 +26,6 @@ const setImports = (dir, type) => {
 
   return imports;
 };
-
-// const loadPermissions = () => {
-//   let _new_permissions = Object.assign({}, permissions);
-
-//   const _permissions = glob.sync('infra/config/permissions/**/*.permission.js');
-
-//   _permissions.forEach(permission => {
-//     const permissionPath = path.resolve(process.cwd(), permission);
-//     const loadedPermission = require(permissionPath);
-//     _.merge(_new_permissions, loadedPermission);
-//   });
-
-//   return _new_permissions;
-// };
 
 module.exports = {
   env: process.env.NODE_ENV || 'development', 
@@ -90,8 +74,7 @@ module.exports = {
   mdw: {
     authorize: require('../middlewares/authorize'),
     errorHandler: require('../middlewares/error'),
-    requestId: require('../middlewares/request-id'),
-    ipv4: require('../middlewares/ipv4'),
+    requestId: require('../middlewares/request-id'),  
     requestLogger: require('../middlewares/request-logger'),
     decryptWebhookContent: require('../middlewares/decrypt-webhook-content'),
     blockExternalIps: require('../middlewares/block-external-ips'),
@@ -103,5 +86,5 @@ module.exports = {
 
   // Constants
   constants: require('../../app/constants'),
-  stylesheetsExcel: require('../../app/stylesheets-excel')
+ 
 };

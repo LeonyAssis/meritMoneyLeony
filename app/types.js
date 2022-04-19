@@ -1,6 +1,5 @@
 /**
  * @typedef {object} Dependencies
- * @property {*} gnBase
  * @property {*} sequelize
  * @property {*} momentTz
  * @property {*} asyncQ

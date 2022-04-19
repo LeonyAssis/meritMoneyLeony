@@ -44,8 +44,7 @@ async function init() {
 
     const container = modules.container;
 
-    const middlewares = {
-      ipv4: modules.mdw.ipv4(container),
+    const middlewares = {     
       requestId: modules.mdw.requestId(container, modules.awilix.asValue),
       authorize: modules.mdw.authorize(container),
       requestLogger: modules.mdw.requestLogger(container),

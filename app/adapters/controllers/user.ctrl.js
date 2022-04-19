@@ -41,6 +41,18 @@ module.exports = () => {
       } catch (error) {
         next(error);
       }
+    },
+
+    updateUser: async (req, res, next) => {
+      const userBs = req.scope.resolve('userBs');
+
+      try {
+        await userBs.updateUser(req);
+        res.sendStatus(204);
+        
+      } catch (error) {
+        next(error);
+      }
     }
 
 

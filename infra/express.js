@@ -2,9 +2,9 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const publicRoutes = require('./routes/public');
-const privateRoutes = require('./routes/private');
-const matrixRobots = require('./routes/matrix-robots');
+// const publicRoutes = require('./routes/public');
+// const privateRoutes = require('./routes/private');
+// const matrixRobots = require('./routes/matrix-robots');
 const glob = require('glob');
 const path = require('path');
 
@@ -19,8 +19,6 @@ module.exports = (middlewares, container) => {
   app.use(middlewares.requestId);
   app.use(middlewares.requestLogger);
 
-  app.use(middlewares.ipv4);
-
   app.use(bodyParser.urlencoded({
     extended: true
   }));
@@ -29,7 +27,7 @@ module.exports = (middlewares, container) => {
     limit: '4MB'
   }));
 
-  privateRoutes(app, controllers, middlewares);
+  // privateRoutes(app, controllers, middlewares);
 
   const routes = glob.sync('infra/routes/**/*.route.js');
 
@@ -40,9 +38,9 @@ module.exports = (middlewares, container) => {
 
   app.use(middlewares.blockExternalIps);
 
-  publicRoutes(app, controllers);
+  // publicRoutes(app, controllers);
 
-  matrixRobots(app, controllers);
+  // matrixRobots(app, controllers);
 
   app.use(middlewares.errorHandler);
 

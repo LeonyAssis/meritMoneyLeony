@@ -8,16 +8,30 @@ class UserBs extends Interactor {
     this.validator = params.validatorService;
     this.errorService = params.errorService;
     this.userRepository = params.userRepository;
+    this.balanceRepository = params.balanceRepository;
+    this.transactionService = params.transactionService;
   }
 
 
   async createUser(req) {
     this.validator.execute('users.json', req.body);
 
-    const user = this.userRepository
-      .createUser(req.body);
+    const t = await this.transactionService.startTransaction();
 
-    return user;
+    try {
+      const user = await this.userRepository
+        .createUser(req.body);
+
+      await this.balanceRepository
+        .createBalance({ balance: 0, user_id: user.dataValues.id });
+
+      await this.transactionService.commitTransaction(t);
+
+    } catch (error) {
+      await this.transactionService.rollbackTransaction(t);
+      throw error;
+    }
+
   }
 
   async getUsers(req) {
@@ -30,17 +44,35 @@ class UserBs extends Interactor {
 
   async getUser(req) {
 
-    if (!req.params.id)
+    if (!req.params.id || !req.params.userId)
       throw this.errorService
         .get('id_required');
 
-    const id = req.params.id;
+    const id = req.params.id || req.params.userId;
     const user = await this.userRepository
       .getUser(id);
 
     if (!user)
       throw this.errorService
         .get('user_not_found');
+
+    return user;
+  }
+
+  async updateUser(req) {
+    this.validator.execute('user-edit.json', req.body);
+    const id = req.params.userId;
+
+    const user = await this.userRepository
+      .getUser(id);
+
+    if (!user)
+      throw this.errorService
+        .get('user_not_found');
+
+
+    await this.userRepository
+      .updateUser(id, req.body);
 
     return user;
   }
