@@ -73,6 +73,7 @@ module.exports = {
   // Middlewares
   mdw: {
     authorize: require('../middlewares/authorize'),
+    automaticBalance: require('../middlewares/automatic-balance'),
     errorHandler: require('../middlewares/error'),
     requestId: require('../middlewares/request-id'),  
     requestLogger: require('../middlewares/request-logger'),

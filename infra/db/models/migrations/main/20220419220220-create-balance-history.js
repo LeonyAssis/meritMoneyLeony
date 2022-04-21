@@ -17,24 +17,29 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         allowNull: true
-      }, 
+      },
       value: {
-        type: Sequelize.INTEGER,       
+        type: Sequelize.INTEGER,
         allowNull: false
-      },  
-      type:{
-        type: Sequelize.STRING,
+      },
+      type: {
+        type: Sequelize.ENUM,
+        values: [
+          'TRANSFER',
+          'MONTHLY_INCOME',
+          'BUY'
+        ],
         allowNull: false
       },
       benefits_id: {
-        type: Sequelize.INTEGER,        
+        type: Sequelize.INTEGER,
         allowNull: true
       },
       responsible_id: {
         type: Sequelize.INTEGER,
         references: { model: 'users', key: 'id' },
         allowNull: false
-      },     
+      },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE
     }).then(() => queryInterface.addIndex('balance_history', ['user_origin', 'user_destiny', 'benefits_id', 'responsible_id', 'type']));

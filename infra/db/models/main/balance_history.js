@@ -16,25 +16,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: { model: 'users', key: 'id' },
       allowNull: true
-    }, 
+    },
     value: {
       type: DataTypes.INTEGER,
       references: { model: 'users', key: 'id' },
       allowNull: false
-    },  
-    type:{
-      type: DataTypes.ENUM("transfer", "system", "benefit"),
+    },
+    type: {
+      type: DataTypes.ENUM,
+      values: [
+        'TRANSFER',
+        'MONTHLY_INCOME',
+        'BUY'
+      ],
       allowNull: false
     },
     benefits_id: {
-      type: DataTypes.INTEGER,     
+      type: DataTypes.INTEGER,
       allowNull: true
     },
     responsible_id: {
       type: DataTypes.INTEGER,
       references: { model: 'users', key: 'id' },
       allowNull: false
-    },     
+    },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE
   }, {

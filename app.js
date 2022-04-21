@@ -46,8 +46,9 @@ async function init() {
 
     const middlewares = {     
       requestId: modules.mdw.requestId(container, modules.awilix.asValue),
-      authorize: modules.mdw.authorize(container),
+      authorize: modules.mdw.authorize(container),      
       requestLogger: modules.mdw.requestLogger(container),
+      automaticBalance: modules.mdw.automaticBalance(container),
       errorHandler: modules.mdw.errorHandler,
       decryptWebhookContent: modules.mdw.decryptWebhookContent(container),
       blockExternalIps: modules.mdw.blockExternalIps(container),

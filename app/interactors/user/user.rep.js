@@ -12,24 +12,34 @@ class userRepository {
       .create(user, { raw: true });
   }
 
-  async getUsers() {
+  async getUsers(params, filters, sorting) {
+    const options = {
+      where: filters,
+      order: sorting, 
+      attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],   
+      offset: params.offset,
+      limit: params.limit,
+      nest: true,
+      logging: true
+    };
+
     return await this.db.main
       .users
-      .findAll({ attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'], raw: true });
+      .findAndCountAll(options);
   }
 
-  async getUser(id) {
+  async getUser(filter) {
 
     return await this.db.main
       .users
       .findOne({
         attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],
-        where: { id }
+        where: filter
       });
   }
 
   async updateUser(id, user) {
-    const options = {     
+    const options = {
       where: { id }
     };
 

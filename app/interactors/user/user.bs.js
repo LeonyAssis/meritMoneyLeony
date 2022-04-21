@@ -10,6 +10,7 @@ class UserBs extends Interactor {
     this.userRepository = params.userRepository;
     this.balanceRepository = params.balanceRepository;
     this.transactionService = params.transactionService;
+    this.userService = params.userService;
   }
 
 
@@ -35,22 +36,23 @@ class UserBs extends Interactor {
   }
 
   async getUsers(req) {
+    let { parameters, filters, sorting } = await this.userService
+      .getParametersList(req.query);
 
     const users = await this.userRepository
-      .getUsers(req.query);
+      .getUsers(parameters, filters, sorting);
 
     return users;
   }
 
   async getUser(req) {
-
-    if (!req.params.id || !req.params.userId)
+    if (!(req.params.id || req.params.userId))
       throw this.errorService
         .get('id_required');
 
     const id = req.params.id || req.params.userId;
     const user = await this.userRepository
-      .getUser(id);
+      .getUser({ id });
 
     if (!user)
       throw this.errorService
@@ -64,7 +66,7 @@ class UserBs extends Interactor {
     const id = req.params.userId;
 
     const user = await this.userRepository
-      .getUser(id);
+      .getUser({ id });
 
     if (!user)
       throw this.errorService

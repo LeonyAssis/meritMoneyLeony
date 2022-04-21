@@ -30,7 +30,8 @@ class balanceRepository {
     const options = {
       include: [{
         model: this.db.main.users,
-        attributes: ['name'],
+        attributes: ['name',],
+        where: { active: true },
         required: true
       }],
       logging: true,
@@ -44,7 +45,25 @@ class balanceRepository {
       .findOne(options);
   }
 
-  async updateBalance(id, balance) {    
+  async getBalanceAndUsers() {
+    const options = {
+      include: [{
+        model: this.db.main.users,
+        where: { active: true },
+        attributes: ['name'],
+        required: true
+      }],
+      raw: true,
+      logging: true,
+      nest: true,
+    };
+
+    return await this.db.main
+      .balance
+      .findAll(options);
+  }
+
+  async updateBalance(id, balance) {
     const options = {
       where: { id },
       logging: true,
@@ -55,7 +74,18 @@ class balanceRepository {
       .update({ balance }, options);
   }
 
-  async createBalanceHistory(history_balance) {      
+  async updateUserBalance(user_id, balance) {
+    const options = {
+      where: { user_id },
+      logging: true,
+    };
+
+    return await this.db.main
+      .balance
+      .update({ balance }, options);
+  }
+
+  async createBalanceHistory(history_balance) {
 
     return await this.db.main
       .balance_history

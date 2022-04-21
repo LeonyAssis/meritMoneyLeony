@@ -1,0 +1,346 @@
+openapi: "3.0.0"
+info:
+  description: "Bem vindo ao Swagger do projeto Merit Money."
+  version: "0.1"
+  title: "Merit Money"
+servers:
+  - url: https://merit-money-leony.herokuapp.com/
+    description: Production
+paths:
+  /users:
+    get:
+      tags:
+        - "Users"
+      summary: "Lista todas os usuários"
+      description: "Este endpoint lista todas os usuários ativos."
+      operationId: "runListUsers"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Limite de registro por página"
+          required: false
+          schema:
+            type: "integer"
+            default: "10"
+        - name: "page"
+          in: "query"
+          description: "Número da página que deseja buscar"
+          required: false
+          schema:
+            type: "integer"
+            default: "1"
+        - name: "column"
+          in: "query"
+          description: "Nome do campo que deseja ordenar"
+          required: false
+          schema:
+            type: "string"
+            default: "created_at"
+        - name: "order"
+          in: "query"
+          description: "Ordenação da coluna (asc, desc)"
+          required: false
+          schema:
+            type: "string"
+            default: "desc"       
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:  
+                {              
+                  "users": [
+                      {
+                          "id": 12,
+                          "name": "SYSTEM",
+                          "email": "system@meritmoney.com",
+                          "role_id": null,
+                          "created_at": "2022-04-21T14:02:51.000Z",
+                          "updated_at": "2022-04-21T14:02:52.000Z"
+                      },
+                      {
+                          "id": 11,
+                          "name": "Euzin",
+                          "email": "euzin@outlook.com.br",
+                          "role_id": null,
+                          "created_at": "2022-04-19T21:14:57.786Z",
+                          "updated_at": "2022-04-19T21:14:57.786Z"
+                      },
+                      {
+                          "id": 10,
+                          "name": "Test 03-04 4",
+                          "email": "test@test.com.br",
+                          "role_id": null,
+                          "created_at": "2022-04-19T21:14:08.420Z",
+                          "updated_at": "2022-04-19T23:12:04.804Z"
+                      }
+                  ],
+                  "currentPage": 1,
+                  "pages": 1,
+                  "numOfResults": 3,
+                  "limit": 10
+                }                 
+               
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+            Possíveis erros (user_not_found)
+              *   code - 3,
+                  message = user not found
+ 
+  /users/:id:
+    post:
+      tags:
+        - "Users"
+      summary: "Cadastra um novo usuário"
+      description: "Este endpoint cadastra um novo usuário"
+      operationId: "runUserPost"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string" 
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsersReq" 
+
+      responses:
+        204:
+          description: "successful operation"
+          
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+  
+    put:
+      tags:
+        - "Users"
+      summary: "Altera um usuário"
+      description: "Este endpoint altera um usuário"
+      operationId: "runUserPut"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsersReq"
+
+      responses:
+        204:
+          description: "successful operation"
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error 
+
+    get:
+      tags:
+        - "Users"
+      summary: "Busca um usuário pelo id"
+      description: "Este endpoint altera um usuário"
+      operationId: "runUserGet"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"     
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:  
+                {
+                  "id": 10,
+                  "name": "Test 03-04 4",
+                  "email": "test@test.com.br",
+                  "role_id": null,
+                  "created_at": "2022-04-19T21:14:08.420Z",
+                  "updated_at": "2022-04-19T23:12:04.804Z"
+                }            
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error 
+
+  /balance/:id:
+    get:
+      tags:
+        - "Balance"
+      summary: "Consulta o saldo de um usuário"
+      description: "Este endpoint consulta o saldo de um usuário"
+      operationId: "runBalanceGetId"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"  
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              example:  
+                {
+                    "id": 28,
+                    "balance": 10000,
+                    "user_id": 11,
+                    "created_at": "2022-04-19T21:14:58.858Z",
+                    "updated_at": "2022-04-21T18:34:12.417Z"
+                }             
+          
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+
+  /balance/transfer-money:
+    post:
+      tags:
+        - "Balance"
+      summary: "Transfere o saldo de um usuário para o outro"
+      description: "Este endpoint transfere o saldo entre usuários"
+      operationId: "runTrasnferBalance"
+      parameters:
+        - name: "Authorization"
+          in: "header"
+          required: true
+          description: "Token Bearer"
+          schema:
+            type: "string"  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferReq"
+              
+      responses:
+        200:
+          description: "successful operation"           
+          
+        400:
+          description: "Invalid status value"
+        500:
+          description: |
+            Internal Server Error
+  
+    
+    
+
+
+components:
+  schemas:
+    Errors:
+      $ref: "#/components/schemas/Errors"
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "GnError"
+            extra:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "documents_not_found"
+                code:
+                  type: integer
+                  example: 3100003
+                message:
+                  type: string
+                  example: "No documents were found in these settings."
+                extra:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: "type"
+                    path:
+                      type: string
+                      example: "state"
+                    meta:
+                      type: object
+                      properties:
+                        missingProperty:
+                          type: string
+                          example: "state"
+              required:
+                - name
+                - code
+                - message
+          required:
+            - name
+            - extra
+      required:
+        - error
+
+    UsersReq:
+      $ref: "#/components/schemas/UsersReq"
+      type: "object"      
+      properties:
+        name:
+          type: "string"
+          example: Euzin
+        email:
+          type: "string"
+          example: 10
+        user_id:
+          type: "integer"
+          example: 10
+      required:
+        - name
+        - email
+        - user_id
+
+    TransferReq:
+        $ref: "#/components/schemas/TransferReq"
+        type: "object"      
+        properties:
+          owner:
+            type: "integer"
+            example: 8
+          sendTo:
+            type: "integer"
+            example: 14
+          value:
+            type: "integer"
+            example: 200
+        required:
+          - owner
+          - sendTo
+          - value
+ 

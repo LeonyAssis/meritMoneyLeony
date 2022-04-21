@@ -29,10 +29,10 @@ class BalanceService {
   }
 
 
-  async compareAndMoveBalance(owner, senTo) {
-
-  }
-
 }
 
 module.exports = BalanceService;
+
+
+
+

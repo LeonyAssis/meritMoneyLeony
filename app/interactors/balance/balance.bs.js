@@ -16,9 +16,7 @@ class BalanceBs extends Interactor {
     this.transactionService = params.transactionService;
   }
 
-
   async getBalance(req) {
-
     req.params.id = req.params.userId;
 
     const user = await this.userBs
@@ -50,12 +48,13 @@ class BalanceBs extends Interactor {
         user_origin: balanceOwner.user_id, 
         user_destiny: balanceReceiver.user_id,
         value: balanceBody.value,
-        type: 'transfer',
+        type: 'TRANSFER',
         responsible_id: balanceOwner.user_id
       };
 
       await this.balanceHistoryRepository.createBalanceHistory(history_balance);
-
+      await this.transactionService.commitTransaction(t);
+      
     } catch (error) {
       await this.transactionService.rollbackTransaction(t);
       throw error;
@@ -63,8 +62,5 @@ class BalanceBs extends Interactor {
   
     return 200;
   }
-
-
 }
-
 module.exports = BalanceBs;
