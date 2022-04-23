@@ -40,4 +40,4 @@ $ npm run test-coverage-html
 
 ## 5 - Collection do Postman
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/676df81d34ccd7583660)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/20656051-5936b139-bf43-4b76-a410-6b918cd99629?action=collection%2Ffork&collection-url=entityId%3D20656051-5936b139-bf43-4b76-a410-6b918cd99629%26entityType%3Dcollection%26workspaceId%3D66bbc557-e6f7-4934-8b32-9b4b10bedbed)
