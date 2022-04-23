@@ -12,7 +12,7 @@
 $ npm start
 ```
 
-O servidor escuta na porta 4427, podendo ser acessado através da url `http://localhost:4400`.
+O servidor escuta na porta 4400, podendo ser acessado através da url `http://localhost:4400`.
 
 ## 3 - Testes
 
