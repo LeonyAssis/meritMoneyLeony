@@ -11,8 +11,6 @@ class automaticBalanceConfigRepository {
   }
 
   async getExecutionStatus() {
-
-    const Op = this.db.Sequelize.Op;
     const options = {
       where: this.db.Sequelize.literal('DATE(choose_date) = CURRENT_DATE'),
       logging: true,
@@ -25,11 +23,12 @@ class automaticBalanceConfigRepository {
   }
 
   async createExecution(data) {
-    return (await this.db.main
+    return this.db.main
       .automatic_balance_execution_status
-      .create(data, { raw: true }))
-      .get({ plain: true });
-
+      .create(data, {
+        raw: true,
+        nest: true,
+      });
   }
 
   async updateExecution(id, data) {

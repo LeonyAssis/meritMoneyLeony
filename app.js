@@ -50,8 +50,7 @@ async function init() {
       requestLogger: modules.mdw.requestLogger(container),
       automaticBalance: modules.mdw.automaticBalance(container),
       errorHandler: modules.mdw.errorHandler,
-      decryptWebhookContent: modules.mdw.decryptWebhookContent(container),
-      blockExternalIps: modules.mdw.blockExternalIps(container),
+      decryptWebhookContent: modules.mdw.decryptWebhookContent(container),     
       webhookBodyParser: modules.mdw.webhookBodyParser(container),
     };
 

@@ -78,7 +78,6 @@ module.exports = {
     requestId: require('../middlewares/request-id'),  
     requestLogger: require('../middlewares/request-logger'),
     decryptWebhookContent: require('../middlewares/decrypt-webhook-content'),
-    blockExternalIps: require('../middlewares/block-external-ips'),
     webhookBodyParser: require('../middlewares/webhook-body-parser'),
   },
 

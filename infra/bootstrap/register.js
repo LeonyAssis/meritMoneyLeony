@@ -26,54 +26,19 @@ module.exports = (config) => {
     moment: asValue(dp.moment),
     momentTz: asValue(dp.momentTz),
     pug: asValue(dp.pug),
-    uuid: asValue(dp.uuid),
-    soap: asValue(dp.soap),
-    minifyXML: asValue(dp.minifyXML),
-    bwipjs: asValue(dp.bwipjs),
-    exceljs: asValue(dp.exceljs),
-    tempfile: asValue(dp.tempfile),
-    holidays: asValue(dp.holidays),
-    easter: asValue(dp.easter),
+    uuid: asValue(dp.uuid),    
     jsonWebToken: asValue(dp.jsonWebToken),
     jsonSchemaPath: asValue(`${__dirname}/../tools/validators/schemas`),
     errors: asValue(dp.errors),
-    requestPromise: asValue(dp.requestPromise),
-    s3: asFunction((params) => {
-      return new dp.AWS.S3(
-        params.config.s3
-      );
-    }),
-    sqs: asFunction((params) => {
-      return new dp.AWS.SQS(params.config.sqs);
-    }),
-    gnBase: asFunction((params) => {
-      return new dp.GnBase(
-        params.config
-      );
-    }),
+    requestPromise: asValue(dp.requestPromise), 
+  
     _: asValue(dp._),
-
     gnLogger: asClass(dp.GnLogger)
       .scoped(),
     sequelize: asFunction(dp.sequelize)
       .singleton(),
     schema: asClass(dp.Schema)
       .singleton(),
-
-    // SDK's
-    authServerSdk: asFunction((params) => {
-      const config = params.config.authServer;
-      const credentials = config.credentials;
-
-      return new dp.AuthServerSDK({
-        client_id: credentials.client_id,
-        client_secret: credentials.client_secret,
-        urls: {
-          production: config.url,
-          lab: config.url
-        }
-      });
-    }),
 
     // Controllers
     controllers: asValue(dp.controllers),
@@ -89,10 +54,7 @@ module.exports = (config) => {
     'app/adapters/services/**/*.js',
     ['app/adapters/services/error.service.js', {
       lifetime: dp.awilix.Lifetime.SINGLETON
-    }],
-    ['app/adapters/services/caradhras-auth.service.js', {
-      lifetime: dp.awilix.Lifetime.SINGLETON
-    }]
+    }]   
   ], {
     formatName: (name) => {
       name = name.replace('.ctrl', '.controller');

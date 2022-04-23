@@ -5,7 +5,6 @@ class userRepository {
     this.db = params.sequelize;
   }
 
-
   async createUser(user) {
     return await this.db.main
       .users

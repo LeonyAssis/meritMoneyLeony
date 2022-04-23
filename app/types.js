@@ -11,10 +11,6 @@
  * @property {import('../app/adapters/services/regex.service')} regexService
  * @property {import('../infra/tools/log/gn-logger')} gnLogger
  * @property {import('../app/adapters/services/error.service')} errorService
- * @property {import('./services/email-register/email-register.service')} emailRegisterService
- * @property {import('./adapters/services/date.service')} dateService
- * @property {import('./services/aws-sqs/aws-sqs.service')} awsSqsService
- *
  * @property {import('../app/constants')} constants
  * */
 

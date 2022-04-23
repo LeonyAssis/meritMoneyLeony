@@ -14,6 +14,7 @@ class AutomaticBalanceBs extends Interactor {
   async getConfig() {
     const config = await this.automaticBalanceConfigRepository
       .getConfig();
+
     return config[0];
   }
 
@@ -32,14 +33,16 @@ class AutomaticBalanceBs extends Interactor {
       const execution = await this.automaticBalanceConfigRepository
         .createExecution(data);
 
-      console.log(execution.value);
+        console.log(execution.id);
 
       let balanceAndUsers = await this.balanceRepository
         .getBalanceAndUsers();
 
+      let t;
       for (const user of balanceAndUsers) {
-        const t = await this.transactionService.startTransaction();
         try {
+          t = await this.transactionService.startTransaction();
+
           await this.automaticBalanceConfigRepository
             .createExecutionUserHistory({ user_id: user.user_id, automatic_balance_id: execution.id });
 
@@ -69,7 +72,7 @@ class AutomaticBalanceBs extends Interactor {
       let updateExecution = {
         status: 'FINISHED',
       };
-     
+
       updateExecution["error_users"] = errorUser.length > 0 ? errorUser : null;
       await this.automaticBalanceConfigRepository
         .updateExecution(execution.id, updateExecution);
