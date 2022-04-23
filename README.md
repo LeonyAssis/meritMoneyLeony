@@ -36,7 +36,7 @@ $ npm run test-coverage-html
 
 ## 4 - Documentação dos endpoints
 
-[![Documentação dos endpoints no Swagger](https://content.screencast.com/users/yury.oliveira/folders/Jing/media/9b10cdd7-293d-41a1-9ff3-a86e3273c862/2020-03-27_0804.png)](https://swagger.interno.testegerencianet.com.br/?url=https://gis.gitlab-pages.interno.testegerencianet.com.br/gis_lab/gis.yml)
+[![View in Swagger]((https://leonyassis.github.io/meritMoneyLeony/))]((https://leonyassis.github.io/meritMoneyLeony/))
 
 ## 5 - Collection do Postman
 
