@@ -36,7 +36,7 @@ $ npm run test-coverage-html
 
 ## 4 - Documentação dos endpoints
 
-[![View in Swagger]((https://leonyassis.github.io/meritMoneyLeony/))]((https://leonyassis.github.io/meritMoneyLeony/))
+![View in Swagger](https://leonyassis.github.io/meritMoneyLeony/)
 
 ## 5 - Collection do Postman
 
