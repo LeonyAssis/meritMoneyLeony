@@ -31,21 +31,21 @@ class BalanceBs extends Interactor {
   async transferMoney(req) {
     this.validator.execute('transfer-balance.json', req.body);
     let balanceBody = req.body;
- 
+
 
     let { balanceOwner, balanceReceiver } = await this.balanceService
-      .checkUsersAndBalance(balanceBody.owner, balanceBody.sendTo, balanceBody.value); 
+      .checkUsersAndBalance(balanceBody.owner, balanceBody.sendTo, balanceBody.value);
 
     const t = await this.transactionService.startTransaction();
     try {
-       let newBalanceOwner =  balanceOwner.balance - balanceBody.value;
-       let newBalanceSendTo = balanceReceiver.balance + balanceBody.value;
-    
-       await this.balanceRepository.updateBalance(balanceOwner.id,newBalanceOwner);
-       await this.balanceRepository.updateBalance(balanceReceiver.id,newBalanceSendTo);
+      let newBalanceOwner = balanceOwner.balance - balanceBody.value;
+      let newBalanceSendTo = balanceReceiver.balance + balanceBody.value;
+
+      await this.balanceRepository.updateBalance(balanceOwner.id, newBalanceOwner);
+      await this.balanceRepository.updateBalance(balanceReceiver.id, newBalanceSendTo);
 
       const history_balance = {
-        user_origin: balanceOwner.user_id, 
+        user_origin: balanceOwner.user_id,
         user_destiny: balanceReceiver.user_id,
         value: balanceBody.value,
         type: 'TRANSFER',
@@ -54,13 +54,26 @@ class BalanceBs extends Interactor {
 
       await this.balanceHistoryRepository.createBalanceHistory(history_balance);
       await this.transactionService.commitTransaction(t);
-      
+
     } catch (error) {
       await this.transactionService.rollbackTransaction(t);
       throw error;
     }
-  
+
     return 200;
   }
+
+
+  async getBalanceHistories(req) {
+
+    let { parameters, filters, sorting, filtersUserOrigin, filtersUserDestiny } = await this.balanceService
+      .getParametersList(req.query);
+
+    const balanceHistories = await this.balanceHistoryRepository
+      .getBalanceHistories(parameters, filters, sorting, filtersUserOrigin, filtersUserDestiny);
+
+    return balanceHistories;
+  }
+
 }
 module.exports = BalanceBs;

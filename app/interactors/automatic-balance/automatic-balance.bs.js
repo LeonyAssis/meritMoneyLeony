@@ -4,10 +4,12 @@ const Interactor = require('../interactor.bs');
 class AutomaticBalanceBs extends Interactor {
   constructor(params) {
     super();
+    this.validator = params.validatorService;
     this.automaticBalanceConfigRepository = params.automaticBalanceConfigRepository;
     this.userRepository = params.userRepository;
     this.balanceRepository = params.balanceRepository;
     this.balanceHistoryRepository = params.balanceHistoryRepository;
+    this.automaticBalanceRepository = params.automaticBalanceRepository;
     this.transactionService = params.transactionService;
   }
 
@@ -15,7 +17,22 @@ class AutomaticBalanceBs extends Interactor {
     const config = await this.automaticBalanceConfigRepository
       .getConfig();
 
-    return config[0];
+    return config;
+  }
+
+  async updateConfig(req) {
+    this.validator.execute('automatic-balance-config-edit.json', req.body);
+    const config = await this.getConfig();  
+    
+    await this.automaticBalanceConfigRepository
+      .updateConfig(config.id, req.body);
+  }
+
+  async getAutomaticBalanceExecutionStatus(firstDayOfMonth, lastDayOfMonth) {
+    const execution = await this.automaticBalanceRepository
+      .getAutomaticBalanceExecutionStatus(firstDayOfMonth, lastDayOfMonth);
+
+    return execution;
   }
 
   async skipOrExecuteAutomaticBalance(config) {
@@ -31,9 +48,7 @@ class AutomaticBalanceBs extends Interactor {
       };
 
       const execution = await this.automaticBalanceConfigRepository
-        .createExecution(data);
-
-        console.log(execution.id);
+        .createExecution(data);  
 
       let balanceAndUsers = await this.balanceRepository
         .getBalanceAndUsers();

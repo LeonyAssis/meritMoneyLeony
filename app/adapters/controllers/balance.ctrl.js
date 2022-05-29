@@ -30,6 +30,22 @@ module.exports = () => {
       } catch (error) {
         next(error);
       }
+    },
+
+
+    getBalanceHistories: async (req, res, next) => {
+      const balanceHistoriesBs = req.scope.resolve('balanceBs');
+
+      try {
+        const balances = await balanceHistoriesBs
+          .getBalanceHistories(req);
+
+        res.send(balances)
+          .status(200);
+
+      } catch (error) {
+        next(error);
+      }
     }
   };
 };

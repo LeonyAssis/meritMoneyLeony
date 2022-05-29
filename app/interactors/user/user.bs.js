@@ -27,7 +27,7 @@ class UserBs extends Interactor {
         .createBalance({ balance: 0, user_id: user.dataValues.id });
 
       await this.transactionService.commitTransaction(t);
-
+      
     } catch (error) {
       await this.transactionService.rollbackTransaction(t);
       throw error;

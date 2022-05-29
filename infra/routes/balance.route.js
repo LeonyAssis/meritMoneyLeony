@@ -14,5 +14,12 @@ module.exports = (app, ctrls, mdws) => {
       ctrls.balanceController.transferMoney
     );
 
+    
+    app.route('/balance/histories/')
+    .get(
+      // mdws.authorize,
+      ctrls.balanceController.getBalanceHistories
+    );
+
   
 };
