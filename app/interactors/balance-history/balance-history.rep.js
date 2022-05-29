@@ -6,7 +6,6 @@ class balanceHistoryRepository {
   }
 
   async createBalanceHistory(history_balance) {
-
     return await this.db.main
       .balance_history
       .create(history_balance);
