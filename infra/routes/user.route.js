@@ -7,19 +7,19 @@ module.exports = (app, ctrls, mdws) => {
       ctrls.userController.createUser
     );
 
-    app.route('/users')
+  app.route('/users')
     .get(
       // mdws.authorize,
       ctrls.userController.getUsers
     );
 
-    app.route('/users/:userId([0-9]{1,30})')
+  app.route('/users/:userId([0-9]{1,30})')
     .get(
       // mdws.authorize,
       ctrls.userController.getUser
     );
 
-    app.route('/users/:userId([0-9]{1,30})')
+  app.route('/users/:userId([0-9]{1,30})')
     .put(
       // mdws.authorize,
       ctrls.userController.updateUser

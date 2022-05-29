@@ -16,6 +16,25 @@ class Relations {
       { sourceKey: 'user_id', foreignKey: 'id' }   
     );
 
+    // this.db.main.balance_history.belongsTo(this.db.main.users, 
+    //   { sourceKey: 'user_origin', foreignKey: 'id' }   
+    // );
+
+    //   this.db.main.balance_history.belongsTo(this.db.main.users, 
+    //   { sourceKey: 'user_origin', foreignKey: 'id' }   
+    // );
+ 
+    this.db.main.balance_history.belongsTo(this.db.main.users, {
+      as: 'userOrigin',
+      foreignKey: 'user_origin'
+    });
+
+    this.db.main.balance_history.belongsTo(this.db.main.users, {
+      as: 'userDestiny',
+      foreignKey: 'user_destiny'
+    });
+ 
+ 
 
 
 

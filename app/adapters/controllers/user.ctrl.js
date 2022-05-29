@@ -8,9 +8,7 @@ module.exports = () => {
 
       try {
         await userBs.createUser(req);
-
-        res.send()
-          .status(200);
+        res.sendStatus(204);
 
       } catch (error) {
         next(error);

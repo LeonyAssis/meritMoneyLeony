@@ -5,11 +5,39 @@ class balanceHistoryRepository {
     this.db = params.sequelize;
   }
 
-  async createBalanceHistory(history_balance) {      
-
+  async createBalanceHistory(history_balance) {
     return await this.db.main
       .balance_history
       .create(history_balance);
+  }
+
+  async getBalanceHistories(params, filters, sorting, filtersUserOrigin, filtersUserDestiny) {
+    const options = {
+      include: [{
+        model: this.db.main.users,
+        attributes: ['name'],
+        where: filtersUserOrigin,
+        required: true,
+        as: 'userOrigin',
+      },
+      {
+        model: this.db.main.users,
+        attributes: ['name'],
+        where: filtersUserDestiny,
+        required: false,
+        as: 'userDestiny',
+      }],
+      order: sorting, 
+      offset: params.offset,
+      limit: params.limit,
+      where: filters,
+      raw: true,
+      logging: true,
+    };
+
+    return await this.db.main
+      .balance_history
+      .findAndCountAll(options);
   }
 }
 

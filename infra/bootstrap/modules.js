@@ -9,6 +9,7 @@ const _ = require('lodash');
 const logSerializers = require('../tools/log/serializers');
 const appPackage = require('../../package.json');
 const errors = require('../config/errors.json');
+const { Op } = require("sequelize");
 
 const setImports = (dir, type) => {
   const relativePath = path.relative('infra/bootstrap', dir) + '/';

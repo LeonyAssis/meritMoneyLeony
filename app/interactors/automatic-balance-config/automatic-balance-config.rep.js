@@ -7,13 +7,22 @@ class automaticBalanceConfigRepository {
   async getConfig() {
     return this.db.main
       .automatic_balance_config
-      .findAll({ raw: true });
+      .findOne({ raw: true });
+  }
+
+  async updateConfig(id, data) {
+    const options = {
+      where: { id }    
+    };
+
+    return this.db.main
+      .automatic_balance_config
+      .update(data, options);
   }
 
   async getExecutionStatus() {
     const options = {
-      where: this.db.Sequelize.literal('DATE(choose_date) = CURRENT_DATE'),
-      logging: true,
+      where: this.db.Sequelize.literal('DATE(choose_date) = CURRENT_DATE'),    
       raw: true,
     };
 

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "id": "automatic-balance-config-edit.json",
+  "properties": {
+    "value": {
+      "type": "integer"     
+    },
+    "day_to_send_balance": {
+      "type": "string",
+      "pattern": "\\b([1-9]|[12][0-8])\\b"     
+    }
+  },
+  "required": [    
+  ]
+}
