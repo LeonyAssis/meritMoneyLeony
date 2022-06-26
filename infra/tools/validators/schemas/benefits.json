@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "id": "benefits.json",
+  "properties": {
+    "name": {
+      "type": "string"     
+    },
+    "brand": {
+      "type": "string"     
+    },
+    "company": {
+      "type": "string"     
+    },
+    "text": {
+      "type": "string"     
+    },
+    "value": {
+      "type": "integer"     
+    },
+    "period": {
+      "type": "string"     
+    },
+    "user_id": {
+      "type": "integer"     
+    },
+    "active":{
+      "$ref": "defs.json#/definitions/boolean"
+    }
+  },
+  "required": [  
+    "name",
+    "value",
+    "user_id" 
+  ]
+}

@@ -34,8 +34,14 @@
     "name": "owner_does_not_have_enough_balance",
     "message": "The owner does not have enough balance",
     "friendly_message": "%s"
+  },
+  {
+    "code": 5,
+    "name": "benefit_not_found",
+    "message": "Benefit not found",
+    "friendly_message": "%s"
   }
 
-
+  
   
 ]
