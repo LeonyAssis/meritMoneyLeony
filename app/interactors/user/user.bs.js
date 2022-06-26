@@ -72,7 +72,6 @@ class UserBs extends Interactor {
       throw this.errorService
         .get('user_not_found');
 
-
     await this.userRepository
       .updateUser(id, req.body);
 
