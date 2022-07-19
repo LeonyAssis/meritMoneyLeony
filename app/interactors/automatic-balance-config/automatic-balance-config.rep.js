@@ -52,8 +52,7 @@ class automaticBalanceConfigRepository {
   }
 
   async createExecutionUserHistory(data) {
-    const options = {
-      logging: true,
+    const options = {      
       raw: true,
     };
 

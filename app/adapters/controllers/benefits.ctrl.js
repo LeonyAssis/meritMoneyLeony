@@ -58,6 +58,17 @@ module.exports = () => {
       }
     },
 
- 
+    buyBenefits: async (req, res, next) => {
+      const benefitsBs = req.scope.resolve('benefitsBs');
+      
+      try {
+        await benefitsBs
+          .buyBenefits(req);
+        res.sendStatus(204);
+      } catch (err) {
+        err.status = err.extra.statusCode;
+        next(err);
+      }
+    },
   };
 };

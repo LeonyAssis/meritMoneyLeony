@@ -5,7 +5,13 @@ class balanceHistoryRepository {
     this.db = params.sequelize;
   }
 
-  async createBalanceHistory(history_balance) {
+  async createBalanceHistory(history_balance, t) {
+    const options = {};
+    
+    if (t) {
+      options.transaction = t;
+    }
+
     return await this.db.main
       .balance_history
       .create(history_balance);

@@ -15,32 +15,48 @@
     "code": 3,
     "name": "user_not_found",
     "message": "user not found",
-    "friendly_message": "%s"
-  },
-  {
-    "code": 3,
-    "name": "owner_or_balance_not_found",
-    "message": "owner or balance not found",
-    "friendly_message": "%s"
+    "friendly_message": "%s",
+    "statusCode": 404
   },
   {
     "code": 4,
+    "name": "owner_or_balance_not_found",
+    "message": "owner or balance not found",
+    "friendly_message": "%s",
+    "statusCode": 406
+  },
+  {
+    "code": 5,
     "name": "receiver_or_balance_not_found",
     "message": "receiver or balance not found",
     "friendly_message": "%s"
   },
   {
-    "code": 5,
+    "code": 6,
     "name": "owner_does_not_have_enough_balance",
     "message": "The owner does not have enough balance",
     "friendly_message": "%s"
   },
   {
-    "code": 5,
+    "code": 7,
     "name": "benefit_not_found",
     "message": "Benefit not found",
     "friendly_message": "%s"
+  },
+  {
+    "code": 5,
+    "name": "server_error",
+    "message": "Server error",   
+    "friendly_message": "%s"
+  },
+  {
+    "code": 6,
+    "name": "balance_is_lower_than_required",
+    "message": "balance is lower than required",
+    "friendly_message": "%s",
+    "statusCode": 406
   }
+  
 
   
   

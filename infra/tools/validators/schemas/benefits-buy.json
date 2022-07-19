@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "id": "benefits-buy.json",
+  "properties": {
+    "benefit_id": {
+      "type": "integer"     
+    },
+    "user_id": {
+      "type": "integer"     
+    }
+  },
+  "required": [  
+    "benefit_id",
+    "user_id"   
+  ]
+}

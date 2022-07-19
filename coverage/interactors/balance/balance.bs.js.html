@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>30/33</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>30/30</span>
+                <span class='fraction'>30/33</span>
             </div>
         
             
@@ -128,7 +128,19 @@
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,7 +174,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,6 +202,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
@@ -226,21 +250,20 @@ class BalanceBs extends Interactor {
   async transferMoney(req) {
     this.validator.execute('transfer-balance.json', req.body);
     let balanceBody = req.body;
- 
 &nbsp;
     let { balanceOwner, balanceReceiver } = await this.balanceService
-      .checkUsersAndBalance(balanceBody.owner, balanceBody.sendTo, balanceBody.value); 
+      .checkUsersAndBalance(balanceBody.owner, balanceBody.sendTo, balanceBody.value);
 &nbsp;
     const t = await this.transactionService.startTransaction();
     try {
-       let newBalanceOwner =  balanceOwner.balance - balanceBody.value;
-       let newBalanceSendTo = balanceReceiver.balance + balanceBody.value;
-    
-       await this.balanceRepository.updateBalance(balanceOwner.id,newBalanceOwner);
-       await this.balanceRepository.updateBalance(balanceReceiver.id,newBalanceSendTo);
+      let newBalanceOwner = balanceOwner.balance - balanceBody.value;
+      let newBalanceSendTo = balanceReceiver.balance + balanceBody.value;
+&nbsp;
+      await this.balanceRepository.updateBalance(balanceOwner.id, newBalanceOwner, t);
+      await this.balanceRepository.updateBalance(balanceReceiver.id, newBalanceSendTo, t);
 &nbsp;
       const history_balance = {
-        user_origin: balanceOwner.user_id, 
+        user_origin: balanceOwner.user_id,
         user_destiny: balanceReceiver.user_id,
         value: balanceBody.value,
         type: 'TRANSFER',
@@ -249,14 +272,27 @@ class BalanceBs extends Interactor {
 &nbsp;
       await this.balanceHistoryRepository.createBalanceHistory(history_balance);
       await this.transactionService.commitTransaction(t);
-      
+&nbsp;
     } catch (error) {
       await this.transactionService.rollbackTransaction(t);
       throw error;
     }
-  
+&nbsp;
     return 200;
   }
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >  as</span>ync getBalanceHistories(req) {
+&nbsp;
+    let { parameters, filters, sorting, filtersUserOrigin, filtersUserDestiny } = <span class="cstat-no" title="statement not covered" >await this.balanceService</span>
+      .getParametersList(req.query);
+&nbsp;
+    const balanceHistories = <span class="cstat-no" title="statement not covered" >await this.balanceHistoryRepository</span>
+      .getBalanceHistories(parameters, filters, sorting, filtersUserOrigin, filtersUserDestiny);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return balanceHistories;</span>
+  }
+&nbsp;
 }
 module.exports = BalanceBs;</pre></td></tr></table></pre>
 
@@ -265,7 +301,7 @@ module.exports = BalanceBs;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed May 04 2022 19:45:11 GMT-0300 (Horário Padrão de Brasília)
+                at Tue Jul 19 2022 10:31:08 GMT-0300 (Horário Padrão de Brasília)
             </div>
         <script src="../../prettify.js"></script>
         <script>

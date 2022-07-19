@@ -32,7 +32,6 @@ class BalanceBs extends Interactor {
     this.validator.execute('transfer-balance.json', req.body);
     let balanceBody = req.body;
 
-
     let { balanceOwner, balanceReceiver } = await this.balanceService
       .checkUsersAndBalance(balanceBody.owner, balanceBody.sendTo, balanceBody.value);
 
@@ -41,8 +40,8 @@ class BalanceBs extends Interactor {
       let newBalanceOwner = balanceOwner.balance - balanceBody.value;
       let newBalanceSendTo = balanceReceiver.balance + balanceBody.value;
 
-      await this.balanceRepository.updateBalance(balanceOwner.id, newBalanceOwner);
-      await this.balanceRepository.updateBalance(balanceReceiver.id, newBalanceSendTo);
+      await this.balanceRepository.updateBalance(balanceOwner.id, newBalanceOwner, t);
+      await this.balanceRepository.updateBalance(balanceReceiver.id, newBalanceSendTo, t);
 
       const history_balance = {
         user_origin: balanceOwner.user_id,

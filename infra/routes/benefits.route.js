@@ -26,6 +26,13 @@ module.exports = (app, ctrls, mdws) => {
       ctrls.benefitsController.updateBenefits
     );
 
+    app.route('/benefits/buy')
+    .post(
+      // mdws.authorize,
+      ctrls.benefitsController.buyBenefits
+    );
+
+
 
 
 
