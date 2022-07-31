@@ -33,7 +33,18 @@ class userRepository {
       .users
       .findOne({
         attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],
-        where: filter
+        where: filter,
+        raw: true
+      });
+  }
+
+  async getUserAndPassword(filter) {
+    return await this.db.main
+      .users
+      .findOne({    
+        attributes: ['name', 'email', 'password'],   
+        where: filter,
+        raw: true
       });
   }
 

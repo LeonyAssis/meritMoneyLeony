@@ -43,15 +43,16 @@ module.exports = {
   express: require('../express'),
   bunyan: bunyan,
   awilix: awilix, 
+
   pug: require('pug'),
   moment: require('moment'), 
   momentTz: require('moment-timezone'),
   immutable: require('immutable'),
   re2: require('re2'),
-  crypto: require('crypto'), 
+  bcrypt: require('bcrypt'), 
   uuid: require('uuid'),
   serializers: logSerializers,
-  jsonWebToken: require('jsonwebtoken'),  
+  jwt: require('jsonwebtoken'),    
   errors: errors,
 
   container: awilix.createContainer({

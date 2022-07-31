@@ -60,10 +60,11 @@ module.exports = () => {
       } catch (error) {
         next(error);
       }
+    },
+
+    version: async (req, res, next) => { 
+      res.sendStatus(204);     
     }
-
-
-
 
 
   };

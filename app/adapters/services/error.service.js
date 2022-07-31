@@ -42,10 +42,6 @@ class ErrorService {
       error = error.set('extra', extra);
     }
 
-   
-
-   
-
     return new MMError(error.toObject());
   }
 
