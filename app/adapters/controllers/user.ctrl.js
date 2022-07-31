@@ -57,15 +57,10 @@ module.exports = () => {
         await userBs.updateUser(req);
         res.sendStatus(204);
 
-      } catch (error) {
-        next(error);
+      } catch (err) {
+        err.status = err.extra.statusCode;
+        next(err);
       }
-    },
-
-    version: async (req, res, next) => { 
-      res.sendStatus(204);     
-    }
-
-
+    },  
   };
 };

@@ -54,6 +54,7 @@ module.exports = () => {
         res.sendStatus(204);
 
       } catch (err) {
+        err.status = err.extra.statusCode;
         next(err);
       }
     },

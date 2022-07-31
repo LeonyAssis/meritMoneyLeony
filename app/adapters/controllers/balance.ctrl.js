@@ -12,8 +12,9 @@ module.exports = () => {
         res.send(balance)
           .status(200);
 
-      } catch (error) {
-        next(error);
+      } catch (err) {
+        err.status = err.extra.statusCode;
+        next(err);
       }
     },
 
@@ -27,8 +28,9 @@ module.exports = () => {
         res.send()
           .status(200);
 
-      } catch (error) {
-        next(error);
+      } catch (err) {
+        err.status = err.extra.statusCode;
+        next(err);
       }
     },
 
