@@ -1,32 +1,33 @@
 'use strict';
 
-module.exports = (app, ctrls, mdws) => { 
- 
-    app.route('/benefits')
+module.exports = (app, ctrls, mdws) => {
+  app.route('/benefits')
     .get(
-      // mdws.authorize,
+      mdws.authorize,
       ctrls.benefitsController.getBenefits
     );
 
-    app.route('/benefits/:id')
+  app.route('/benefits/:id')
     .get(
-      // mdws.authorize,
+      mdws.authorize,
       ctrls.benefitsController.getBenefit
     );
 
-    app.route('/benefits')
+  app.route('/benefits')
     .post(
-      // mdws.authorize,
+      mdws.authorize,
       ctrls.benefitsController.upsertBenefits
     );
 
-    app.route('/benefits/:id')
+  app.route('/benefits/:id')
     .put(
-      // mdws.authorize,
+      mdws.authorize,
       ctrls.benefitsController.updateBenefits
     );
 
-
-
-
+  app.route('/benefits/buy')
+    .post(
+      mdws.authorize,
+      ctrls.benefitsController.buyBenefits
+    );
 };

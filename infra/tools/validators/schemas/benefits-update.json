@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "id": "benefits-update.json",
+  "properties": {
+    "name": {
+      "type": "string"     
+    },
+    "brand": {
+      "type": "string"     
+    },
+    "company": {
+      "type": "string"     
+    },
+    "text": {
+      "type": "string"     
+    },
+    "value": {
+      "type": "integer"     
+    },
+    "period": {
+      "type": "string"     
+    },   
+    "active":{
+      "$ref": "defs.json#/definitions/boolean"
+    }
+  },
+  "required": [     
+  ],
+  "additionalProperties": false
+}

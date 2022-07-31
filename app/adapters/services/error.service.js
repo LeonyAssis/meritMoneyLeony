@@ -1,6 +1,6 @@
 'use strict';
 
-class GnError extends Error {
+class MMError extends Error {
   constructor(error) {
     super(error.message);
     Error.captureStackTrace(this, this.constructor);
@@ -23,19 +23,18 @@ class ErrorService {
       this.errors[e.name] = this.immutable.Map({
         name: e.name,
         code: e.code,
-        message: e.message
+        message: e.message,
+        statusCode: e.statusCode
       });
     });
   }
 
   get(name, params, extra) {
-    let error = this.errors[name];
-
+    let error = this.errors[name];    
     if (params) {
       let message = this.util.format.apply(
         this.util, [error.get('message')].concat(params)
       );
-
       error = error.set('message', message);
     }
 
@@ -43,7 +42,7 @@ class ErrorService {
       error = error.set('extra', extra);
     }
 
-    return new GnError(error.toObject());
+    return new MMError(error.toObject());
   }
 
 

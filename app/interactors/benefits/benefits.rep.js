@@ -18,7 +18,6 @@ class BenefitsRepository {
       .findAndCountAll(options);
   }
 
-
   async getBenefit(filter) {
     return await this.db.main
       .benefits
@@ -33,8 +32,6 @@ class BenefitsRepository {
       .benefits
       .upsert(newBenefit, { logging: true });
   }
-
-
 
   async updateBenefit(id, benefit) {
     const options = {

@@ -1,16 +1,20 @@
 'use strict';
 
 class AuthenticateBs {
-  constructor(params) {    
+  constructor(params) {
     this.errorService = params.errorService;
     this.gnLogger = params.gnLogger;
-    this.permissions = params.permissions;
+    this.jwt = params.jwt;
   }
 
-  async execute(accessToken) {
-    const params = {
-      token: accessToken
-    };  
+  async execute(accessToken) {    
+    return this.jwt.verify(accessToken, process.env.SECRET_KEY, (err, decodeToken) => {
+      if (err) {
+        throw this.errorService
+          .get('access_denied');
+      }
+      return decodeToken;
+    });
   }
 }
 

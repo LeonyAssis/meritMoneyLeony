@@ -11,12 +11,16 @@ class UserBs extends Interactor {
     this.balanceRepository = params.balanceRepository;
     this.transactionService = params.transactionService;
     this.userService = params.userService;
+    this.bcrypt = params.bcrypt;
   }
 
 
   async createUser(req) {
     this.validator.execute('users.json', req.body);
-
+    const user = req.body;
+    user.password = this.bcrypt.hashSync(req.body.password, 8);
+    
+    // ARRUMAR USER REPETIDO
     const t = await this.transactionService.startTransaction();
 
     try {
@@ -27,7 +31,7 @@ class UserBs extends Interactor {
         .createBalance({ balance: 0, user_id: user.dataValues.id });
 
       await this.transactionService.commitTransaction(t);
-      
+
     } catch (error) {
       await this.transactionService.rollbackTransaction(t);
       throw error;

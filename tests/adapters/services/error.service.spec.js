@@ -30,12 +30,14 @@ describe('error service', () => {
       {
         code: 3400000,
         name: 'unauthorized',
-        message: 'could not authenticate'
+        message: 'could not authenticate', 
+        statusCode: 500
       },
       {
         code: 3400001,
         name: 'unauthorized_1',
-        message: '%s'
+        message: '%s', 
+        statusCode: 500
       }
     ];
 
@@ -90,30 +92,33 @@ describe('error service', () => {
     it('should get an error without params', () => {
       const error = errorService.get('unauthorized');
 
-      error.name.should.eql('GnError');
+      error.name.should.eql('MMError');
       error.should.instanceof(Error);
       error.extra.code.should.eql(3400000);
       error.extra.name.should.eql('unauthorized');
+      error.extra.statusCode.should.eql(500);
       error.extra.message.should.eql('could not authenticate');
     });
 
     it('should get an error with params', () => {
       const error = errorService.get('unauthorized_1', 'world');
 
-      error.name.should.eql('GnError');
+      error.name.should.eql('MMError');
       error.should.instanceof(Error);
       error.extra.code.should.eql(3400001);
       error.extra.name.should.eql('unauthorized_1');
+      error.extra.statusCode.should.eql(500);
       error.extra.message.should.eql('could not authenticate world');
     });
 
     it('should get an error with extra', () => {
       const error = errorService.get('unauthorized_1', null, { id: 1 });
 
-      error.name.should.eql('GnError');
+      error.name.should.eql('MMError');
       error.should.instanceof(Error);
       error.extra.code.should.eql(3400001);
       error.extra.name.should.eql('unauthorized_1');
+      error.extra.statusCode.should.eql(500);
       error.extra.message.should.eql('%s');
       error.extra.extra.should.eql({ id: 1 });
     });

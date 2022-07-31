@@ -10,7 +10,7 @@ class balanceRepository {
       where: {
         user_id: userId
       },
-      logging: true
+      raw: true
     };
 
     return await this.db.main
@@ -63,12 +63,16 @@ class balanceRepository {
       .findAll(options);
   }
 
-  async updateBalance(id, balance) {
+  async updateBalance(id, balance, t) {
     const options = {
-      where: { id },
-      logging: true,
+      where: { id }, 
+      logging: true,   
     };
 
+    if (t) {
+      options.transaction = t;
+    }
+    
     return await this.db.main
       .balance
       .update({ balance }, options);
@@ -76,8 +80,7 @@ class balanceRepository {
 
   async updateUserBalance(user_id, balance) {
     const options = {
-      where: { user_id },
-      logging: true,
+      where: { user_id }     
     };
 
     return await this.db.main
