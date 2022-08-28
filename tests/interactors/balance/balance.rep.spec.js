@@ -73,12 +73,12 @@ describe('balanceRepository', () => {
     });
   });
 
-  describe('createBalanceHistory()', () => {
-    it('should update User Balance', async () => {
-      await balanceRepository
-        .createBalanceHistory({ user_id: 22, automatic_balance_id: 2 });
-    });
-  });
+  // describe('createBalanceHistory()', () => {
+  //   it('should update User Balance', async () => {
+  //     await balanceRepository
+  //       .createBalanceHistory({ user_id: 22, automatic_balance_id: 2 });
+  //   });
+  // });
 
 
 
