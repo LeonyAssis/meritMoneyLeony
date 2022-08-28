@@ -7,12 +7,12 @@ class AuthenticateBs {
     this.jwt = params.jwt;
   }
 
-  async execute(accessToken) {    
-    return this.jwt.verify(accessToken, process.env.SECRET_KEY, (err, decodeToken) => {
+  async execute(accessToken) {        
+    return this.jwt.verify(accessToken, process.env.SECRET_KEY, (err, decodeToken) => {    
       if (err) {
         throw this.errorService
           .get('access_denied');
-      }
+      }          
       return decodeToken;
     });
   }

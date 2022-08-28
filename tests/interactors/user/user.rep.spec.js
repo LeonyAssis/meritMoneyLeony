@@ -53,4 +53,11 @@ describe('userRepository', () => {
         .updateUser(11,{ active: 'false' });
     });
   });
+
+  describe('getUserAndPassword()', () => {
+    it('should getUserAndPassword', async () => {
+      await userRepository
+        .getUserAndPassword({ active: 'true' });
+    });
+  });
 });

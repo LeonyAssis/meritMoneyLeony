@@ -28,6 +28,7 @@ describe('automaticBalanceRepository', () => {
         },
         automatic_balance_config: {
           findAll: sinon.stub(),
+          findOne: sinon.stub(),
         }
       },
     },

@@ -36,6 +36,9 @@ const params = {
   },
   formatService: {
     formatObjectByProperty: sinon.stub()
+  },
+  bcrypt:{
+    hashSync: sinon.stub()
   }
 };
 
@@ -66,7 +69,7 @@ describe('UserBs', () => {
         .throws(new Error());
 
       try {
-        await userBs.createUser({});
+        await userBs.createUser({ body:{ password: 'TEST123' }});
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +80,7 @@ describe('UserBs', () => {
         .createUser
         .resolves({ dataValues: { id: 10 } });
 
-      await userBs.createUser({});
+      await userBs.createUser({ body:{ password: 'TEST123' }});
     });
   });
 
