@@ -8,10 +8,11 @@
   "scripts": {
     "start": "node app.js",
     "start_nodemon": "nodemon app.js",
-    "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha tests/**/* --recursive",
+    "test-coverage": "nyc --reporter=json-summary --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
     "lint": "eslint",
-    "type-checking": "tsc --noEmit"  
+    "type-checking": "tsc --noEmit" ,
+    "coverage:badge": "coverage-badge-creator"
   },
   "nyc": {
     "all": true,
