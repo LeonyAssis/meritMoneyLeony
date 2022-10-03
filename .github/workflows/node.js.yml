@@ -14,10 +14,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "merit-money-leony"
           heroku_email: "leonyra@hotmail.com"
-          
-      - uses: devmasx/coverage-check-action@v1.2.0
-        with:
-          type: lcov
-          result_path: coverage/lcov.info
-          min_coverage: 90
-          token: ${{ secrets.GITHUB_TOKEN }}
+  
