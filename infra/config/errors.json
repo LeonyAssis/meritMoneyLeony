@@ -41,7 +41,8 @@
     "code": 7,
     "name": "benefit_not_found",
     "message": "Benefit not found",
-    "friendly_message": "%s"
+    "friendly_message": "%s",
+    "statusCode": 404
   },
   {
     "code": 5,
@@ -83,7 +84,15 @@
     "message": "Access denied",
     "friendly_message": "%s",
     "statusCode": 401
+  },  
+  {
+    "code": 10,
+    "name": "config_not_found",
+    "message": "Configuration register not found",
+    "friendly_message": "%s",
+    "statusCode": 404
   }
+
 
 
   

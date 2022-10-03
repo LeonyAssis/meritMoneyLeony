@@ -93,7 +93,8 @@ class BenefitsBs {
         benefits_id: benefit.id,
         value: benefit.value,
         type: 'BUY',
-        responsible_id: balance.user_id
+        responsible_id: req.body.user_id
+        // responsible_id: balance.user_id
       };
       await this.balanceHistoryRepository.createBalanceHistory(history_balance, t);
       await this.transactionService.commitTransaction(t);

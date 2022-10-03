@@ -24,6 +24,11 @@ describe('balanceService', () => {
     },
     errorService: {
       get: sinon.stub()
+    },
+    sequelize: {
+      Sequelize: {
+        Op: Op  
+      }
     }
   };
 
@@ -95,6 +100,21 @@ describe('balanceService', () => {
         .onCall(1).returns({ balance: 5, user: { name: 'test' } });
 
       await balanceService.checkUsersAndBalance(50, 10, 50);
+    });
+  });
+
+  describe('getParametersList()', () => {
+
+    it('format parameters list without any change', async () => {  
+      await balanceService.getParametersList({});
+    });
+
+    it('format parameters list with change', async () => {  
+      await balanceService.getParametersList({column: 'created_at', searchOrigin: 'test', searchDestiny: 'jupira'});
+    });
+
+    it('format parameters list with change order == asc', async () => {  
+      await balanceService.getParametersList({column: 'created_at', searchOrigin: 'test', searchDestiny: 'jupira', order: 'asc'});
     });
   });
 });

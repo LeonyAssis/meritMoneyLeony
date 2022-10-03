@@ -64,6 +64,11 @@ describe('balanceRepository', () => {
       await balanceRepository
         .updateBalance(1, { balance: 5000 });
     });
+
+    it('should update Balance with transaction true', async () => {
+      await balanceRepository
+        .updateBalance(1, { balance: 5000 }, true);
+    });
   });
 
   describe('updateUserBalance()', () => {

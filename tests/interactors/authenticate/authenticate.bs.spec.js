@@ -1,40 +1,37 @@
-// 'use strict';
+'use strict';
 
-// require('should-sinon');
-// const sinon = require('sinon');
-// const AuthenticateBs = require('../../../app/interactors/authenticate/authenticate.bs');
-// const jwt  = require('jsonwebtoken');
+require('should-sinon');
+const sinon = require('sinon');
+const AuthenticateBs = require('../../../app/interactors/authenticate/authenticate.bs');
+const jwt = require('jsonwebtoken');
+let authenticateBs;
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NjM5ODUwNDAsImV4cCI6MTY2Mzk4ODY0MH0.w98BVeNRe4CWme69Ky4upCzWUSbrKuxnRy9nPSU97o8';
 
-// let authenticateBs = null;
+const params = {
+  errorService: {
+    get: sinon.stub()
+  },
+  gnLogger: {
+    error: sinon.stub()
+  },
+  jwt
+};
 
-// const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTkzOTM0ODYsImV4cCI6MTY1OTM5NzA4Nn0.S6j-jFD-ohXxZLs9WBnWRet0Dd2pZhbM_qqdf3tbgjQ';
+describe('authenticate business', () => {
+  beforeEach(() => {
+    sinon.reset();
+    authenticateBs = new AuthenticateBs(params);
+  });
 
-// const params = {
-//   errorService: {
-//     get: sinon.stub()
-//   },
-//   gnLogger: {
-//     error: sinon.stub()
-//   },
-//   jwt: {
-//     verify: sinon.stub()
-//   }
-// };
+  it('reject verify token', async () => {
+    try {
+      jwt.verify;
+      await authenticateBs
+        .execute(accessToken);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+ 
 
-// describe.only('authenticate business', () => {
-//   beforeEach(() => {
-//     sinon.reset();
-//     authenticateBs = new AuthenticateBs(params);
-//   });
-
-//   it('should call execute with success', async () => {
-
-
-//     jwt.verify();
-
-//     await authenticateBs
-//       .execute(accessToken);
-//   });
-
-
-// });
+});

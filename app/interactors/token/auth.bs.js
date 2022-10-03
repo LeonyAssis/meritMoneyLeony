@@ -12,10 +12,10 @@ class TokenBs {
 
 
   async generateToken(req) {
-    const auth = req.headers.authorization.split(' ')[1];
+    const auth = req.headers.authorization.split(' ')[1];   
     const buff = Buffer.from(auth, 'base64');
     const loginAndPass = buff.toString('utf-8').split(':');
-    let tokenJWT;
+    let tokenJWT;   
 
     if (loginAndPass[0] == '' || loginAndPass[1] == '')
       throw this.errorService

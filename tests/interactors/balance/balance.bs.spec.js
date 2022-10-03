@@ -19,15 +19,21 @@ const params = {
     updateBalance: sinon.stub(),
   },
   balanceHistoryRepository: {
+    createBalanceHistory: sinon.stub(),   
+  },
+  balanceHistoryRepository: {
+    getBalanceHistories: sinon.stub(),
     createBalanceHistory: sinon.stub(),
   },
   balanceService: {
-    checkUsersAndBalance: sinon.stub()
+    checkUsersAndBalance: sinon.stub(),
+    getParametersList: sinon.stub()
   },
   transactionService: {
     startTransaction: sinon.stub(),
     commitTransaction: sinon.stub(),
-    rollbackTransaction: sinon.stub()
+    rollbackTransaction: sinon.stub(),
+   
   },
   validatorService: {
     execute: sinon.stub()
@@ -97,6 +103,21 @@ describe('BalanceBs', () => {
         console.log(error);
       }
 
+    });
+  });
+
+  describe('getBalanceHistories()', () => {
+    it('Should get balance histories', async () => {
+
+      params.balanceService
+        .getParametersList
+        .resolves({ parameters: {}, filters: {}, sorting: {}, filtersUserOrigin: {}, filtersUserDestiny: {} });
+
+      params.balanceHistoryRepository
+        .getBalanceHistories
+        .resolves({ id: 14 });
+
+      await balanceBs.getBalanceHistories({ query: { user_id: 5 } });
     });
   });
 
