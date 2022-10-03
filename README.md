@@ -1,8 +1,8 @@
 # Merit Money
+![coverage](https://img.shields.io/badge/Coverage-99%25-83A603.svg?prefix=$coverage$)
 
 > Backend do Merit money
 
-![coverage](https://img.shields.io/badge/Coverage-99%25-83A603.svg?prefix=$coverage$)
 
 ## 1 - Requisitos para rodar na máquina local
 
