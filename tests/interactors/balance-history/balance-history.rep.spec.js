@@ -2,7 +2,7 @@
 
 const sinon = require('sinon');
 const BalanceHistoryRepository = require(
-  '../../app/interactors/balance-history/balance-history.rep'
+  '../../../app/interactors/balance-history/balance-history.rep'
 );
 
 describe('balanceHistoryRepository', () => {
@@ -12,7 +12,8 @@ describe('balanceHistoryRepository', () => {
     sequelize: {    
       main: {
         balance_history: {
-          create: sinon.stub(),         
+          create: sinon.stub(), 
+          findAndCountAll: sinon.stub(),         
         },     
       },
     },
@@ -24,12 +25,21 @@ describe('balanceHistoryRepository', () => {
   });
 
   describe('createBalanceHistory()', () => {
-
     it('should create Balance History', async () => {
       await balanceHistoryRepository
         .createBalanceHistory();
     });
 
-   
+    it('should create Balance History transaction true', async () => {
+      await balanceHistoryRepository
+        .createBalanceHistory({}, true);
+    });   
+  });
+
+  describe('getBalanceHistories()', () => {
+    it('should get Balance Histories without filters', async () => {
+      await balanceHistoryRepository
+        .getBalanceHistories({}, {}, {}, {}, {});
+    });   
   });
 });

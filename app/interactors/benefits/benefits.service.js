@@ -43,8 +43,7 @@ class BenefitsService {
         [Op.like]: `%${brand}%`
       };
 
-    if (active)
-      filters['active'] = active;
+    filters['active'] = active;
 
     return { parameters, filters, sorting };
 

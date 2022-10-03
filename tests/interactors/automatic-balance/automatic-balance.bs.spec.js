@@ -16,6 +16,10 @@ const params = {
     createExecution: sinon.stub(),
     createExecutionUserHistory: sinon.stub(),
     updateExecution: sinon.stub(),
+    updateConfig: sinon.stub(),
+  },
+  automaticBalanceRepository: {
+    getAutomaticBalanceExecutionStatus: sinon.stub(),
   },
   balanceRepository: {
     getBalanceAndUsers: sinon.stub(),
@@ -37,6 +41,10 @@ const params = {
   },
   formatService: {
     formatObjectByProperty: sinon.stub()
+  },
+  this: {
+    getConfig: sinon.stub()
+
   }
 };
 
@@ -65,6 +73,28 @@ describe('AutomaticBalanceBs', () => {
       await automaticBalanceBs.getConfig();
     });
   });
+
+  describe('updateConfig()', () => {
+    it('should get update Config for automatic balance', async () => {
+
+      sinon.stub(automaticBalanceBs, 'getConfig')
+        .returns({ id: 5 });
+
+      await automaticBalanceBs.updateConfig({ body: {} });
+    });
+  });
+
+  describe('getAutomaticBalanceExecutionStatus()', () => {
+    it('should getAutomaticBalanceExecutionStatus', async () => {
+
+      params.automaticBalanceConfigRepository
+        .getExecutionStatus
+        .resolves(null);
+
+      await automaticBalanceBs.getAutomaticBalanceExecutionStatus('2022-08-01', '2022-08-31');
+    });
+  });
+
 
   describe('skipOrExecuteAutomaticBalance()', () => {
     it('should skip automatic balance', async () => {
@@ -198,25 +228,7 @@ describe('AutomaticBalanceBs', () => {
       await automaticBalanceBs.skipOrExecuteAutomaticBalance({ value: 5000 });
 
     });
-
-    // it('should check if the commercial size is different from undefined', async () => {
-
-    //   params.commercialWalletRepository
-    //     .documentCommercialSizeIntranet
-    //     .resolves(20);
-
-    //   await commercialWalletBs.create(req);
-
-    // });
-    // it('should check if the commercial size is different from undefined', async () => {
-
-    //   params.commercialWalletRepository
-    //     .documentCommercialSizeIntranet
-    //     .resolves(20);
-
-    //   await commercialWalletBs.create(req_error_schema2);
-
-    // });
+ 
   });
 
 

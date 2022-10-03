@@ -8,7 +8,9 @@ class AuthenticateBs {
   }
 
   async execute(accessToken) {        
-    return this.jwt.verify(accessToken, process.env.SECRET_KEY, (err, decodeToken) => {    
+    return this.jwt.verify(accessToken, process.env.SECRET_KEY, (err, decodeToken) => {       
+      console.log(process.env.SECRET_KEY);
+      console.log(err);
       if (err) {
         throw this.errorService
           .get('access_denied');

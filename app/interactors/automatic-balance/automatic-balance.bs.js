@@ -6,6 +6,7 @@ class AutomaticBalanceBs extends Interactor {
     super();
     this.validator = params.validatorService;
     this.automaticBalanceConfigRepository = params.automaticBalanceConfigRepository;
+    this.errorService = params.errorService;
     this.userRepository = params.userRepository;
     this.balanceRepository = params.balanceRepository;
     this.balanceHistoryRepository = params.balanceHistoryRepository;
@@ -17,13 +18,21 @@ class AutomaticBalanceBs extends Interactor {
     const config = await this.automaticBalanceConfigRepository
       .getConfig();
 
+    if (!config)
+      throw this.errorService
+        .get('config_not_found')
+
     return config;
   }
 
   async updateConfig(req) {
     this.validator.execute('automatic-balance-config-edit.json', req.body);
-    const config = await this.getConfig();  
-    
+    const config = await this.getConfig();
+
+    if (!config)
+      throw this.errorService
+        .get('config_not_found')
+
     await this.automaticBalanceConfigRepository
       .updateConfig(config.id, req.body);
   }
@@ -48,7 +57,7 @@ class AutomaticBalanceBs extends Interactor {
       };
 
       const execution = await this.automaticBalanceConfigRepository
-        .createExecution(data);  
+        .createExecution(data);
 
       let balanceAndUsers = await this.balanceRepository
         .getBalanceAndUsers();

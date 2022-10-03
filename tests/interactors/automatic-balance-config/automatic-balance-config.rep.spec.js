@@ -1,12 +1,12 @@
 'use strict';
 
 const sinon = require('sinon');
-const AutomaticBalanceRepository = require(
+const AutomaticBalanceConfigRepository = require(
   '../../../app/interactors/automatic-balance-config/automatic-balance-config.rep'
 );
 
-describe('automaticBalanceRepository', () => {
-  let automaticBalanceRepository;
+describe('automaticBalanceConfigRepository', () => {
+  let automaticBalanceConfigRepository;
   const literal = String;
 
   const params = {
@@ -29,6 +29,7 @@ describe('automaticBalanceRepository', () => {
         automatic_balance_config: {
           findAll: sinon.stub(),
           findOne: sinon.stub(),
+          update: sinon.stub(),
         }
       },
     },
@@ -36,23 +37,29 @@ describe('automaticBalanceRepository', () => {
 
   beforeEach(() => {
     sinon.reset();
-    automaticBalanceRepository = new AutomaticBalanceRepository(params);
+    automaticBalanceConfigRepository = new AutomaticBalanceConfigRepository(params);
   });
 
   describe('automaticBalanceRep', () => {
 
     it('should get config', async () => {
-      await automaticBalanceRepository
+      await automaticBalanceConfigRepository
         .getConfig();
     });
 
+    it('should get config', async () => {
+      await automaticBalanceConfigRepository
+        .updateConfig(10, {});
+    });
+
+
     it('should get Execution Status', async () => {
-      await automaticBalanceRepository
+      await automaticBalanceConfigRepository
         .getExecutionStatus();
     });
 
     it('should create Execution', async () => {
-      await automaticBalanceRepository
+      await automaticBalanceConfigRepository
         .createExecution({
           choose_date: '2022-04-22',
           value: 5000,
@@ -61,12 +68,12 @@ describe('automaticBalanceRepository', () => {
     });
 
     it('should update Execution', async () => {
-      await automaticBalanceRepository
+      await automaticBalanceConfigRepository
         .updateExecution(14, { raw: true });
     });
 
     it('should create Execution User History', async () => {
-      await automaticBalanceRepository
+      await automaticBalanceConfigRepository
         .createExecutionUserHistory({ user_id: 12, automatic_balance_id: 14 });
     });
   });
