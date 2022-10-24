@@ -36,14 +36,23 @@ module.exports = () => {
 
 
     getBalanceHistories: async (req, res, next) => {
+      const page = req.query.page || 1;
+      const limit = req.query.limit || 10;
       const balanceHistoriesBs = req.scope.resolve('balanceBs');
 
       try {
         const balances = await balanceHistoriesBs
           .getBalanceHistories(req);
 
-        res.send(balances)
-          .status(200);
+        res.status(200)
+          .send({
+            itens: balances.rows,
+            currentPage: page,
+            pages: Math.ceil(balances.count / limit),
+            numOfResults: balances.count,
+            limit: limit
+          });
+
 
       } catch (error) {
         next(error);
