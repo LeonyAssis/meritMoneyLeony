@@ -18,9 +18,8 @@ class UserBs extends Interactor {
   async createUser(req) {
     this.validator.execute('users.json', req.body);
     const user = req.body;
-    user.password = this.bcrypt.hashSync(req.body.password, 8);
+    user.password = this.bcrypt.hashSync(req.body.password, 8);    
     
-    // ARRUMAR USER REPETIDO
     const t = await this.transactionService.startTransaction();
 
     try {
@@ -36,6 +35,8 @@ class UserBs extends Interactor {
       await this.transactionService.rollbackTransaction(t);
       throw error;
     }
+
+    // RETORNAR ACCESS TOKEN 
 
   }
 

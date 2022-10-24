@@ -7,11 +7,11 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start_nodemon": "nodemon app.js",
+    "start-nodemon": "nodemon app.js",
     "test-coverage": "nyc --reporter=json-summary --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
     "lint": "eslint",
-    "type-checking": "tsc --noEmit" ,
+    "type-checking": "tsc --noEmit",
     "coverage:badge": "coverage-badge-creator"
   },
   "nyc": {
@@ -35,6 +35,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "1.18.3",
     "bunyan": "1.8.12",
+    "cors": "^2.8.5",
     "date-holidays": "^1.5.1",
     "express": "4.17.3",
     "fs-extra": "7.0.1",
@@ -57,7 +58,7 @@
     "sequelize-cli": "^5.5.1",
     "underscore.string": "3.3.5"
   },
-  "devDependencies": {   
+  "devDependencies": {
     "del": "4.0.0",
     "dotenv": "^16.0.0",
     "jshint": "2.13.4",

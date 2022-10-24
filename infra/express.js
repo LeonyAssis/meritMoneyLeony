@@ -4,11 +4,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const glob = require('glob');
 const path = require('path');
+const cors = require('cors');
 
 module.exports = (middlewares, container) => {
   const controllers = container.resolve('controllers');
 
   let app = express();
+
+  app.use(cors());
 
   app.disable('x-powered-by');
   app.enable('trust proxy');
@@ -30,7 +33,7 @@ module.exports = (middlewares, container) => {
   routes.forEach(route => {
     const routePath = path.resolve(process.cwd(), route);
     require(routePath)(app, controllers, middlewares);
-  }); 
+  });
   app.use(middlewares.errorHandler);
 
   return app;

@@ -45,6 +45,7 @@ class AutomaticBalanceBs extends Interactor {
   }
 
   async skipOrExecuteAutomaticBalance(config) {
+    
     const executionStatus = await this.automaticBalanceConfigRepository
       .getExecutionStatus();
 
@@ -89,7 +90,7 @@ class AutomaticBalanceBs extends Interactor {
         type: 'MONTHLY_INCOME',
         responsible_id: 12
       };
-
+      
       await this.balanceHistoryRepository
         .createBalanceHistory(history_balance);
 

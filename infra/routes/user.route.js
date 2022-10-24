@@ -2,8 +2,7 @@
 
 module.exports = (app, ctrls, mdws) => {
   app.route('/users')
-    .post(
-      mdws.authorize,
+    .post(      
       ctrls.userController.createUser
     );
 

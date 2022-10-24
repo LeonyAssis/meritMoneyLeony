@@ -38,6 +38,7 @@ class balanceHistoryRepository {
       limit: params.limit,
       where: filters,
       raw: true,
+      nest: true,
       logging: true,
     };
 
