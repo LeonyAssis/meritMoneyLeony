@@ -9,9 +9,8 @@ class TokenBs {
     this.bcrypt = params.bcrypt;
     this.jwt = params.jwt;
   }
-
-
-  async generateToken(req) {
+  
+  async generateToken(req) {    
     const auth = req.headers.authorization.split(' ')[1];   
     
     const buff = Buffer.from(auth, 'base64');
@@ -32,8 +31,8 @@ class TokenBs {
     const checkSenha = this.bcrypt
       .compareSync(loginAndPass[1], user.password);
 
-    if (checkSenha) {
-      tokenJWT = this.jwt.sign({ id: user.id },
+    if (checkSenha) {    
+      tokenJWT = this.jwt.sign({ id: user.id  },
         process.env.SECRET_KEY, {
         expiresIn: parseInt(process.env.EXPIRES_IN)
       });

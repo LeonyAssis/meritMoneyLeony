@@ -18,8 +18,7 @@ class userRepository {
       attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],   
       offset: params.offset,
       limit: params.limit,
-      nest: true,
-      logging: true
+      nest: true   
     };
 
     return await this.db.main
@@ -42,7 +41,7 @@ class userRepository {
     return await this.db.main
       .users
       .findOne({    
-        attributes: ['name', 'email', 'password'],   
+        attributes: ['id','name', 'email', 'password'],   
         where: filter,
         raw: true
       });

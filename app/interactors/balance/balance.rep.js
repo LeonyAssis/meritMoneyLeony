@@ -33,8 +33,7 @@ class balanceRepository {
         attributes: ['name',],
         where: { active: true },
         required: true
-      }],
-      logging: true,
+      }],      
       raw: true,
       nest: true,
       where: { user_id }
@@ -53,8 +52,7 @@ class balanceRepository {
         attributes: ['name'],
         required: true
       }],
-      raw: true,
-      logging: true,
+      raw: true,      
       nest: true,
     };
 
@@ -65,8 +63,7 @@ class balanceRepository {
 
   async updateBalance(id, balance, t) {
     const options = {
-      where: { id }, 
-      logging: true,   
+      where: { id },          
     };
 
     if (t) {
