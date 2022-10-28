@@ -5,8 +5,7 @@ class BenefitsRepository {
 
   async getBenefits(params, filters, sorting) {
     const options = {
-      raw: true,
-      logging: true,
+      raw: true,      
       where: filters,
       order: sorting,
       offset: params.offset,
@@ -30,7 +29,7 @@ class BenefitsRepository {
   async upsertBenefits(newBenefit) {
     return await this.db.main
       .benefits
-      .upsert(newBenefit, { logging: true });
+      .upsert(newBenefit);
   }
 
   async updateBenefit(id, benefit) {
