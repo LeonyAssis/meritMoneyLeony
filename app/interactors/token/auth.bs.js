@@ -40,6 +40,7 @@ class TokenBs {
       user.expiresIn = parseInt(process.env.EXPIRES_IN);
       user.token = tokenJWT;
       delete user.password;
+      delete user.id;
 
       return user;
     } else {
