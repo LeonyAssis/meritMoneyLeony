@@ -44,13 +44,12 @@ async function init() {
 
     const container = modules.container;
 
-    const middlewares = {     
+    const middlewares = {
       requestId: modules.mdw.requestId(container, modules.awilix.asValue),
-      authorize: modules.mdw.authorize(container),      
-      requestLogger: modules.mdw.requestLogger(container),
-      automaticBalance: modules.mdw.automaticBalance(container),
+      authorize: modules.mdw.authorize(container),
+      requestLogger: modules.mdw.requestLogger(container),      
       errorHandler: modules.mdw.errorHandler,
-      decryptWebhookContent: modules.mdw.decryptWebhookContent(container),     
+      decryptWebhookContent: modules.mdw.decryptWebhookContent(container),
       webhookBodyParser: modules.mdw.webhookBodyParser(container),
     };
 
@@ -58,6 +57,9 @@ async function init() {
       .initialize();
     container.resolve('errorService')
       .initialize();
+
+    container.resolve('automaticBalanceService')
+      .initialize(container.resolve('automaticBalanceBs'));
 
     const app = modules.express(middlewares, container);
 
