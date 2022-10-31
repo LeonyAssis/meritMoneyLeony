@@ -2,10 +2,10 @@
 <!-- ![coverage](https://img.shields.io/badge/Coverage-99%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$coverage$)) -->
 
 ![coverage](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$coverage$)
-![Statements](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$statements$)
-![Branches](https://img.shields.io/badge/Coverage-93%25-83A603.svg?prefix=$branches$)
-![Functions](https://img.shields.io/badge/Coverage-98%25-83A603.svg?prefix=$functions$)
-![Lines](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$lines$)
+![statements](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$statements$)
+![branches](https://img.shields.io/badge/Coverage-93%25-83A603.svg?prefix=$branches$)
+![functions](https://img.shields.io/badge/Coverage-98%25-83A603.svg?prefix=$functions$)
+![lines](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$lines$)
 
 > Backend do Merit money
 
