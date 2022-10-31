@@ -3,6 +3,7 @@ var CronJob = require('cron').CronJob;
 
 class AutomaticBalanceService {
   initialize(automaticBalanceBs) {
+    console.log('Creating Cron task');
     new CronJob(
       '* 0 */12 * * *',
       async function () { 
