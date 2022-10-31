@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start-nodemon": "nodemon app.js",
+    "start-nodemon": "nodemon app.js",   
     "test-coverage": "nyc --reporter=json-summary --reporter=text-summary mocha tests/**/* --recursive",
     "test-coverage-html": "nyc --reporter=html mocha tests/**/* --recursive",
     "lint": "eslint",
@@ -60,6 +60,7 @@
     "underscore.string": "3.3.5"
   },
   "devDependencies": {
+    "coverage-badge-creator": "^1.0.14",
     "del": "4.0.0",
     "dotenv": "^16.0.0",
     "jshint": "2.13.4",
