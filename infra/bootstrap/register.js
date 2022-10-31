@@ -50,9 +50,12 @@ module.exports = (config) => {
     'app/interactors/**/*.js',
     'app/services/**/*.js',
     'app/adapters/services/**/*.js',
+    ['app/adapters/services/automatic-balance.service.js', {
+      lifetime: dp.awilix.Lifetime.SINGLETON
+    },],
     ['app/adapters/services/error.service.js', {
       lifetime: dp.awilix.Lifetime.SINGLETON
-    }]   
+    },]   
   ], {
     formatName: (name) => {
       name = name.replace('.ctrl', '.controller');

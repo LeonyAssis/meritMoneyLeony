@@ -1,6 +1,6 @@
 'use strict';
 
-class TransactionService {
+class FormatService {
   constructor(params) {
     this.config = params.config;
     this.db = params.sequelize;
@@ -19,4 +19,4 @@ class TransactionService {
 
 
 
-module.exports = TransactionService;
+module.exports = FormatService;

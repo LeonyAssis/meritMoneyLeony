@@ -17,8 +17,7 @@ module.exports = (middlewares, container) => {
   app.enable('trust proxy');
 
   app.use(middlewares.requestId);
-  app.use(middlewares.requestLogger);
-  app.use(middlewares.automaticBalance);
+  app.use(middlewares.requestLogger); 
 
   app.use(bodyParser.urlencoded({
     extended: true
