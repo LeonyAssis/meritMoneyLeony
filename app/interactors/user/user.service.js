@@ -13,6 +13,7 @@ class UserService {
     let offset = ((parseInt(query.page) || 1) - 1) * limit;
     let active = query.active || true;
     let search = query.search;
+    let name = query.name;
     let column = query.column;
     let order = query.order;
 
@@ -39,7 +40,12 @@ class UserService {
 
     if (search)
       filters['email'] = {
-        [Op.like]: `%${search}%`
+        [Op.iLike]: `%${search}%`
+      };
+
+    if (name)
+      filters['name'] = {
+        [Op.iLike]: `%${name}%`
       };
 
     return { parameters, filters, sorting };

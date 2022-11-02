@@ -14,11 +14,11 @@ class userRepository {
   async getUsers(params, filters, sorting) {
     const options = {
       where: filters,
-      order: sorting, 
-      attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],   
+      order: sorting,
+      attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],
       offset: params.offset,
       limit: params.limit,
-      nest: true   
+      nest: true,
     };
 
     return await this.db.main
@@ -33,15 +33,16 @@ class userRepository {
       .findOne({
         attributes: ['id', 'name', 'email', 'role_id', 'created_at', 'updated_at'],
         where: filter,
-        raw: true
+        raw: true,
+
       });
   }
 
   async getUserAndPassword(filter) {
     return await this.db.main
       .users
-      .findOne({    
-        attributes: ['id','name', 'email', 'password'],   
+      .findOne({
+        attributes: ['id', 'name', 'email', 'password'],
         where: filter,
         raw: true
       });

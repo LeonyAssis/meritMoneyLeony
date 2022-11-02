@@ -28,7 +28,7 @@ class BalanceBs extends Interactor {
     return balance;
   }
 
-  async transferMoney(req) {
+  async transferMoney(req) {    
     this.validator.execute('transfer-balance.json', req.body);
     let balanceBody = req.body;
 
