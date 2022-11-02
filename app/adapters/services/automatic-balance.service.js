@@ -1,11 +1,11 @@
 'use strict';
 var CronJob = require('cron').CronJob;
-
+// '* 0 */12 * * *'
 class AutomaticBalanceService {
   initialize(automaticBalanceBs) {
     console.log('Creating Cron task');
     new CronJob(
-      '* 0 */12 * * *',
+      '*/40 * * * * *',
       async function () { 
         console.log('Running Cron Balance');
         const config = await automaticBalanceBs.getConfig();        
