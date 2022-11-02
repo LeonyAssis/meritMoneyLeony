@@ -5,7 +5,7 @@ class AutomaticBalanceService {
   initialize(automaticBalanceBs) {
     console.log('Creating Cron task');
     new CronJob(
-      '* 0 */14 * * *',
+      '* */10 * * * *',
       async function () { 
         console.log('Running Cron Balance');
         const config = await automaticBalanceBs.getConfig();        
