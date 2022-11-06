@@ -21,7 +21,4 @@ describe('format service', () => {
       await service.formatObjectByProperty(obj, 'test');
     });
   });
-
-
-
 });
