@@ -72,6 +72,23 @@ describe('AutomaticBalanceBs', () => {
         ]);
       await automaticBalanceBs.getConfig();
     });
+
+    it('should throw error config not found', async () => {
+      params.automaticBalanceConfigRepository
+        .getConfig
+        .resolves(null);
+
+        try {
+          await automaticBalanceBs.getConfig();;
+        } catch (error) {
+          params.errorService
+            .get
+            .should
+            .calledWith('config_not_found');
+        }     
+    });
+
+
   });
 
   describe('updateConfig()', () => {
@@ -81,6 +98,22 @@ describe('AutomaticBalanceBs', () => {
         .returns({ id: 5 });
 
       await automaticBalanceBs.updateConfig({ body: {} });
+    });
+
+
+    it('should throw error config not found in update config', async () => {
+
+      sinon.stub(automaticBalanceBs, 'getConfig')
+        .returns(null);
+
+        try {
+          await automaticBalanceBs.updateConfig({ body: {} });
+        } catch (error) {
+          params.errorService
+            .get
+            .should
+            .calledWith('config_not_found');
+        }         
     });
   });
 
@@ -227,9 +260,6 @@ describe('AutomaticBalanceBs', () => {
 
       await automaticBalanceBs.skipOrExecuteAutomaticBalance({ value: 5000 });
 
-    });
- 
+    }); 
   });
-
-
 });

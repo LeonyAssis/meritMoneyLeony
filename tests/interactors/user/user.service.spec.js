@@ -52,6 +52,12 @@ describe('userService', () => {
         .getParametersList({ column: 'created_at', order: 'asc', active: true, search: 'james@test.com' });
     });
 
+    it('should get the parameters with filter name', async () => {
+      await userService
+        .getParametersList({ column: 'created_at', order: 'asc', active: true, name: 'Bond' });
+    });
+
+
   });
 
 

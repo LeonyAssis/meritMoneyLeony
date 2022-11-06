@@ -1,11 +1,10 @@
 # Merit Money
-<!-- ![coverage](https://img.shields.io/badge/Coverage-99%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$coverage$)) -->
 
-[![coverage](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$coverage$)](https://leonyassis.github.io/meritMoneyLeony/)
-![statements](https://img.shields.io/badge/Statements-96%25-83A603.svg?prefix=$statements$)
-![branches](https://img.shields.io/badge/Branches-93%25-83A603.svg?prefix=$branches$)
-![functions](https://img.shields.io/badge/Functions-98%25-83A603.svg?prefix=$functions$)
-![lines](https://img.shields.io/badge/Lines-96%25-83A603.svg?prefix=$lines$)
+[![coverage](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$coverage$))](https://leonyassis.github.io/meritMoney/)
+![statements](https://img.shields.io/badge/Statements-96%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$statements$))(https://leonyassis.github.io/meritMoney/)
+![branches](https://img.shields.io/badge/Branches-94%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-94%25-83A603.svg?prefix=$branches$))(https://leonyassis.github.io/meritMoney/)
+![functions](https://img.shields.io/badge/Functions-98%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-98%25-83A603.svg?prefix=$functions$))(https://leonyassis.github.io/meritMoney/)
+![lines](https://img.shields.io/badge/Lines-96%25-83A603.svg?prefix=![](https://img.shields.io/badge/Coverage-96%25-83A603.svg?prefix=$lines$))(https://leonyassis.github.io/meritMoney/)
 
 
 > Backend do Merit money
