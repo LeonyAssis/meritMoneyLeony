@@ -24,64 +24,6 @@
       "algorithm": "RS256",
       "expires_in": 3600
     }
-  },
-  "email": {
-    "sender": {
-      "name": "Gerencianet",
-      "email": "naoresponda@notificacao.gerencianet.com.br"
-    },
-    "message_type": 21,
-    "max_attempts": 10
-  },
-  "infra": {
-    "appId": "",
-    "logger": "infra_log",
-    "key": "",
-    "url": "https://infraws.interno.testegerencianet.com.br"
-  },
-  "kernel": {
-    "class": "kernel",
-    "appId": "",
-    "logger": "kernel_log",
-    "key": "",
-    "url": "https://kernel.m12080920.orp-1.colaboradores.labgerencianet.com.br",
-    "viewUrl": "https://kernel.m12080920.orp-1.colaboradores.labgerencianet.com.br"
-  },
-  "intranet": {
-    "url": "https://intranet.m12080920.orp-1.colaboradores.labgerencianet.com.br"
-  },
-  "whatsapp": {
-    "url": "https://http.msging.net",
-    "key": "Key bm92b2ZsdXhvZ246MDZHUnpYRElUOGd6cTlEdjlGM3A=",
-    "alternative_account": {
-      "id": "84b32eaa-134b-460c-8a39-fd03e9d6341a",
-      "to": "postmaster@wa.gw.msging.net",
-      "method": "get",
-      "uri_request": "lime://wa.gw.msging.net/accounts"
-    },
-    "messages": {
-      "id": "454r545",
-      "hsm": {
-        "language": {
-          "policy": "deterministic",
-          "code": "pt_BR"
-        }
-      }
-    }
-  },
-  "correios": {
-    "cartao_postagem": {
-      "0067599079": {
-        "usuario": "sigep",
-        "senha": "n5f9t8",
-        "contrato": "9992157880"
-      }
-    },
-    "AtendeCliente": {
-      "url": "https://apphom.correios.com.br/SigepMasterJPA/AtendeClienteService/AtendeCliente?wsdl"
-    },
-    "CalcPrecoPrazo": {
-      "url": "http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?wsdl"
-    }
   }
+
 }
