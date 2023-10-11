@@ -1,8 +1,8 @@
 {
     "main": {
         "username": "vzibkpcsbouxvn",
-        "password": "4f83a704bb8b82e57759480606172a8feb1760dbbc9819fcbeb32c211f7a5fd4",
-        "database": "dafgst7a5duloj",
+        "password": "",
+        "database": "",
         "host": "ec2-52-21-136-176.compute-1.amazonaws.com",
         "dialect": "postgres",
         "dialectOptions": {
